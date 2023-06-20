@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>그린 24</title>
+    <link rel="stylesheet" href="{% static 'greenbooks/css/bootstrap.css' %}">
+
+    <script src="{% static 'greenbooks/js/bootstrap.js' %}"></script>
+</head>
+<body>
+{% include 'header.html' %}
+{% block content %}
+{% endblock %}
+{% include 'footer.html' %}
+</body>
+</html>
