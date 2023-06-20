@@ -3,10 +3,76 @@
 {% load static %}
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="{% static 'greenbooks/css/style.css' %}">
-    <title>안녕하세요</title>
+    <title>그린 24</title>
+    <link rel="stylesheet" href="{% static 'C:\myproject\GreenProject\static\greenbooks\css\bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'C:\myproject\GreenProject\static\greenbooks\css\style.css' %}">
 </head>
+
 <body>
-    <h1>헬로헬로</h1>
+{% include 'header.html' %}
+{% block contents %}
+<div class="container px-4 py-5" id="icon-grid">
+    <h2 class="pb-2 border-bottom">책</h2>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
+      <div class="col d-flex align-items-start">
+        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#bootstrap"></use></svg>
+        <div>
+          <h3 class="fw-bold mb-0 fs-4">책 제목</h3>
+          <img src="{% static 'greenbooks/images/book1.jpg' %}">
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#cpu-fill"></use></svg>
+        <div>
+          <h3 class="fw-bold mb-0 fs-4">책 제목</h3>
+           <img src="{% static 'greenbooks/images/book1.jpg' %}">
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#calendar3"></use></svg>
+        <div>
+          <h3 class="fw-bold mb-0 fs-4">책 제목</h3>
+           <img src="{% static 'greenbooks/images/book1.jpg' %}">
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#home"></use></svg>
+        <div>
+          <h3 class="fw-bold mb-0 fs-4">책 제목</h3>
+           <img src="{% static 'greenbooks/images/book1.jpg' %}">
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#speedometer2"></use></svg>
+        <div>
+          <h3 class="fw-bold mb-0 fs-4">책 제목</h3>
+           <img src="{% static 'greenbooks/images/book1.jpg' %}">
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#toggles2"></use></svg>
+        <div>
+          <h3 class="fw-bold mb-0 fs-4">책 제목</h3>
+           <img src="{% static 'greenbooks/images/book1.jpg' %}">
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#geo-fill"></use></svg>
+        <div>
+          <h3 class="fw-bold mb-0 fs-4">책 제목</h3>
+           <img src="{% static 'greenbooks/images/book1.jpg' %}">
+        </div>
+      </div>
+      <div class="col d-flex align-items-start">
+        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#tools"></use></svg>
+        <div>
+          <h3 class="fw-bold mb-0 fs-4">책 제목</h3>
+           <img src="{% static 'greenbooks/images/book1.jpg' %}">
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% include 'footer.html' %}
 </body>
 </html>
