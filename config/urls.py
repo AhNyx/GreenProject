@@ -17,10 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from greenbooks import views
+from greenbooks.views import posting
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.index, name='index'),
-    path("gbook/mypage", views.mypage),
+    path("gbook/mypage", views.mypage, name='mypage'),
+    path("trade/", views.trade, name='trade'),
+    # URL:80/blog/숫자로 접속하면 게시글-세부페이지(posting)
+    path('trade/<int:pk>', posting, name="posting"),
     path('common/', include('common.urls')),
 ]
