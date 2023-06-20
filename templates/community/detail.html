@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container px-4 py-5">
+    <section id="detail">
+        <table class="table">
+            <tr>
+                <th colspan="2">제목</th>
+                <td colspan="2">{{ post.title }}</td>
+            </tr>
+            <tr>
+                <th colspan="2">글쓴이</th>
+                <td colspan="2">{{ post.content }}</td>
+            </tr>
+            <tr>
+                <th>조회수</th>
+                <td>{{ post.views }}</td>
+                <th>작성일</th>
+                <td>{{ post.create_date }}</td>
+            </tr>
+            <tr>
+                <th>좋아요</th>
+                <td>{{ post.likes }}</td>
+                <td colspan="2">
+                    <button>좋아요</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4">{{ post.content }}</td>
+            </tr>
+        </table>
+        <div id="btn" class="text-center">
+            <button class="btn btn-primary btn-a"><a href="#">삭제</a></button>
+            <button class="btn btn-primary btn-a"><a href="{% url 'community:community' %}">목록</a></button>
+            <button class="btn btn-primary btn-a"><a href="#">수정</a></button>
+        </div>
+    </section>
+</div>
+{% endblock %}

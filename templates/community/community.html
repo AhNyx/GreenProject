@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container px-4 py-5">
+    <section id="comunity">
+            <div id="announcement">
+                <p>공지사항: 독후감을 써주세요. 1등 회원에겐 상품을 드립니다.</p>
+            </div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>번호</td>
+                        <td>제목</td>
+                        <td>작성자</td>
+                        <td>작성일</td>
+                        <td>조회수</td>
+                        <td>추천수</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if post_list %}
+                        {% for post in post_list %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>
+                                <a href="{% url 'community:detail' post.id %}">
+                                    {{ post.title }}
+                                </a>
+                            </td>
+                            <td>{{ post.writer }}</td>
+                            <td>{{ post.create_date }}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td>게시글이 없습니다.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            <div id="btn_write" class="text-end">
+                <button class="btn btn-primary btn-a"><a href="{% url 'community:post_form' %}">글쓰기</a></button>
+            </div>
+        </section>
+</div>
+{% endblock %}

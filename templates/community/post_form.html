@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container px-4 py-5">
+    <section id="post_form">
+        <form action="" method="post">
+            {% csrf_token %}
+            <table class="table">
+                <tr>
+                    <th>제목</th>
+                    <td><input type="text" class="form-control" name="title" id="title" value="{{ form.title.value|default_if_none:'' }}"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <textarea name="content" id="content" rows="10" class="form-control">{{ form.content.value|default_if_none:'' }}</textarea>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <div id="btn" class="text-center">
+            <button type="reset" class="btn btn-primary">취소</button>
+            <button class="btn btn-primary btn-a"><a href="{% url 'community:community' %}">목록</a></button>
+            <button type="submit" class="btn btn-primary">작성</button>
+        </div>
+    </section>
+</div>
+{% endblock %}
