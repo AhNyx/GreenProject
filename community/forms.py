@@ -9,5 +9,5 @@ class PostForm(forms.ModelForm):
         fields = ['title', 'content']
         labels = {
             'title': '제목',
-            'content': '내용'
+            'content': '내용',
         }
