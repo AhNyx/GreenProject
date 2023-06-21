@@ -130,3 +130,6 @@ main {
 
 .fw-semibold { font-weight: 600; }
 .lh-tight { line-height: 1.25; }
+
+/* community 스타일 */
+.btn-a a{color: #fff; text-decoration: none;}

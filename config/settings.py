@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'greenbooks',
     'common.apps.CommonConfig',
+    'community',
 ]
 
 MIDDLEWARE = [

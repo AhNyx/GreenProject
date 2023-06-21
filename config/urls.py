@@ -23,4 +23,5 @@ urlpatterns = [
     path('',views.index, name='index'),
     path("gbook/mypage", views.mypage),
     path('common/', include('common.urls')),
+    path('community/', include('community.urls')),
 ]

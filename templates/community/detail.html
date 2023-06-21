@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container px-4 py-5">
+    <section id="detail">
+        <h2 class="pb-2 border-bottom">내용보기</h2>
+        <table class="table">
+            <tr>
+                <th colspan="4">{{ post.title }}</th>
+            </tr>
+            <tr>
+                <td>글쓴이: {{ post.writer }}</td>
+                <td>작성일: {{ post.create_date }}</td>
+                <td>조회: {{ post.views }}</td>
+                <td><button>좋아요</button>: {{ post.likes }}</td>
+            </tr>
+            <tr>
+                <td colspan="4">{{ post.content|linebreaks }}</td>  <!-- 엔터적용 -->
+            </tr>
+        </table>
+        <div id="btn" class="text-center">
+            {% if post.writer == request.user %}
+            <a href="#" data-uri="{% url 'community:post_delete' post_id=post.pk %}" class="btn-a btn btn-primary">삭제</a>
+            <a href="{% url 'community:community' %}" class="btn-a btn btn-primary">목록</a>
+            <a href="#" class="btn-a btn btn-primary">수정</a>
+            {% else %}
+            <a href="{% url 'community:community' %}" class="btn-a btn btn-primary">목록</a>
+            {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function() {
+        $('.delete').click(function() {
+            if(confirm('정말 삭제하시겠습니까?')) {
+                location.href=$(this).data('uri');
+            }
+        });
+    });
+</script>
+{% endblock %}
