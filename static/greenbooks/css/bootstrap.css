@@ -149,7 +149,7 @@ h6, .h6 {
 
 p {
   margin-top: 0;
-  margin-bottom: 1rem;
+  /*margin-bottom: 1rem;*/
 }
 
 abbr[title],
@@ -4648,8 +4648,8 @@ textarea.form-control-lg {
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 1rem 1.25rem;
-  font-size: 1rem;
+  padding: 2rem 1.25rem;
+  font-size: 1.2rem;
   color: #212529;
   text-align: left;
   background-color: #fff;
@@ -6848,7 +6848,7 @@ textarea.form-control-lg {
 }
 
 .border-bottom {
-  border-bottom: 1px solid #dee2e6 !important;
+  /*border-bottom: 1px solid #dee2e6 !important;*/
 }
 
 .border-bottom-0 {
