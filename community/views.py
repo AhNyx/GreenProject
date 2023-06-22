@@ -38,17 +38,17 @@ def post_create(request):
 # post 수정하기(post_id 필요)
 @login_required(login_url='common:login')
 def post_edit(request, post_id):
-    post = get_object_or_404(Post, pk=post_id, writer=request.user)
+    post = get_object_or_404(Post, pk=post_id, writer=request.user)     # post_id를 pk로 함     # writer를 user로 지정
     if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.modify_date = timezone.now()
-            post.save()
-            return redirect('community/post_edit.html', post_id=post_id)
+        form = PostForm(request.POST, instance=post)    # post의 정보를 가져옴
+        if form.is_valid():                     # 유효성검사 후
+            post = form.save(commit=False)      # 가저장
+            post.modify_date = timezone.now()   # 수정일을 지정
+            post.save()                         # 찐저장
+            return redirect('community:detail', post_id=post_id)    # 수정한 post 페이지로 넘어가기
     else:
         form = PostForm(instance=post)
-    context = {'form': form}
+    context = {'form': form}    # 생성되었던 그대로의 post의 정보 form
     return render(request, 'community/post_form.html', context)
 
 

@@ -12,7 +12,13 @@
             <tr>
                 <!-- post 정보 -->
                 <td>글쓴이: {{ post.writer }}</td>
-                <td>작성: {{ post.create_date }}</td>
+                <!-- 수정된 경우 수정일시, 아닌 경우 작성일시 표시 -->
+                <td>{% if post.modify_date %}
+                    수정: {{ post.modify_date }}
+                    {% else %}
+                    작성: {{ post.create_date }}
+                {% endif %}
+                </td>
                 <td>조회: {{ post.views }}</td>
                 <td><button>좋아요</button> {{ post.likes }}</td>
             </tr>
