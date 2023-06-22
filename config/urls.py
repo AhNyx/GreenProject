@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.index, name='index'),
     path('common/', include('common.urls')),
+    path('community/', include('community.urls')),
     path('mypage/', include('mypage.urls')),
     path('qna/', views.qna, name='qna')
 ]

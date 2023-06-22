@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'greenbooks',
     'common.apps.CommonConfig',
     'community',
-    'mypage',
 ]
 
 MIDDLEWARE = [
