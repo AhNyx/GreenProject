@@ -12,6 +12,7 @@
                 <!-- 제목 영역 -->
                 <tr>
                     <td>
+                        <!-- 폼정보가있으면(수정시)title값, 없거나기본값은'' -->
                         <input type="text" class="form-control" name="title" id="title"
                                value="{{ form.title.value|default_if_none:'' }}" placeholder="제목을 입력해주세요">
                     </td>
@@ -27,7 +28,7 @@
             <!-- 버튼 영역 -->
             <div id="btn" class="text-center">
                 <button type="reset" class="btn btn-primary">취소</button>
-                <a href="{% url 'community:community' %}" class="btn-a btn btn-primary">목록</a></button>
+                <a href="{% url 'community:community' %}" class="btn-a btn btn-primary">목록</a>
                 <button type="submit" class="btn btn-primary">작성</button>
             </div>
         </form>

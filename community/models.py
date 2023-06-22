@@ -10,3 +10,6 @@ class Post(models.Model):   # 포스트 모델
     modify_date = models.DateTimeField(null=True, blank=True)   # 수정일: 수동생성(null, 공백 가능)
     views = models.IntegerField(default=0)      # 조회수
     likes = models.IntegerField(default=0)      # 좋아요
+
+    def __str__(self):
+        return self.title   # Post를 식별할 상황에서 기본인 id가 아니라 title값을 불러와줘서 알아보기 쉽게 함

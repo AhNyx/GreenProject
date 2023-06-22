@@ -35,7 +35,13 @@
                             <!-- 작성자 -->
                             <td>{{ post.writer }}</td>
                             <!-- 작성일 -->
-                            <td>{{ post.create_date }}</td>
+                            <!-- 오늘 작성된 글은 오전/오후hh:mm으로 포맷변경 -->
+                            {% if post.create_date|date:"Y-m-d" == today|date:"Y-m-d" %}
+                                <td>{{ post.create_date|date:"Ag:i" }}</td>
+                            <!-- 아니면 yy-mm-dd으로 포맷변경 -->
+                            {% else %}
+                                <td>{{ post.create_date|date:"y-m-d" }}</td>
+                            {% endif %}
                             <!-- 조회수 -->
                             <td>{{ post.views }}</td>
                             <!-- 좋아요 -->

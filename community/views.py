@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
@@ -7,8 +9,9 @@ from community.models import Post
 
 # post 리스트 페이지
 def community(request):
-    post_list = Post.objects.order_by('-create_date')   # 내림차순, 새로운 글이 맨위로
-    context = {'post_list': post_list}                  # post 리스트 가져오기
+    post_list = Post.objects.order_by('-create_date')   # 내림차순, 새로운 글이 맨위로 가도록 설정
+    today = date.today()                                # 작성일과 비교하기 위해 오늘날짜 준비
+    context = {'post_list': post_list, 'today': today}              # 보낼 준비
     return render(request, 'community/community.html', context)     # 가져와서, 템플릿에 연결, 가져와야 할 것
 
 

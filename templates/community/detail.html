@@ -12,19 +12,22 @@
             <tr>
                 <!-- post 정보 -->
                 <td>글쓴이: {{ post.writer }}</td>
-                <!-- 수정된 경우 수정일시, 아닌 경우 작성일시 표시 -->
-                <td>{% if post.modify_date %}
-                    수정: {{ post.modify_date }}
-                    {% else %}
-                    작성: {{ post.create_date }}
-                {% endif %}
+                <!-- 수정된 경우 수정일시와 작성일시를, 아닌 경우 작성일시만 표시 -->
+                <!-- yy-mm-dd 오전/오후 hh:mm으로 포맷변경 -->
+                <td>
+                    작성: {{ post.create_date|date:"y-m-d A g:i" }}
+                    {% if post.modify_date %}
+                    ,&nbsp;&nbsp;수정: {{ post.modify_date|date:"y-m-d A g:i" }}
+                    {% endif %}
                 </td>
                 <td>조회: {{ post.views }}</td>
                 <td><button>좋아요</button> {{ post.likes }}</td>
             </tr>
             <tr>
                 <!-- post 내용 -->
-                <td colspan="4" class="text-start" style="white-space: pre-line">{{ post.content }}</td>
+                <td colspan="4" class="text-start" style="white-space: pre-line">
+                    {{ post.content }}
+                </td>
             </tr>
         </table>
         <div id="btn" class="text-center">
@@ -51,7 +54,7 @@
         $('.delete').click(function() {
             // 경고창
             if(confirm('정말 삭제하시겠습니까?')) {
-                // urt로 이동
+                // uri로 이동
                 location.href=$(this).data('uri');
             }
         });

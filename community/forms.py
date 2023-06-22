@@ -1,5 +1,4 @@
 from django import forms
-
 from community.models import Post
 
 
