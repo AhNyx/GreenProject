@@ -20,8 +20,9 @@ from greenbooks import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'),
-    path("gbook/mypage", views.mypage),
+    path('',views.index, name='index'),
     path('common/', include('common.urls')),
-    path('community/', include('community.urls')),  # 연결
+    path('community/', include('community.urls')),
+    path('mypage/', include('mypage.urls')),
+    path('qna/', views.qna, name='qna')
 ]
