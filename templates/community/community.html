@@ -19,21 +19,30 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <!-- post가 있으면 -->
                     {% if post_list %}
+                        <!-- 각 post별로 모두 -->
                         {% for post in post_list %}
                         <tr>
+                            <!-- 번호 -->
                             <td>{{ post.id }}</td>
+                            <!-- 제목 -->
                             <td>
                                 <a href="{% url 'community:detail' post.id %}">
                                     {{ post.title }}
                                 </a>
                             </td>
+                            <!-- 작성자 -->
                             <td>{{ post.writer }}</td>
+                            <!-- 작성일 -->
                             <td>{{ post.create_date }}</td>
-                            <td></td>
-                            <td></td>
+                            <!-- 조회수 -->
+                            <td>{{ post.views }}</td>
+                            <!-- 좋아요 -->
+                            <td>{{ post.likes }}</td>
                         </tr>
                         {% endfor %}
+                    <!-- post가 없으면 -->
                     {% else %}
                     <tr>
                         <td colspan="6" class="text-center">게시글이 없습니다.</td>
@@ -41,6 +50,7 @@
                     {% endif %}
                 </tbody>
             </table>
+            <!-- 로그인시에만 글쓰기 버튼 보이게 -->
             {% if user.is_authenticated %}
             <div id="btn_write" class="text-end">
                 <a href="{% url 'community:post_create' %}" class="btn-a btn btn-primary">글쓰기</a>

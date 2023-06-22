@@ -9,12 +9,17 @@
             {% include 'form_errors.html' %}
             <table class="table">
                 <tr>
-                    <th>제목</th>
-                    <td><input type="text" class="form-control" name="title" id="title" value="{{ form.title.value|default_if_none:'' }}"></td>
+                    <td>
+                        <input type="text" class="form-control" name="title" id="title"
+                               value="{{ form.title.value|default_if_none:'' }}" placeholder="제목을 입력해주세요">
+                    </td>
                 </tr>
                 <tr>
-                    <td colspan="2">
-                        <textarea name="content" id="content" rows="10" class="form-control">{{ form.content.value|default_if_none:'' }}</textarea>
+                    <td>
+                        <textarea class="form-control" name="content" id="content"
+                                  rows="10" placeholder="내용을 입력해주세요">
+                            {{ form.content.value|default_if_none:'' }}
+                        </textarea>
                     </td>
                 </tr>
             </table>
