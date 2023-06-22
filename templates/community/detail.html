@@ -12,9 +12,9 @@
             <tr>
                 <!-- post 정보 -->
                 <td>글쓴이: {{ post.writer }}</td>
-                <td>{{ post.create_date }} 작성</td>
+                <td>작성: {{ post.create_date }}</td>
                 <td>조회: {{ post.views }}</td>
-                <td><button>좋아요</button>: {{ post.likes }}</td>
+                <td><button>좋아요</button> {{ post.likes }}</td>
             </tr>
             <tr>
                 <!-- post 내용 -->
@@ -29,7 +29,7 @@
                data-uri="{% url 'community:post_delete' post.id %}"
                class="delete btn-a btn btn-primary">삭제</a>
             <a href="{% url 'community:community' %}" class="btn-a btn btn-primary">목록</a>
-            <a href="#" class="btn-a btn btn-primary">수정</a>
+            <a href="{% url 'community:post_edit' post.id %}" class="btn-a btn btn-primary">수정</a>
             <!-- post작성자가 아닌 사람이 글을 봤을 때 -->
             {% else %}
             <a href="{% url 'community:community' %}" class="btn-a btn btn-primary">목록</a>
