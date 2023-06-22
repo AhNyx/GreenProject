@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container px-4 py-5">
+    <section id="community">
+            <div id="announcement">
+                <h2 class="pb-2 border-bottom">중고책거래</h2>
+                <p>매너 있는 거래 합시다.</p>
+            </div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>거래상태</td>
+                        <td>번호</td>
+                        <td>제목</td>
+                        <td>작성자</td>
+                        <td>작성일</td>
+                        <td>조회</td>
+                        <td>관심</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if trade_list %}
+                        {% for trade in trade_list %}
+                        <tr>
+                            <td><span class="badge bg-secondary">{{ trade.status_choice }}</span></td>
+                            <td>{{ trade.id }}</td>
+                            <td>
+                                <a href="#">
+                                    {{ trade.title }}
+                                </a>
+                            </td>
+                            <td>{{ trade.writer }}</td>
+                            <td>{{ trade.pub_date }}</td>
+                            <td>{{ trade.hit }}</td>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="8" class="text-center">게시글이 없습니다.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            {% if user.is_authenticated %}
+            <div id="btn_write" class="text-end">
+                <a href="{% url 'community:post_create' %}" class="btn-a btn btn-primary">글쓰기</a>
+            </div>
+            {% endif %}
+        </section>
+</div>
+{% endblock %}
