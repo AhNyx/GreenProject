@@ -20,8 +20,8 @@ from greenbooks import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.index, name='index'),
+    path('', views.index, name='index'),
     path("gbook/mypage", views.mypage),
     path('common/', include('common.urls')),
-    path('community/', include('community.urls')),
+    path('community/', include('community.urls')),  # 연결
 ]
