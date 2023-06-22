@@ -9,3 +9,6 @@ class UserForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("username", "password1", "password2", "email")
+
+class LoginForm(forms.Form):
+    username = forms.CharField(error_messages={'required':"아이디를 입력하세요"})
