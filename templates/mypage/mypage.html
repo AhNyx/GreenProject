@@ -13,8 +13,8 @@
 <body class="m-5">
 <div class="container">
     <div class="d-flex flex-row mb-3">
-        <div class="p-2 h3"><a href="{% url 'gbooks:mypage' user.id %}">마이페이지</a></div>
-        <div class="p-2 mx-5"><a href="{% url 'gbooks:memberinfo' user.id %}">회원정보</a></div>
+        <div class="p-2 h3"><a href="{% url 'mypage:mypage' user.id %}">마이페이지</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'mypage:memberinfo' user.id %}">회원정보</a></div>
         <div class="p-2 mx-5">내가쓴글</div>
         <div class="p-2 mx-5">장바구니</div>
         <div class="p-2 mx-5">고객센터</div>

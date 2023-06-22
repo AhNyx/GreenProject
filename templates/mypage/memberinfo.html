@@ -14,7 +14,7 @@
 <body class="m-5">
 <div class="container text-center">
     <div class="d-flex flex-row mb-5">
-        <div class="p-2 h3"><a href="{% url 'gbooks:mypage' user.id %}">마이페이지</a></div>
+        <div class="p-2 h3"><a href="{% url 'mypage:mypage' user.id %}">마이페이지</a></div>
         <div class="p-2 mx-5">회원정보</div>
         <div class="p-2 mx-5">내가쓴글</div>
         <div class="p-2 mx-5">장바구니</div>
@@ -30,6 +30,7 @@
             <div class="mx-5">
                 <label for="pw" class="form-label">비밀번호</label>
                 <input type="text" class="form-control" id="pw">
+                <button type="button" class="btn btn-outline-secondary">변경</button>
             </div>
         </form>
     </div>

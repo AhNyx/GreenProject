@@ -12,7 +12,7 @@
       <div class="col-md-3 text-end">
         {% if user.is_authenticated %}
         <button type="button" class="btn btn-primary"
-        onclick="location.href='{% url 'gbooks:mypage' user.id %}'">마이페이지</button>
+        onclick="location.href='{% url 'mypage:mypage' user.id %}'">마이페이지</button>
         <button type="button" class="btn btn-primary"
         onclick="location.href='{% url 'common:logout' %}'">{{ user.username }} 로그아웃</button>
         {% else %}

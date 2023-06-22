@@ -21,8 +21,7 @@ from greenbooks import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.index, name='index'),
-    path("gbook/mypage", views.mypage),
     path('common/', include('common.urls')),
-    path("gbooks/", include('greenbooks.urls')),
+    path('mypage/', include('mypage.urls')),
     path('qna/', views.qna, name='qna')
 ]

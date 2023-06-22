@@ -5,6 +5,5 @@ from . import views
 app_name = 'gbooks'
 
 urlpatterns = [
-    path("mypage/<int:user_id>/", views.mypage, name='mypage'),
-    path("memberinfo/<int:user_id>/", views.memberinfo, name='memberinfo'),
+
 ]
