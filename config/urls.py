@@ -23,4 +23,6 @@ urlpatterns = [
     path('',views.index, name='index'),
     path("gbook/mypage", views.mypage),
     path('common/', include('common.urls')),
+    path("gbooks/", include('greenbooks.urls')),
+    path('qna/', views.qna, name='qna')
 ]

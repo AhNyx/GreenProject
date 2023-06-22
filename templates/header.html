@@ -7,12 +7,12 @@
         <li><a href="#" class="nav-link px-2 link-secondary"
         onclick="location.href='{% url 'index' %}'">홈</a></li>
         <li><a href="#" class="nav-link px-2 link-dark">커뮤니티</a></li>
-        <li><a href="#" class="nav-link px-2 link-dark">고객센터</a></li>
+        <li><a href="{% url 'qna' %}" class="nav-link px-2 link-dark">고객센터</a></li>
       </ul>
       <div class="col-md-3 text-end">
         {% if user.is_authenticated %}
         <button type="button" class="btn btn-primary"
-        onclick="location.href='#'">마이페이지</button>
+        onclick="location.href='{% url 'gbooks:mypage' user.id %}'">마이페이지</button>
         <button type="button" class="btn btn-primary"
         onclick="location.href='{% url 'common:logout' %}'">{{ user.username }} 로그아웃</button>
         {% else %}
