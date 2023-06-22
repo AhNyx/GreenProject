@@ -1,4 +1,4 @@
-import form as form
+
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
@@ -41,10 +41,3 @@ def register(request):
             login(request, user)
             return redirect('/')
     return render(request, 'common/signup.html', {'data':data})
-def login(request):
-    if request.method == "POST":
-
-        if form.is_vaild():
-            request
-
-    return render(request, 'common/login.html', )
