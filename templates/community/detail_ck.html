@@ -4,7 +4,8 @@
 <div class="container px-4 py-5">
     <section id="detail">
         <h2 class="pb-2 border-bottom">내용보기</h2>
-        <table class="table">
+        <!-- 편집기 크기와 맞추려고 스타일 줌 -->
+        <table class="table" style="width: 70%; margin: 0 auto;">
             {% if post.category %}
             <tr>
                 <!-- 카테고리가 있으면 카테고리를 제목 옆에 -->
@@ -32,12 +33,13 @@
             </tr>
             <tr>
                 <!-- post 내용 - 편집기 넣은 버전 -->
-                <td colspan="4" class="text-start" style="white-space: pre-line">
+                <td colspan="4" class="text-start">
                     {{ post.description|safe }}
                 </td>
             </tr>
         </table>
-        <div id="btn" class="text-center">
+        <!-- 마진탑 -->
+        <div id="btn" class="text-center mt-3">
             <!-- post작성자가 자기 글을 봤을 때 - 삭제, 수정 -->
             {% if post.writer == request.user %}
                 <!-- 삭제시 자바스크립트 연결 -->

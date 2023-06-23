@@ -8,7 +8,8 @@
             {% csrf_token %}
             <!-- 유효성 검사 -->
             {% include 'form_errors.html' %}
-            <table class="table">
+            <!-- 편집기 크기와 맞추려고 스타일 줌 -->
+            <table class="table" style="width: 70%; margin: 0 auto;">
                 <tr>
                     <!-- 카테고리 영역 -->
                     <td style="width: 20%;">
@@ -36,7 +37,8 @@
                 </tr>
             </table>
             <!-- 버튼 영역 -->
-            <div id="btn" class="text-center">
+            <!-- 마진탑 -->
+            <div id="btn" class="text-center mt-3">
                 <button type="reset" class="btn btn-primary">취소</button>
                 <a href="{% url 'community:community' %}" class="btn-a btn btn-primary">목록</a>
                 <button type="submit" class="btn btn-primary">작성</button>
