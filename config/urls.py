@@ -28,7 +28,7 @@ urlpatterns = [
     path('community/', include('community.urls')),
     path('tradebook/',include('tradebook.urls')),
     path('mypage/', include('mypage.urls')),
-    path('qna/', views.qna, name='qna')
+    path('custom/',include('custom.urls')),
 ]
 urlpatterns += static(settings.MEDIA_URL,
                       document_root=settings.MEDIA_ROOT)
