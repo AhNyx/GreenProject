@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'greenbooks/css/bootstrap.css' %}">
+    <meta charset="UTF-8">
+    <title>회원정보</title>
+    <style>
+        #box1{height:50px;}
+        a{text-decoration: none; color: black}
+
+    </style>
+</head>
+<body class="m-5">
+<div class="container text-center">
+    <div class="d-flex flex-row mb-5">
+        <div class="p-2 h3"><a href="{% url 'mypage:mypage' user.id %}">마이페이지</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'mypage:memberinfo' user.id %}">회원정보</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'mypage:mypost' %}">내가쓴글</a></div>
+        <div class="p-2 mx-5">장바구니</div>
+        <div class="p-2 mx-5">고객센터</div>
+    </div>
+<div class="container px-4 py-5">
+    <section id="community">
+            <div id="announcement">
+                <h2 class="pb-2 border-bottom">내가쓴글</h2>
+            </div>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td>번호</td>
+                        <td>제목</td>
+                        <td>작성자</td>
+                        <td>작성일</td>
+                        <td>조회</td>
+                        <td>추천</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- post가 있으면 -->
+                    {% if post_list %}
+                        <!-- 각 post별로 모두 -->
+                        {% for post in post_list %}
+                        <tr>
+                            <!-- 번호 -->
+                            <td>{{ post.id }}</td>
+                            <!-- 제목 -->
+                            <td>
+                                <a href="{% url 'community:detail' post.id %}">
+                                    {{ post.title }}
+                                </a>
+                            </td>
+                            <!-- 작성자 -->
+                            <td>{{ post.writer }}</td>
+                            <!-- 작성일 -->
+                            <td>{{ post.create_date }}</td>
+                            <!-- 조회수 -->
+                            <td>{{ post.views }}</td>
+                            <!-- 좋아요 -->
+                            <td>{{ post.likes }}</td>
+                        </tr>
+                        {% endfor %}
+                    <!-- post가 없으면 -->
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">게시글이 없습니다.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </section>
+</div>
+</body>
+{% endblock %}
