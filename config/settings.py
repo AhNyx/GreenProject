@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'community',    # 커뮤니티
     'tradebook',
     'custom',
-    'ckeditor',     # 폼편집기
-    'ckeditor_uploader',
+    'ckeditor',             # 폼편집기
+    'ckeditor_uploader',    # 폼편집기
 ]
 
 MIDDLEWARE = [

@@ -12,7 +12,6 @@ urlpatterns = [
     path('community/', include('community.urls')),  # 커뮤니티
     path('tradebook/', include('tradebook.urls')),
     path('mypage/', include('mypage.urls')),
-    path('qna/', views.qna, name='qna'),
     path('custom/', include('custom.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),   # 편집기
 ]
