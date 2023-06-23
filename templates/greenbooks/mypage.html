@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'greenbooks/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'greenbooks/css/bootstrap.css' %}">
-    <meta charset="UTF-8">
-    <title>마이페이지</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 <div class="container">
     <div class="row my-3">
         <ul class="nav mx-3">
@@ -50,5 +43,4 @@
         </div>
     </div>
 </div>
-</body>
-</html>
+{% endblock %}
