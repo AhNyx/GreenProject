@@ -15,8 +15,7 @@
                         <td>제목</td>
                         <td>작성자</td>
                         <td>작성일</td>
-                        <td>조회</td>
-                        <td>관심</td>
+                        <td>조회수</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,7 +25,7 @@
                             <td><span class="badge bg-secondary">{{ trade.status_choice }}</span></td>
                             <td>{{ trade.id }}</td>
                             <td>
-                                <a href="#">
+                                <a href="{% url 'tradebook:tradebook_detail' trade.id %}">
                                     {{ trade.title }}
                                 </a>
                             </td>
@@ -45,7 +44,7 @@
             </table>
             {% if user.is_authenticated %}
             <div id="btn_write" class="text-end">
-                <a href="{% url 'community:post_create' %}" class="btn-a btn btn-primary">글쓰기</a>
+                <a href="{% url 'tradebook:tradebook_create' %}" class="btn-a btn btn-primary">글쓰기</a>
             </div>
             {% endif %}
         </section>
