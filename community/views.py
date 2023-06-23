@@ -28,7 +28,7 @@ def detail(request, post_id):
 @login_required(login_url='common:login')   # 로그인요구-로그인페이지연결
 def post_create(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():     # 폼이 유효하면
             post = form.save(commit=False)  # 폼 가저장 후
             post.writer = request.user      # writer를 user로 지정하고

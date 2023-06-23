@@ -26,6 +26,9 @@
             <tr>
                 <!-- post 내용 -->
                 <td colspan="4" class="text-start" style="white-space: pre-line">
+                    {% if post.attach %}
+                    <img src = "{{ post.attach.url }}">
+                    {% endif %}
                     {{ post.content }}
                 </td>
             </tr>

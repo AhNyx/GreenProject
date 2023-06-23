@@ -27,6 +27,7 @@ class Post(models.Model):   # 포스트 모델
     views = models.IntegerField(default=0)      # 조회수
     likes = models.IntegerField(default=0)      # 좋아요
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
+    attach = models.ImageField(upload_to='community/images/%Y/%m/%d/', null=True, blank=True)
 
     def __str__(self):
         return self.title   # Post를 식별할 상황에서 기본인 id가 아니라 title값을 불러와줘서 알아보기 쉽게 함
