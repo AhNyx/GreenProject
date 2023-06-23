@@ -1,11 +1,29 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends "base.html" %}
 {% block content %}
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'greenbooks/css/bootstrap.css' %}">
+    <meta charset="UTF-8">
+    <title>회원정보</title>
+    <style>
+        #box1{height:50px;}
+        a{text-decoration: none; color: black}
+
+    </style>
+</head>
+<body class="m-5">
+<div class="container text-center">
+    <div class="d-flex flex-row mb-5">
+        <div class="p-2 h3"><a href="{% url 'mypage:mypage' user.id %}">마이페이지</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'mypage:memberinfo' user.id %}">회원정보</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'mypage:mypost' %}">내가쓴글</a></div>
+        <div class="p-2 mx-5">장바구니</div>
+        <div class="p-2 mx-5">고객센터</div>
+    </div>
 <div class="container px-4 py-5">
     <section id="community">
             <div id="announcement">
-                <h2 class="pb-2 border-bottom">커뮤니티</h2>
-                <p>공지사항: 독후감을 써주세요. 1등 회원에겐 상품을 드립니다.</p>
+                <h2 class="pb-2 border-bottom">내가쓴글</h2>
             </div>
             <table class="table table-hover">
                 <thead>
@@ -50,12 +68,7 @@
                     {% endif %}
                 </tbody>
             </table>
-            <!-- 로그인시에만 글쓰기 버튼 보이게 -->
-            {% if user.is_authenticated %}
-            <div id="btn_write" class="text-end">
-                <a href="{% url 'community:post_create' %}" class="btn-a btn btn-primary">글쓰기</a>
-            </div>
-            {% endif %}
         </section>
 </div>
+</body>
 {% endblock %}

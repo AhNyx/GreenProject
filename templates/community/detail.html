@@ -6,23 +6,37 @@
         <h2 class="pb-2 border-bottom">내용보기</h2>
         <table class="table">
             <tr>
+                <!-- 제목 -->
                 <th colspan="4">{{ post.title }}</th>
             </tr>
             <tr>
+                <!-- post 정보 -->
                 <td>글쓴이: {{ post.writer }}</td>
-                <td>작성일: {{ post.create_date }}</td>
+                <!-- 수정된 경우 수정일시, 아닌 경우 작성일시 표시 -->
+                <td>{% if post.modify_date %}
+                    수정: {{ post.modify_date }}
+                    {% else %}
+                    작성: {{ post.create_date }}
+                {% endif %}
+                </td>
                 <td>조회: {{ post.views }}</td>
-                <td><button>좋아요</button>: {{ post.likes }}</td>
+                <td><button>좋아요</button> {{ post.likes }}</td>
             </tr>
             <tr>
-                <td colspan="4">{{ post.content|linebreaks }}</td>  <!-- 엔터적용 -->
+                <!-- post 내용 -->
+                <td colspan="4" class="text-start" style="white-space: pre-line">{{ post.content }}</td>
             </tr>
         </table>
         <div id="btn" class="text-center">
+            <!-- post작성자가 자기 글을 봤을 때 - 삭제, 수정 -->
             {% if post.writer == request.user %}
-            <a href="#" data-uri="{% url 'community:post_delete' post_id=post.pk %}" class="btn-a btn btn-primary">삭제</a>
+                <!-- 삭제시 자바스크립트 연결 -->
+            <a href="#"
+               data-uri="{% url 'community:post_delete' post.id %}"
+               class="delete btn-a btn btn-primary">삭제</a>
             <a href="{% url 'community:community' %}" class="btn-a btn btn-primary">목록</a>
-            <a href="#" class="btn-a btn btn-primary">수정</a>
+            <a href="{% url 'community:post_edit' post.id %}" class="btn-a btn btn-primary">수정</a>
+            <!-- post작성자가 아닌 사람이 글을 봤을 때 -->
             {% else %}
             <a href="{% url 'community:community' %}" class="btn-a btn btn-primary">목록</a>
             {% endif %}
@@ -33,8 +47,11 @@
 {% block script %}
 <script>
     $(document).ready(function() {
+        // delete 클래스를 클릭하면
         $('.delete').click(function() {
+            // 경고창
             if(confirm('정말 삭제하시겠습니까?')) {
+                // urt로 이동
                 location.href=$(this).data('uri');
             }
         });

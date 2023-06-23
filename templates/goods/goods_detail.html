@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>상품목록입니다.</title>
+</head>
+<style>
+    /* h3{ text-align:center;} */
+    #img{float: left; margin-right: 20px;}
+
+</style>
+<body>
+    <h3> 상품 목록 페이지</h3>
+    <hr>
+
+        <div id =img>
+            <img src="https://image.yes24.com/goods/119578103/XL" alt ="책 사진" width=200px; height=300px;>
+        </div>
+        <h4>BEYOND THE STORY 비욘드 더 스토리</h4>
+        <ul id="detail_table">
+            <table>
+                 <tr>
+                    <td>책 제목</td>
+                    <td>BEYOND THE STORY 비욘드 더 스토리</td>
+                </tr>
+                <tr>
+                    <td>글쓴이</td>
+                    <td>강명석, 방탄소년단</td>
+                </tr>
+                <tr>
+                    <td>정가금액</td>
+                    <td>31,500 원</td>
+                </tr>
+                 <tr>
+                    <td>중고판매금액</td>
+                    <td>24,000 원</td>
+                </tr>
+                <tr>
+                    <td>발행일</td>
+                    <td>2023년 07월 09일</td>
+                </tr>
+                 <tr>
+                    <td>쪽수</td>
+                    <td>524 쪽</td>
+                </tr>
+                 <tr>
+                    <td>ISBN13</td>
+                    <td>9791198320902</td>
+                </tr>
+
+
+
+            </table>
+
+        </ul>
+
+        <div id = title>★주의사항★ </div>
+        <div id = detail_content>
+            -중고 거래 특성 상 환불 불가합니다. <br>
+            -제품에 따라 오염 현상이 있습니다. 불량이 아니므로 환불 불가합니다.<br>
+            -실물 색상은 모니터와 휴대전화의 기종과 해상도에 따라 상이할 수 있습니다.<br>
+            -품절시 재입고가 어려울 수 있습니다.<br>
+        </div>
+
+
+        <h3> Review(서평?)</h3>
+        <div id = review>
+
+            <p><input type="radio" id="review" name="review" value="review">  감명깊게 읽었어요 엄청 좋아요 엉엉
+            <label for="5-stars" class="star pr-4">★★★★★★</label></p>
+            <p><input type="radio" id="review" name="review" value="review">  인생책이에요 추천합니다.
+            <label for="5-stars" class="star pr-4">★★★★★★</label></p>
+            <p><input type="radio" id="review" name="review" value="review">  소장용으로 한권더 갖고 싶어요
+            <label for="5-stars" class="star pr-4">★★★★★★</label></p>
+            <p><input type="radio" id="review" name="review" value="review">  필사하기 좋은 책입니다.
+            <label for="5-stars" class="star pr-4">★★★★★★</label></p>
+            <p><input type="radio" id="review" name="review" value="review">  하루에 다 읽을정도로 몰입감이 좋습니다.
+             <label for="5-stars" class="star pr-4">★★★★★★</label></p>
+
+
+    </div>
+
+
+
+    <h2>게시판 목록</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>글번호</th><th>글제목</th><th>작성일</th><th>조회수</th><th>글쓴이</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- {% for board in boardlist %} -->
+            <tr>
+                <!-- <td>{{ board[0] }}</td> -->
+                <td>
+                    <!-- <a href="{{ url_for('detail', bno=board[0]) }}"> -->
+                        {{ board[1] }}</a>
+                </td>
+                <td>{{ board[3] }}</td>
+                <td>{{ board[5] }}</td>
+                <td>{{ board[6] }}</td>
+            </tr>
+            <!-- {% endfor %} -->
+        </tbody>
+    </table>
+    <div class="btnWrite">
+        <!-- <a href="{{ url_for('writing') }}"> -->
+            <button type="button">글쓰기</button>
+        </a>
+    </div>
+</section>
+
+
+
+</body>
+</html>
