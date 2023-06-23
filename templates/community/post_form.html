@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container px-4 py-5" xmlns="http://www.w3.org/1999/html">
+    <section id="post_form">
+        <h2 class="pb-2 border-bottom">글남기기</h2>
+        <form action="" method="post">
+            {% csrf_token %}
+            {% include 'form_errors.html' %}
+            <table class="table">
+                <tr>
+                    <td>
+                        <input type="text" class="form-control" name="title" id="title"
+                               value="{{ form.title.value|default_if_none:'' }}" placeholder="제목을 입력해주세요">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea class="form-control" name="content" id="content"
+                                  rows="10" placeholder="내용을 입력해주세요">
+                            {{ form.content.value|default_if_none:'' }}
+                        </textarea>
+                    </td>
+                </tr>
+            </table>
+            <div id="btn" class="text-center">
+                <button type="reset" class="btn btn-primary">취소</button>
+                <a href="{% url 'community:community' %}" class="btn-a btn btn-primary">목록</a></button>
+                <button type="submit" class="btn btn-primary">작성</button>
+            </div>
+        </form>
+    </section>
+</div>
+{% endblock %}

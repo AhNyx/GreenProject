@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container px-4 py-5" id="icon-grid">
+    <h2 class="pb-2 border-bottom">최근 등록된 책</h2>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
+      <div class="col d-flex align-items-start">
+        <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#bootstrap"></use></svg>
+        <div>
+            <!--책제목-->
+          <!--<h3 class="fw-bold mb-0 fs-4">돈의 속성</h3>-->
+          <img src="{% static 'greenbooks/images/book.jpg' %}" alt="책">
+        </div>
+      </div>
+    </div>
+  </div>
+<div>
+</div>
+{% endblock %}
