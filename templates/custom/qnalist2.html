@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="board_wrap">
+        <div class="board-top">
+            <p class="customer_center">고객센터</p>
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+                <label class="btn btn-outline-primary" for="btnradio1">FAQ</label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio2">1:1 상담</label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio3">service</label>
+            </div>
+        </div>
+
+
+        <div class="board_title">
+                <strong>자주 묻는 질문 TOP 10</strong>
+             <h1>상품판매</h1>
+        </div>
+        <div class="board_bottom">
+            <ul class="nav nav-pills nav-justified">
+                <li class="nav-item">
+                    <a class="nav-link"  href="{% url 'custom:qnalist' %}">회원로그인</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'custom:qnalist2' %}">상품판매</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'custom:qnalist3' %}">게시판 이용</a>
+                </li>
+            </ul>
+            <div class="board_list_wrap">
+                {% include 'custom/qnalist_content2.html'%}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
