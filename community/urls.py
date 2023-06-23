@@ -9,4 +9,5 @@ urlpatterns = [
     path('write/', views.post_create, name='post_create'),                  # post 작성
     path('edit/<int:post_id>/', views.post_edit, name='post_edit'),         # post 수정
     path('delete/<int:post_id>/', views.post_delete, name='post_delete'),   # post_id로 삭제
+    path('category/<str:slug>/', views.category_page, name='cate_page')     # 카테고리페이지(slug기능)
 ]
