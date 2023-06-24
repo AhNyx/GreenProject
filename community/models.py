@@ -1,3 +1,4 @@
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -28,6 +29,7 @@ class Post(models.Model):   # 포스트 모델
     likes = models.IntegerField(default=0)      # 좋아요
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)    # 카테고리: FK(null/공백 가능, 삭제비연동)
     attach = models.ImageField(upload_to='community/images/%Y/%m/%d/', null=True, blank=True)   # 첨부(저장폴더, null/공백 가능)
+    description = RichTextUploadingField(null=True, blank=True)     # 편집기 연결
 
     def __str__(self):
         return self.title   # Post를 식별할 상황에서 기본인 id가 아니라 title값을 불러와줘서 알아보기 쉽게 함

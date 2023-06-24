@@ -21,7 +21,8 @@ def detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)  # post_id를 pk로 함
     categories = Category.objects.all()     # 카테고리 추가
     context = {'post': post, 'categories': categories}    # post 가져오기
-    return render(request, 'community/detail.html', context)
+    # return render(request, 'community/detail.html', context)
+    return render(request, 'community/detail_ck.html', context)     # 편집기 넣은 버전
 
 
 # post 생성하기
@@ -38,7 +39,8 @@ def post_create(request):
     else:   # get 방식으로 폼이 넘어왔을 때
         form = PostForm()   # 빈 폼 가져오기
     context = {'form': form, 'categories': categories}
-    return render(request, 'community/post_form.html', context)
+    # return render(request, 'community/post_form.html', context)
+    return render(request, 'community/post_form_ck.html', context)      # 편집기 넣은 버전
 
 
 # post 수정하기(post_id 필요)
@@ -56,7 +58,8 @@ def post_edit(request, post_id):
     else:
         form = PostForm(instance=post)
     context = {'form': form, 'categories':categories}    # 생성되었던 그대로의 post의 정보 form
-    return render(request, 'community/post_form.html', context)
+    # return render(request, 'community/post_form.html', context)
+    return render(request, 'community/post_form_ck.html', context)     # 편집기 넣은 버전
 
 
 # post 삭제하기(post_id 필요)

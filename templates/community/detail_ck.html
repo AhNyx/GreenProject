@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container px-4 py-5">
+    <section id="detail">
+        <h2 class="pb-2 border-bottom">내용보기</h2>
+        <!-- 편집기 크기와 맞추려고 스타일 줌 -->
+        <table class="table" style="width: 70%; margin: 0 auto;">
+            {% if post.category %}
+            <tr>
+                <!-- 카테고리가 있으면 카테고리를 제목 옆에 -->
+                <th colspan="4">[{{ post.category }}]&nbsp;&nbsp;{{ post.title }}</th>
+            </tr>
+            {% else %}
+            <tr>
+                <!-- 카테고리가 없으면 제목만 -->
+                <th colspan="4">{{ post.title }}</th>
+            </tr>
+            {% endif %}
+            <!-- post 정보 -->
+            <tr>
+                <td>글쓴이: {{ post.writer }}</td>
+                <!-- 수정된 경우 수정일시와 작성일시를, 아닌 경우 작성일시만 표시 -->
+                <!-- yy-mm-dd 오전/오후 hh:mm으로 포맷변경 -->
+                <td>
+                    작성: {{ post.create_date|date:"y-m-d A g:i" }}
+                    {% if post.modify_date %}
+                    ,&nbsp;&nbsp;수정: {{ post.modify_date|date:"y-m-d A g:i" }}
+                    {% endif %}
+                </td>
+                <td>조회: {{ post.views }}</td>
+                <td><button>좋아요</button> {{ post.likes }}</td>
+            </tr>
+            <tr>
+                <!-- post 내용 - 편집기 넣은 버전 -->
+                <td colspan="4" class="text-start">
+                    {{ post.description|safe }}
+                </td>
+            </tr>
+        </table>
+        <!-- 마진탑 -->
+        <div id="btn" class="text-center mt-3">
+            <!-- post작성자가 자기 글을 봤을 때 - 삭제, 수정 -->
+            {% if post.writer == request.user %}
+                <!-- 삭제시 자바스크립트 연결 -->
+            <a href="#"
+               data-uri="{% url 'community:post_delete' post.id %}"
+               class="delete btn-a btn btn-primary">삭제</a>
+            <a href="{% url 'community:community' %}" class="btn-a btn btn-primary">목록</a>
+            <a href="{% url 'community:post_edit' post.id %}" class="btn-a btn btn-primary">수정</a>
+            <!-- post작성자가 아닌 사람이 글을 봤을 때 -->
+            {% else %}
+            <a href="{% url 'community:community' %}" class="btn-a btn btn-primary">목록</a>
+            {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function() {
+        // delete 클래스를 클릭하면
+        $('.delete').click(function() {
+            // 경고창
+            if(confirm('정말 삭제하시겠습니까?')) {
+                // uri로 이동
+                location.href=$(this).data('uri');
+            }
+        });
+    });
+</script>
+{% endblock %}
