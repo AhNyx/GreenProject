@@ -6,33 +6,36 @@
         <h2 class="pb-2 border-bottom">내용보기</h2>
         <!-- 편집기 크기와 맞추려고 스타일 줌 -->
         <table class="table" style="width: 70%; margin: 0 auto;">
-            {% if post.category %}
+            <!-- [카테고리] 제목 -->
             <tr>
+                <th colspan="4">
+                {% if post.category %}
                 <!-- 카테고리가 있으면 카테고리를 제목 옆에 -->
-                <th colspan="4">[{{ post.category }}]&nbsp;&nbsp;{{ post.title }}</th>
-            </tr>
-            {% else %}
-            <tr>
+                    <span id="commu-cate">[{{ post.category }}]</span>&nbsp;{{ post.title }}
+                {% else %}
                 <!-- 카테고리가 없으면 제목만 -->
-                <th colspan="4">{{ post.title }}</th>
+                    {{ post.title }}
+                {% endif %}
+                </th>
             </tr>
-            {% endif %}
             <!-- post 정보 -->
             <tr>
                 <td>글쓴이: {{ post.writer }}</td>
                 <!-- 수정된 경우 수정일시와 작성일시를, 아닌 경우 작성일시만 표시 -->
-                <!-- yy-mm-dd 오전/오후 hh:mm으로 포맷변경 -->
+                <!-- yy-m-d h:mm으로 포맷변경 -->
                 <td>
-                    작성: {{ post.create_date|date:"y-m-d A g:i" }}
+                    작성: {{ post.create_date|date:"y-n-j G:i" }}
                     {% if post.modify_date %}
-                    ,&nbsp;&nbsp;수정: {{ post.modify_date|date:"y-m-d A g:i" }}
+                    ,&nbsp;&nbsp;수정: {{ post.modify_date|date:"y-n-j G:i" }}
                     {% endif %}
                 </td>
-                <td>조회: {{ post.views }}</td>
+                <!-- 조회수를 모델링에서 정의한 조회수로 교체. 페이지에 들어올때마다 카운트함 -->
+                <td>조회: {{ post.update_views }}</td>
                 <td><button>좋아요</button> {{ post.likes }}</td>
             </tr>
             <tr>
-                <!-- post 내용 - 편집기 넣은 버전 -->
+            <!-- post 내용 - 편집기 넣은 버전 -->
+                <!-- 스타일: 왼쪽정렬, 자동줄바꿈 적용되기 때문에 white-space처리 삭제 -->
                 <td colspan="4" class="text-start">
                     {{ post.description|safe }}
                 </td>
