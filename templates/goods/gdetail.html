@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %} 상세 페이지입니다.
+
+{% endblock %}
+
+{% block content %}
+
+ <link rel="stylesheet" href="{% static 'greenbooks/css/detail_style.css' %}">
+
+<main id="main">
+
+
+    <!-- ======= Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-8">
+            <div class="portfolio-details-slider swiper">
+              <div class="swiper-wrapper align-items-center">
+
+                <div class="swiper-slide">
+                  <img src="{% static 'greenbooks/images/book.jpg' %}" alt="책">
+                </div>
+
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="portfolio-info">
+              <h3>{{ goods.bname }}책제목</h3>
+              <ul>
+                <li><strong>정가금액</strong>: ₩{{ goods.price }}</li>
+                <li><strong>Client</strong>: ASU Company</li>
+                <li><strong>Project date</strong>: 01 March, 2020</li>
+                <li><strong>Project URL</strong>: <a href="#">www.example.com</a></li>
+              </ul>
+            </div>
+            <div class="portfolio-description">
+              <h2>This is an example of portfolio detail</h2>
+              <p>
+                  ※ 주의사항
+                -중고 거래 특성 상 환불 불가합니다.
+                -제품에 따라 오염 현상이 있습니다. 불량이 아니므로 환불 불가합니다.
+                -실물 색상은 모니터와 휴대전화의 기종과 해상도에 따라 상이할 수 있습니다.
+                -품절시 재입고가 어려울 수 있습니다.
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Portfolio Details Section -->
+
+  </main><!-- End #main -->
+
+
+
+
+        <h3> 한줄평 </h3>
+<!--        <div id = "review">-->
+
+<!--            <p><input type="radio" id="review" name="review" value="review">  오랜만에 감명깊게 읽은채ㅇ 엄청 좋아요 엉엉-->
+<!--            <label for="5-stars" class="star pr-4">★★★★★★</label></p>-->
+<!--            <p><input type="radio" id="review" name="review" value="review">  인생책이에요 추천합니다.-->
+<!--            <label for="5-stars" class="star pr-4">★★★★★★</label></p>-->
+<!--            <p><input type="radio" id="review" name="review" value="review">  소장용으로 한권더 갖고 싶어요-->
+<!--            <label for="5-stars" class="star pr-4">★★★★★★</label></p>-->
+<!--            <p><input type="radio" id="review" name="review" value="review">  필사하기 좋은 책입니다.-->
+<!--            <label for="5-stars" class="star pr-4">★★★★★★</label></p>-->
+<!--            <p><input type="radio" id="review" name="review" value="review">  하루에 다 읽을정도로 몰입감이 좋습니다.-->
+<!--             <label for="5-stars" class="star pr-4">★★★★★★</label></p>-->
+
+    <div class="speech-bubble">오랜만에 감명깊게 읽은책입니다
+    ★★★★★★ <br>
+    -이*연-</div>
+    <div class="speech-bubble:after"></div>
+    <br>
+    <div class="speech-bubble">인생책이에요 추천합니다. ★★★★★★  <br>- 김*명 -</div>
+    <div class="speech-bubble:after">
+   <br>
+    <div>
+        <img scr="{% static 'greenbooks/images/girl.jpg' %}" alt = "미모티콘">
+    </div>
+    </div> <div class="speech-bubble">오랜만에 감명깊게 읽은책입니다 ★★★★★★ <br> -경*진 -</div>
+    <div class="speech-bubble:after2"></div>
+   <br>
+    <div class="speech-bubble">소장용으로 한권 더 구매할 예정입니다. ★★★★★★  <br>- 고*현</div>
+    <div class="speech-bubble:after2"></div>
+   <br>
+
+
+    </div>
+{% endblock %}

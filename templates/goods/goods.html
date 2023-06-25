@@ -1,26 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<style>
-    h2{ text-align: center;}
-
-    .product-list {
-  display: flex;
-  justify-content: space-between;
-}
-
-#first-book, #second-book, #third-book {
-  flex: 1;
-}
-
-.btn{margin-top: 15px;}
-
-</style>
-
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} 구매 페이지입니다.
+{% endblock %}
+{% block content %}
 <body>
     <div class="product-list">
         <h2> Best Seller</h2>
@@ -28,7 +10,7 @@
         <hr>
         <!-- 첫번째 -->
         <div id="first-book">
-            <a href="#" class="product">
+            <a href="{% url 'goods:gdetail' %}" class="product">
                 <img src="https://image.yes24.com/goods/119578103/XL" width="300">
                 <div class="product-name">
                     BEYOND THE STORY 비욘드 더 스토리
@@ -74,5 +56,4 @@
                 <button class="btn">상세보기</button>
             </div>
         </div>
-</body>
-</html>
+{% endblock %}

@@ -29,7 +29,8 @@ urlpatterns = [
     path('tradebook/',include('tradebook.urls')),
     path('mypage/', include('mypage.urls')),
     path('qna/', views.qna, name='qna'),
-    path('custom/',include('custom.urls')),
+    path('custom/', include('custom.urls')),
+    path("goods/", include("goods.urls")),
 
 ]
 
