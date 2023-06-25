@@ -19,8 +19,9 @@ def community(request):
 # post 상세보기(post_id 필요)
 def detail(request, post_id):
     post = get_object_or_404(Post, pk=post_id)  # post_id를 pk로 함
+    post.update_views()                     # 조회수 증가
     categories = Category.objects.all()     # 카테고리 추가
-    context = {'post': post, 'categories': categories}    # post 가져오기
+    context = {'post': post, 'categories': categories}    # 업데이트한 정보들 전달하기
     # return render(request, 'community/detail.html', context)
     return render(request, 'community/detail_ck.html', context)     # 편집기 넣은 버전
 

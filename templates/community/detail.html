@@ -28,8 +28,7 @@
                     ,&nbsp;&nbsp;수정: {{ post.modify_date|date:"y-n-j G:i" }}
                     {% endif %}
                 </td>
-                <!-- 조회수를 모델링에서 정의한 조회수로 교체. 페이지에 들어올때마다 카운트함 -->
-                <td>조회: {{ post.update_views }}</td>
+                <td>조회: {{ post.views }}</td>
                 <td><button>좋아요</button> {{ post.likes }}</td>
             </tr>
             <tr>
