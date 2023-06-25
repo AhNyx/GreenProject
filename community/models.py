@@ -25,9 +25,10 @@ class Post(models.Model):   # 포스트 모델
     create_date = models.DateTimeField(auto_now_add=True)       # 생성일: 최초 생성시 자동생성, 수정시 변경안됨
     modify_date = models.DateTimeField(null=True, blank=True)   # 수정일: 수동생성(null/공백 가능)
     views = models.PositiveIntegerField(default=0)      # 조회수 - 양수만 입력가능하도록 positive 추가
-    likes = models.PositiveIntegerField(default=0)      # 좋아요
     # 카테고리: FK(null/공백 가능, 삭제비연동)
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
+    # 포스트추천인: 1사용자 - 여러 포스트 추천, 1포스트 - 여러 사용자의 추천 연결이 가능하도록 다대다필드
+    liked_user = models.ManyToManyField(User, related_name='likes', blank=True)
     # 내용 - 편집기 사용시 삭제해도 됨
     content = models.TextField()
     # 첨부(저장폴더, null/공백 가능) - 편집기 사용시 삭제해도 됨
@@ -38,9 +39,13 @@ class Post(models.Model):   # 포스트 모델
     def __str__(self):
         return self.title   # Post를 식별할 상황에서 기본인 id가 아니라 title값을 불러와줘서 알아보기 쉽게 함
 
-    # 주훈씨 모델링 참고함. @property: 메서드를 속성처럼 사용할 수 있도록 해주는 데코레이터
+    # 조회수 증가: 주훈씨 모델링 참고함. @property: 메서드를 속성처럼 사용할 수 있도록 해주는 데코레이터
     @property
     def update_views(self):
         self.views += 1
         self.save()
         return self.views
+
+    # 포스트의 추천인 수
+    def count_liked_user(self):
+        return self.liked_user.count()
