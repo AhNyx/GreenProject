@@ -133,3 +133,16 @@ main {
 
 /* community 스타일 */
 .btn-a a{color: #fff; text-decoration: none;}
+
+
+.container .dropBox.active {
+  background: #eee;
+}
+
+.container .dropBox{
+width:700px;
+height:500px;
+text-align: center;
+margin:0 auto;
+border: 2px solid red;
+}
