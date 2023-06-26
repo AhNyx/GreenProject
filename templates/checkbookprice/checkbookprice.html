@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="dropzone"></div>
+    <!-- 포스팅 - 이미지/동영상 dropzone 영역 -->
+    <ul class="list-unstyled mb-0" id="dropzone-preview">
+      <li class="mt-2" id="dropzone-preview-list">
+        <!-- This is used as the file preview template -->
+        <div class="border rounded-3">
+          <div class="d-flex align-items-center p-2">
+            <div class="flex-shrink-0 me-3">
+              <div class="width-8 h-auto rounded-3">
+                <img data-dz-thumbnail="data-dz-thumbnail" class="w-full h-auto rounded-3 block" src="#" alt="Dropzone-Image" style="width: 120px;"/>
+              </div>
+            </div>
+            <div class="flex-grow-1">
+              <div class="pt-1">
+                <h6 class="font-semibold mb-1" data-dz-name="data-dz-name">&nbsp;</h6>
+                <p class="text-sm text-muted fw-normal" data-dz-size="data-dz-size"></p>
+                <strong class="error text-danger" data-dz-errormessage="data-dz-errormessage"></strong>
+              </div>
+            </div>
+            <div class="shrink-0 ms-3">
+              <button data-dz-remove="data-dz-remove" class="btn btn-sm btn-danger">Delete</button>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+</div>
+    <script>
+      Dropzone.autoDiscover = false;
+      var dropzonePreviewNode = document.querySelector('#dropzone-preview-list');
+      dropzonePreviewNode.id = '';
+      var previewTemplate = dropzonePreviewNode.parentNode.innerHTML;
+      dropzonePreviewNode.parentNode.removeChild(dropzonePreviewNode);
+
+      const dropzone = new Dropzone(".dropzone", {
+        url: "https://httpbin.org/post", // 파일을 업로드할 서버 주소 url.
+        method: "post", // 기본 post로 request 감. put으로도 할수있음
+
+        previewTemplate: previewTemplate, // 만일 기본 테마를 사용하지않고 커스텀 업로드 테마를 사용하고 싶다면
+        previewsContainer: '#dropzone-preview', // 드롭존 영역을 .dropzone이 아닌 다른 엘리먼트에서 하고싶을때
+
+        maxFiles: 1,
+        acceptedFiles: '.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF',
+        autoProcessQueue: false, // 자동으로 보내기. true : 파일 업로드 되자마자 서버로 요청, false : 서버에는 올라가지 않은 상태. 따로 this.processQueue() 호출시 전송
+        autoQueue: false, // 드래그 드랍 후 바로 서버로 전송
+      });
+    </script>
+{% endblock %}
