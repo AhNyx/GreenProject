@@ -97,7 +97,7 @@
                             <!-- 조회수 -->
                             <td>{{ post.views }}</td>
                             <!-- 좋아요 -->
-                            <td>{{ post.liked_user.all.count }}</td>
+                            <td>{{ post.count_liked_user }}</td>
                         </tr>
                         {% endfor %}
                     <!-- post가 없으면 -->
