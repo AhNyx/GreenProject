@@ -1,6 +1,7 @@
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.contrib.auth.models import User
 from django.db import models
+from django.urls import reverse
 
 
 # 카테고리 모델
@@ -12,7 +13,8 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return f'/community/category/{self.slug}'   # 카테고리에 해당하는 절대 slug형 url을 반환
+        # return f'/community/category/{self.slug}'   # 카테고리에 해당하는 절대 slug형 url을 반환
+        return reverse('community:cate_page', args=[self.slug])     # reverse 방식으로 변경
 
     class Meta:     # 중첩모델
         verbose_name = 'category'
@@ -29,12 +31,8 @@ class Post(models.Model):   # 포스트 모델
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL)
     # 포스트추천인: 1사용자 - 여러 포스트 추천, 1포스트 - 여러 사용자의 추천 연결이 가능하도록 다대다필드
     liked_user = models.ManyToManyField(User, related_name='likes', blank=True)
-    # 내용 - 편집기 사용시 삭제해도 됨
-    content = models.TextField()
-    # 첨부(저장폴더, null/공백 가능) - 편집기 사용시 삭제해도 됨
-    attach = models.ImageField(upload_to='community/images/%Y/%m/%d/', null=True, blank=True)
-    # 편집기 연결 - 유효성검사를 위해서 중복가능을 해제해야함. 현재 입력된 데이터들 삭제하고 진행예정)
-    description = RichTextUploadingField(null=True, blank=True)
+    # 편집기 연결: 내용과 파일첨부를 대체
+    description = RichTextUploadingField()
 
     def __str__(self):
         return self.title   # Post를 식별할 상황에서 기본인 id가 아니라 title값을 불러와줘서 알아보기 쉽게 함
