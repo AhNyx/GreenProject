@@ -11,5 +11,6 @@ urlpatterns = [
     path("membermodify/", views.membermodify, name='membermodify'),
     path("mypost/", views.mypost, name='mypost'),
     path("question/", views.question, name='question'),
-    path("question_post", views.question_post, name='question_post')
+    path("question_post", views.question_post, name='question_post'),
+    path("cart/", views.cart, name='cart')
 ]

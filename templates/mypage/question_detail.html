@@ -6,8 +6,8 @@
    <h2 class="my-5">고객상담</h2>
    <form action="" method="post">
        {% csrf_token %}
-    <input style="margin:0 auto;" type="text" name="title" class="form-control w-50 my-3" placeholder="제목을 입력해주세요">
-       <textarea style="margin:0 auto;" name="content" class="form-control w-50 my-3" rows="10" ></textarea>
+    <input style="margin:0 auto;" type="text" name="title" class="form-control w-50 my-3" value="ㅎㅇㅎㅇㅎㅇ">
+       <textarea style="margin:0 auto;" name="content" class="form-control w-50 my-3" rows="10"></textarea>
 
        {% if user.is_authenticated %}
         <div id="btn_write" class="text-center">
