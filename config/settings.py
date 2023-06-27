@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'ckeditor',             # 폼편집기
     'ckeditor_uploader',    # 폼편집기
     'checkbookprice', #바코드리더
+    'goods',
 ]
 
 MIDDLEWARE = [
