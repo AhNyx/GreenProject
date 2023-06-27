@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'common.apps.CommonConfig',
     'community',
     'tradebook',
-    'goods.apps.GoodsConfig',
+    'goods',
+
 ]
 
 MIDDLEWARE = [
