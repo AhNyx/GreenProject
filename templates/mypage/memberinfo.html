@@ -18,48 +18,59 @@
         <div class="p-2 h3"><a href="{% url 'mypage:mypage' user.id %}">마이페이지</a></div>
         <div class="p-2 mx-5"><a href="{% url 'mypage:memberinfo' user.id %}">회원정보</a></div>
         <div class="p-2 mx-5"><a href="{% url 'mypage:mypost' %}">내가쓴글</a></div>
-        <div class="p-2 mx-5">장바구니</div>
-        <div class="p-2 mx-5">고객센터</div>
+        <div class="p-2 mx-5"><a href="{% url 'mypage:cart' %}">장바구니</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'mypage:question' %}">고객상담</a></div>
     </div>
     <div class="container d-flex justify-content-center">
-        <form class="justify-content-left w-50 row g-3" method="post">
+        <form class="justify-content-left w-50 row g-3" method="POST" id="info" action="{% url 'mypage:membermodify' %}">
             {% csrf_token %}
-            {% include "form_errors.html" %}
+            {% include 'form_errors.html' %}
             <div class="col-4">
                 <label for="username" class="col-form-label">아이디</label>
             </div>
             <div class="col-6">
-                <input type="text" id="username" class="form-control" value="{{ member_info.username }}" readonly>
+                <input type="text" name="username" id="username" class="form-control" value="{{ member_info.username }}" readonly>
             </div>
             <div class="col-4">
-                <label for="password1" class="col-form-label">비밀번호</label>
+                <label for="password" class="col-form-label">비밀번호</label>
             </div>
             <div class="col-6">
-                <input type="password" id="password1" class="form-control" value="{{ member_info.password }}">
-            </div>
-            <div class="col-4">
-                <label for="password2" class="col-form-label">비밀번호 확인</label>
-            </div>
-            <div class="col-6">
-                <input type="password" id="password2" class="form-control" value="{{ member_info.password }}">
+                <input type="password" name="password" id="password" class="form-control" value="{{ member_info.password }}" readonly>
             </div>
             <div class="col-4">
                 <label for="last_name" class="col-form-label">이름</label>
             </div>
             <div class="col-6">
-                <input type="text" id="last_name" class="form-control" value="{{ member_info.last_name }}">
+                <input type="text" name="last_name" id="last_name" class="form-control" value="{{ member_info.last_name }}" readonly>
             </div>
             <div class="col-4">
                 <label for="email" class="col-form-label">이메일</label>
             </div>
             <div class="col-6">
-                <input type="text" id="email" class="form-control" value="{{ member_info.email }}">
+                <input type="text" name="email" id="email" class="form-control" value="{{ member_info.email }}" readonly>
+            </div>
+            <div class="col-4">
+                <label for="date" class="col-form-label">가입일</label>
+            </div>
+            <div class="col-6">
+                <input type="text" name="email" id="date" class="form-control" value="{{ member_info.date_joined }}" readonly>
             </div>
             <div class="col-12">
-                <button type="submit" class="btn btn-outline-secondary w-25 col-12">변경</button>
+                <button type="button" id="exit" class="btn btn-outline-secondary w-25 col-12">회원탈퇴</button>
             </div>
         </form>
     </div>
 </div>
 </body>
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function() {
+    $('#exit').click(function() {
+        if(confirm('정말 탈퇴하시겠습니까?')) {
+            $('#info').submit();
+        }
+    });
+});
+</script>
 {% endblock %}

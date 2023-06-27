@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container px-4 py-5">
+    <div id="announcement">
+        <h2 class="pb-2 border-bottom">글남기기</h2>
+        <p></p>
+    </div>
+    <div class="row">
+        <!-- 성길씨 Q&A에서 가져옴. 그리드: 왼쪽 2/12(16.67%) 영역 -->
+        <aside class="col-lg-2">
+            <div class="flex-shrink-0" style="font-size: 16px;">
+                <ul class="list-unstyled ps-0">
+                    <li class="mb-1">
+                        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse"
+                                data-bs-target="#home-collapse" aria-expanded="true">
+                            <!-- 카테고리 눌렀다면 사이드바 큰 글씨로 -->
+                            {% if current_category.slug %}
+                            <h3>{{ current_category.slug }}</h3>
+                            {% else %}
+                            <!-- 카테고리를 누르지 않았다면 -->
+                            <h3>전체글</h3>
+                            {% endif %}
+                        </button>
+                        <div class="collapse show" id="home-collapse" style="">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <!-- 전체글 -->
+                                <li><a href="{% url 'community:community' %}" class="link-dark rounded">전체글</a></li>
+                                <!-- 카테고리 이름으로 리스트 설정 -->
+                                {% for category in categories %}
+                                <li><a href="{{ category.get_absolute_url }}" class="link-dark rounded">
+                                    {{ category.name }}
+                                </a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        <!-- 그리드: 가운데 8/12(66.67%) 영역 -->
+        <section id="post_form" class="col-lg-8">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- 유효성 검사 -->
+                {% include 'form_errors.html' %}
+                <!-- 편집기 크기와 맞추려고 스타일 줌 -->
+                <table class="table">
+                    <tr>
+                        <!-- 카테고리 영역 -->
+                        <td style="width: 20%;">
+                            <!-- 셀렉트 옵션으로 카테고리 선택 -->
+                            <select class="form-select" name="category" id="category">
+                                <option value="" selected>카테고리</option>
+                                {% for category in categories %}
+                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    <!-- 제목 영역 -->
+                        <td style="width: 80%">
+                            <!-- 폼정보가있으면(수정시)title값, 없거나기본값은'' -->
+                            <input type="text" class="form-control" name="title" id="title"
+                                   value="{{ form.title.value|default_if_none:'' }}" placeholder="제목을 입력해주세요">
+                        </td>
+                    </tr>
+                    <!-- ck편집기 영역(내용, 첨부) -->
+                    <tr>
+                        <td colspan="2">
+                            {{ form.media }}
+                            {{ form.description }}
+                        </td>
+                    </tr>
+                </table>
+                <!-- 버튼 영역 -->
+                <!-- 마진탑 -->
+                <div id="btn" class="text-center mt-3">
+                    <button type="reset" class="btn btn-primary">취소</button>
+                    <a href="{% url 'community:community' %}" class="btn-a btn btn-primary">목록</a>
+                    <button type="submit" class="btn btn-primary">작성</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+{% endblock %}

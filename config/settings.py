@@ -39,10 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'greenbooks',
     'common.apps.CommonConfig',
-    'community',
+    'community',    # 커뮤니티
     'tradebook',
+    'custom',
+    'mypage',
+    'ckeditor',             # 폼편집기
+    'ckeditor_uploader',    # 폼편집기
+    'checkbookprice', #바코드리더
     'goods',
-
 ]
 
 MIDDLEWARE = [
@@ -124,8 +128,13 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
+# 파일 첨부를 통해 채워지는 폴더
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# 편집기를 통해 채워지는 폴더
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_IMAGE_BACKEND = "pillow"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

@@ -8,7 +8,7 @@
         onclick="location.href='{% url 'index' %}'">홈</a></li>
         <li><a href="{% url 'goods:goods' %}" class="nav-link px-2 link-dark">구매하기</a></li>
         <li><a href="{% url 'tradebook:tradebook_list' %}" class="nav-link px-2 link-dark">중고책거래</a></li>
-        <li><a href="#" class="nav-link px-2 link-dark">책 가격조회</a></li>
+        <li><a href="{% url 'price:checkbookprice' %}" class="nav-link px-2 link-dark">책 가격조회</a></li>
         <li><a href="{% url 'community:community' %}" class="nav-link px-2 link-dark">커뮤니티</a></li>
         <li><a href="{% url 'custom:qnalist' %}" class="nav-link px-2 link-dark">고객센터</a></li>
       </ul>

@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container px-4 py-5">
+    <div id="announcement">
+        <h2 class="pb-2 border-bottom">내용보기</h2>
+        <p></p>
+    </div>
+    <div class="row">
+        <!-- 성길씨 Q&A에서 가져옴. 그리드: 왼쪽 2/12(16.67%) 영역 -->
+        <aside class="col-lg-2">
+            <div class="flex-shrink-0" style="font-size: 16px;">
+                <ul class="list-unstyled ps-0">
+                    <li class="mb-1">
+                        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse"
+                                data-bs-target="#home-collapse" aria-expanded="true">
+                            <!-- 카테고리 눌렀다면 사이드바 큰 글씨로 -->
+                            {% if current_category.slug %}
+                            <h3>{{ current_category.slug }}</h3>
+                            {% else %}
+                            <!-- 카테고리를 누르지 않았다면 -->
+                            <h3>전체글</h3>
+                            {% endif %}
+                        </button>
+                        <div class="collapse show" id="home-collapse" style="">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <!-- 전체글 -->
+                                <li><a href="{% url 'community:community' %}" class="link-dark rounded">전체글</a></li>
+                                <!-- 카테고리 이름으로 리스트 설정 -->
+                                {% for category in categories %}
+                                <li><a href="{{ category.get_absolute_url }}" class="link-dark rounded">
+                                    {{ category.name }}
+                                </a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        <!-- 그리드: 가운데 8/12(66.67%) 영역 -->
+        <section id="detail" class="col-lg-8">
+            <table class="table">
+                <!-- [카테고리] 제목 -->
+                <tr>
+                    <th colspan="4">
+                    {% if post.category %}
+                    <!-- 카테고리가 있으면 카테고리를 제목 옆에 -->
+                        <span id="commu-cate">[{{ post.category }}]</span>&nbsp;{{ post.title }}
+                    {% else %}
+                    <!-- 카테고리가 없으면 제목만 -->
+                        {{ post.title }}
+                    {% endif %}
+                    </th>
+                </tr>
+                <!-- post 정보 -->
+                <tr>
+                    <!-- 글쓴이 -->
+                    <td>글쓴이: {{ post.writer }}</td>
+                    <!-- 수정된 경우 수정일시와 작성일시를, 아닌 경우 작성일시만 표시 -->
+                    <!-- yy-m-d h:mm으로 포맷변경 -->
+                    <td>
+                        작성: {{ post.create_date|date:"y-n-j G:i" }}
+                        {% if post.modify_date %}
+                        ,&nbsp;&nbsp;수정: {{ post.modify_date|date:"y-n-j G:i" }}
+                        {% endif %}
+                    </td>
+                    <!-- 조회수 -->
+                    <td>조회: {{ post.views }}</td>
+                    <!-- 추천버튼과 추천수 -->
+                    <td>
+                        <!-- 추천버튼 영역: 클래스지정-자바스크립트에 클릭시 함수적용, 네임지정-자바스크립트에 포스트정보 제공 -->
+                        <button type="button" name="{{ post.id }}" class="like">
+                            <!-- 현재 유저가 추천인 중에 있으면 -->
+                            {% if has_liked %}
+                            <img src="{% static 'greenbooks/images/heart_filled.png' %}" style="width: 20px; height: 20px;" alt="추천완료">
+                            {% else %}
+                            <img src="{% static 'greenbooks/images/heart_empty.png' %}" style="width: 20px; height: 20px;" alt="추천보류">
+                            {% endif %}
+                        </button>
+                        <!-- 추천수 영역: id지정-정보받아서 ajax로 반영 -->
+                        <span id="count-{{ post.id }}">{{ post.count_liked_user }}</span>
+                    </td>
+                </tr>
+                <tr>
+                <!-- post 내용 - 편집기 넣은 버전 -->
+                    <!-- 스타일: 왼쪽정렬, 자동줄바꿈 적용되기 때문에 white-space처리 삭제 -->
+                    <td colspan="4" class="text-start">
+                        {{ post.description|safe }}
+                    </td>
+                </tr>
+            </table>
+        </section>
+    </div>
+    <!-- 마진탑 -->
+    <div id="btn" class="text-center mt-3">
+        <!-- post작성자가 자기 글을 봤을 때 - 삭제, 수정 -->
+        {% if post.writer == request.user %}
+            <!-- 삭제시 자바스크립트 연결 -->
+        <a href="#"
+           data-uri="{% url 'community:post_delete' post.id %}"
+           class="delete btn-a btn btn-primary">삭제</a>
+        <a href="{% url 'community:community' %}" class="btn-a btn btn-primary">목록</a>
+        <a href="{% url 'community:post_edit' post.id %}" class="btn-a btn btn-primary">수정</a>
+        <!-- post작성자가 아닌 사람이 글을 봤을 때 -->
+        {% else %}
+        <a href="{% url 'community:community' %}" class="btn-a btn btn-primary">목록</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    $(document).ready(function() {
+        // 삭제시 경고창
+        // delete 클래스를 클릭시
+        $('.delete').click(function() {
+            // 경고창
+            if(confirm('정말 삭제하시겠습니까?')) {
+                // uri로 이동
+                location.href=$(this).data('uri');
+            }
+        });
+
+        // 추천 ajax처리
+        $(".like").click(function () {
+            var button = $(this);   // 버튼 특정하기
+            var pk = button.attr('name');   // 버튼 name에서 post.id 가져오기
+            $.ajax({
+                type: "POST",
+                url: "{% url 'community:post_like' %}",     // data를 전송할 url(뷰가 연결됨) 지정
+                data: { 'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}' },  // pk를 통해 post 특정
+                dataType: "json",   // json형식으로 data를 보냄
+                success: function (response) {  // 전송 성공시
+                    var likesCount = response.likes_count;  // 뷰에서 넘어온 likes_count정보
+                    $("#count-" + pk).html(likesCount);     //id가 count인 영역에 likes_count 정보 가져오기
+                    if (response.liked) {               // 버튼 영역에 정보 가져오기. 정보에 따라 상태 바꾸기
+                        button.find('img').attr('src', '{% static 'greenbooks/images/heart_filled.png' %}');
+                        button.find('img').attr('alt', '추천완료');
+                    } else {
+                        button.find('img').attr('src', '{% static 'greenbooks/images/heart_empty.png' %}');
+                        button.find('img').attr('alt', '추천보류');
+                    }
+                },
+                error: function (error) { // In case of transmission failure
+                    console.error(error); // error message to console
+                }
+            });
+        });
+    })
+</script>
+{% endblock %}
