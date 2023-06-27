@@ -51,9 +51,11 @@
                         <td style="width: 20%;">
                             <!-- 셀렉트 옵션으로 카테고리 선택 -->
                             <select class="form-select" name="category" id="category">
-                                <option value="" selected>카테고리</option>
+                                <option value="">----------</option>
                                 {% for category in categories %}
-                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                <option value="{{ category.id }}" {% if current_cate == category.id %} selected{% endif %}>
+                                    {{ category.name }}
+                                </option>
                                 {% endfor %}
                             </select>
                         </td>

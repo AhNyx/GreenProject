@@ -79,7 +79,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
+CKEDITOR_CONFIGS = {
+    'default': {
+         'resize_enabled': False,
+    },
+}
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 

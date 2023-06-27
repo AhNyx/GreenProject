@@ -56,6 +56,7 @@ def post_create(request):
 def post_edit(request, post_id):
     post = get_object_or_404(Post, pk=post_id, writer=request.user)     # post_id를 pk로 함     # writer를 user로 지정
     categories = Category.objects.all()
+    current_cate = post.category_id
     if request.method == "POST":
         form = PostForm(request.POST, instance=post)    # post의 정보를 가져옴
         if form.is_valid():                     # 유효성검사 후
@@ -65,7 +66,7 @@ def post_edit(request, post_id):
             return redirect('community:detail', post_id=post_id)    # 수정한 post 페이지로 넘어가기
     else:
         form = PostForm(instance=post)
-    context = {'form': form, 'categories':categories}    # 생성되었던 그대로의 post의 정보 form
+    context = {'form': form, 'categories': categories, 'current_cate': current_cate}
     return render(request, 'community/post_form_ck.html', context)
 
 
@@ -86,7 +87,7 @@ def category_page(request, slug):
     page = request.GET.get('page', '1')     # 페이지 처리 시작 - 여기에서도 해주어야 start_index를 받아 올 수 있음
     paginator = Paginator(post_list, 10)    # 장고내장모듈을 통해 페이지처리. 10개가 1페이지
     page_obj = paginator.get_page(page)
-    context = {'current_category': current_category, 'post_list': page_obj, 'categories': categories}
+    context = {'current_cate': current_category, 'post_list': page_obj, 'categories': categories}
     return render(request, 'community/community.html', context)
 
 

@@ -22,8 +22,8 @@
                         <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse"
                                 data-bs-target="#home-collapse" aria-expanded="true">
                             <!-- 카테고리 눌렀다면 사이드바 큰 글씨로 -->
-                            {% if current_category.slug %}
-                            <h3>{{ current_category.slug }}</h3>
+                            {% if current_cate.slug %}
+                            <h3>{{ current_cate.slug }}</h3>
                             {% else %}
                             <!-- 카테고리를 누르지 않았다면 -->
                             <h3>전체글</h3>
@@ -114,13 +114,10 @@
                 {% if post_list.has_previous %}
                 <li class="page-item">
                     <a class="page-link" href="?page={{ post_list.previous_page_number }}">
-                {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link" href="">
-                {% endif %}
                         <i class="fa-solid fa-backward"></i>
                     </a>
                 </li>
+                {% endif %}
                 <!-- 현재 페이지 -->
                 {% for page_number in post_list.paginator.page_range %}
                     {% if page_number == post_list.number %}
@@ -137,13 +134,10 @@
                 {% if post_list.has_next %}
                 <li class="page-item">
                     <a class="page-link" href="?page={{ post_list.next_page_number }}">
-                {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link" href="">
-                {% endif %}
                         <i class="fa-solid fa-forward"></i>
                     </a>
                 </li>
+                {% endif %}
             </ul>
             <!-- 로그인시에만 글쓰기 버튼 보이게 -->
             {% if user.is_authenticated %}
