@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% load static %}
+    <style>
+        #box1{height:50px;}
+        a{text-decoration: none; color: black}
+    </style>
+<body class="m-5">
+<div class="container text-center">
+    <div class="d-flex flex-row mb-5">
+        <div class="p-2 h3"><a href="{% url 'mypage:mypage' user.id %}">마이페이지</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'mypage:memberinfo' user.id %}">회원정보</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'mypage:mypost' %}">내가쓴글</a></div>
+        <div class="p-2 mx-5"><a href="">장바구니</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'mypage:memo_list' %}">메모장</a></div>
+    </div>
+<div class="container px-4 py-5">
+    <section id="question">
+            <div id="title">
+                <h3 class="pb-2 border-bottom">메모장</h3>
+                <h6 class="my-3">기억에 남는 책을 적어두는건 어떨까요?</h6>
+            </div>
+
+        {% if user.is_authenticated %}
+        <form action="{% url 'mypage:memo_create' %}" method="POST">
+            {% csrf_token %}
+            <div id="btn_write" class="d-flex text-left">
+            <input id="content" name="content" class="d-inline w-50 text-left"/>
+                <input type="submit" class="mx-1 btn btn-primary" value="쓰기">
+            </div>
+        </form>
+            <table class="table table-hover">
+                <tbody>
+                    {% if memo_list %}
+                        {% for memo in memo_list %}
+                        <tr class="" style="position : relative">
+                            <td>{{ memo.content }}</td>
+                            <td>{{ memo_list.create_date }}</td>
+                                <td><a id="like" href="{% url 'mypage:memo_delete' memo.id %}" class="d-flex justify-content-evenly">
+                                <i class="fa-sharp fa-solid fa-trash" style="position: absolute; bottom:15px; right: 50px"></i>
+                            </a></td>
+                        </tr>
+                        {% endfor %}
+                    <!-- post가 없으면 -->
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">메모가 없습니다.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+
+        {% endif %}
+        </section>
+</div>
+</div>
+</body>
+{% endblock %}
+{% block script %}
+
+
+{% endblock %}

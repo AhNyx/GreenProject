@@ -2,13 +2,8 @@ from itertools import product
 
 from django.contrib import admin
 
-from mypage.models import Category_product, Product, Cart
+from mypage.models import Memo
 
 # Register your models here.
-admin.site.register(Product)
-admin.site.register(Cart)
+admin.site.register(Memo)
 
-class CategoryProductAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug':('name',)}
-
-admin.site.register(Category_product, CategoryProductAdmin)

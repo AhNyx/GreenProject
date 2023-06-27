@@ -18,8 +18,8 @@
         <div class="p-2 h3"><a href="{% url 'mypage:mypage' user.id %}">마이페이지</a></div>
         <div class="p-2 mx-5"><a href="{% url 'mypage:memberinfo' user.id %}">회원정보</a></div>
         <div class="p-2 mx-5"><a href="{% url 'mypage:mypost' %}">내가쓴글</a></div>
-        <div class="p-2 mx-5"><a href="{% url 'mypage:cart' %}">장바구니</a></div>
-        <div class="p-2 mx-5"><a href="{% url 'mypage:question' %}">고객상담</a></div>
+        <div class="p-2 mx-5"><a href="">장바구니</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'mypage:memo_list' %}">메모장</a></div>
     </div>
     <div class="container d-flex justify-content-center">
         <form class="justify-content-left w-50 row g-3" method="POST" id="info" action="{% url 'mypage:membermodify' %}">
