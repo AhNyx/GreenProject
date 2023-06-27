@@ -53,6 +53,7 @@
                             <select class="form-select" name="category" id="category">
                                 <option value="">----------</option>
                                 {% for category in categories %}
+                                <!-- 뷰에서 넘어온 카테 id 정보가 있으면 일치하는 카테고리를 자동선택 -->
                                 <option value="{{ category.id }}" {% if current_cate == category.id %} selected{% endif %}>
                                     {{ category.name }}
                                 </option>
