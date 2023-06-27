@@ -4,16 +4,7 @@
     <div class="board_wrap">
         <div class="board-top">
             <p class="customer_center">고객센터</p>
-            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                <label class="btn btn-outline-primary" for="btnradio1">FAQ</label>
 
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                <label class="btn btn-outline-primary" for="btnradio2">1:1 상담</label>
-
-                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-                <label class="btn btn-outline-primary" for="btnradio3">service</label>
-            </div>
         </div>
 
 
@@ -40,5 +31,43 @@
 
     </div>
 </div>
+<script>
+    // 아코디언바의 버튼 클릭 이벤트 처리
+    const accordionButtons = document.querySelectorAll('.accordion-button');
+    accordionButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            // 버튼에 대응하는 아코디언바 내용 요소 찾기
+            const collapse = button.getAttribute('data-bs-target');
+            const collapseElement = document.querySelector(collapse);
+
+            // 다른 아코디언바 닫기
+            accordionButtons.forEach(otherButton => {
+                if (otherButton !== button) {
+                    const otherCollapse = otherButton.getAttribute('data-bs-target');
+                    const otherCollapseElement = document.querySelector(otherCollapse);
+                    const isExpanded = otherButton.getAttribute('aria-expanded') === 'true';
+
+                    if (isExpanded) {
+                        otherButton.setAttribute('aria-expanded', 'false');
+                        otherButton.classList.add('collapsed');
+                        otherCollapseElement.classList.remove('show');
+                    }
+                }
+            });
+
+            // 현재 아코디언바 상태 변경
+            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+            button.setAttribute('aria-expanded', !isExpanded);
+            button.classList.toggle('collapsed');
+            if (isExpanded) {
+                collapseElement.classList.remove('show');
+            } else {
+                collapseElement.classList.add('show');
+            }
+        });
+    });
+</script>
+
+
 
 {% endblock %}

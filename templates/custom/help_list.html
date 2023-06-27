@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1:1 목록</title>
+    <link rel="stylesheet" href="../../static/greenbooks/css/customer_style.css">
+    <link rel="stylesheet" href="../../static/greenbooks/css/customer_help.css">
+    <link rel="stylesheet" href="../../static/greenbooks/css/bootstrap.css">
+
+    <script src="../../static/greenbooks/js/bootstrap.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+</head>
+<body>
+{% include 'header.html' %}
+<div class="container">
+    <section id="help_list" class="board_wrap">
+        <div class="board_title">
+            <strong>1:1게시판</strong>
+            <p>문의사항을 빠르고 정확하게 안내해드립니다.</p>
+        </div>
+        <div class="board_list_wrap">
+            <table class="board_list">
+                <thead class="top">
+                <tr>
+                    <td class="num">번호</td>
+                    <td class="title">제목</td>
+                    <td class="writer">고객명</td>
+                    <td class="date">작성일</td>
+                    <td class="count">조회</td>
+                </tr>
+                </thead>
+                {% if help_list %}
+                <!-- 포스트 가져옴 -->
+                {% for help in help_list %}
+                <tbody>
+                    <tr>
+                        <td class="num">{{ help.id }}</td>
+                        <td class="title"><a href="{% url 'custom:help_view' help.id %}">{{ help.title }}</a></td>
+                        <td class="writer">{{ help.author }}</td>
+                        <td class="date">{{ help.pub_date }}</td>
+                        <td class="count">{{ help.views }}</td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+
+        {% else %}
+        <p>포스트가 없습니다.</p>
+        {% endif %}
+    </section>
+    <div class="board_page">
+        <a href="#" class="bt first"><<</a>
+        <a href="#" class="bt prev"><</a>
+        <a href="#" class="num on">1</a>
+        <a href="#" class="num">2</a>
+        <a href="#" class="num">3</a>
+        <a href="#" class="num">4</a>
+        <a href="#" class="num">5</a>
+        <a href="#" class="bt next">></a>
+        <a href="#" class="bt last">>></a>
+    </div>
+    <div class="bt_wrap">
+        <a href="{% url 'custom:help_write' %}" class="on">등록</a>
+        <!--<a href="#">수정</a>-->
+    </div>
+</div>
+
+{% include 'footer.html' %}
+</body>
+</html>

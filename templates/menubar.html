@@ -1,0 +1,42 @@
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+ 
+<body style="height: 7000px;">
+<div id="test_obj">
+    <header>
+        <h1>Brand</h1>
+        <nav>
+          <span>Menu1</span>
+          <span>Menu2</span>
+          <span>Menu3</span>
+        </nav>
+    </header>
+</div>
+</body>
+ 
+<style>
+    #test_obj {
+        position: absolute;
+        width: 70px;
+        height: 350px;
+        right: 50px;
+        border-radius: 70px;
+        top: 250px;
+        border: 1px solid #dddddd;
+    }
+</style>
+ 
+<script>
+    $(document).ready(function () {
+        var tmp = parseInt($("#test_obj").css('top'));
+ 
+        $(window).scroll(function () {
+            var scrollTop = $(window).scrollTop();
+            var obj_position = scrollTop + tmp + "px";
+ 
+            $("#test_obj").stop().animate({
+                "top": obj_position
+            }, 500);
+ 
+        }).scroll();
+    });
+</script>

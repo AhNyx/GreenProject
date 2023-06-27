@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+    <div class="board_wrap">
+        <div class="board_title">
+            <strong>공지사항</strong>
+            <p>공지사항을 빠르고 정확하게 안내해드립니다.</p>
+        </div>
+        <div class="board_view_wrap">
+            <div class="board_view">
+                <div class="title">
+                    {{ help.title }}
+                </div>
+                <div class="info">
+                    <dl>
+                        <dt>번호</dt>
+                        <dd>{{ help.id }}</dd>
+                    </dl>
+                    <dl>
+                        <dt>글쓴이</dt>
+                        <dd>{{ help.author }}</dd>
+                    </dl>
+                    <dl>
+                        <dt>작성일</dt>
+                        <dd>{{ help.pub_date }}</dd>
+                    </dl>
+                    <dl>
+                        <dt>조회</dt>
+                        <dd>{{ help.views }}</dd>
+                    </dl>
+                </div>
+                <div class="cont">
+                    {{ help.content }}
+                </div>
+            </div>
+            <div id="btn" class="text-center mt-3">
+                <!-- 작성자가 자기글 -->
+                {% if help.author == request.user %}
+
+
+                <a href="{% url 'custom:help_list' %}" class="btn-a btn btn-primary">목록</a>
+                <a href="{% url 'custom:help_modify' help.id %}" class="btn-a btn btn-primary">수정</a>
+                <!-- post작성자가 아닌 사람이 글을 봤을 때 -->
+                {% else %}
+                <a href="{% url 'custom:help_list' %}" class="btn-a btn btn-primary">목록</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
