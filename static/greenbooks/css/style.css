@@ -37,8 +37,9 @@
         padding: 10px 20px;
         }
         td.cst_title{width:500px;}
-    /* lock icon*/
-    .lockicon{width: 10px; height: 10px; }
+    /* helplist */
+        .board_list_wrap{    margin-left: auto}
+        .board_title{margin-bottom: 3rem;}
 
     /*side var*/
     body {
@@ -131,7 +132,7 @@ main {
 .fw-semibold { font-weight: 600; }
 .lh-tight { line-height: 1.25; }
 
-/* community 스타일 */
+/* @@@@@@@@@@community @@@@@@@@@@@@@@스타 일 */
 
 
 .container .dropBox.active {

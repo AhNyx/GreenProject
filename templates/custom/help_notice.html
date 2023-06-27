@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="board_wrap">
+        <div class="board-top">
+            <p class="customer_center">고객센터</p>
+
+        </div>
+
+
+        <div class="board_title">
+                <strong>자주 묻는 질문 TOP 10</strong>
+            <h1>회원로그인</h1>
+        </div>
+        <div class="board_bottom">
+            <ul class="nav nav-pills nav-justified">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'custom:qnalist' %}">회원로그인</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'custom:qnalist2' %}">상품판매</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'custom:qnalist3' %}">게시판 이용</a>
+                </li>
+            </ul>
+            <div class="board_list_wrap">
+                {% include 'custom/qnalist_content1.html'%}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+
