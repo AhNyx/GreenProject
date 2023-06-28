@@ -12,6 +12,7 @@ urlpatterns = [
     path('community/', include('community.urls')),  # 커뮤니티
     path('tradebook/', include('tradebook.urls')),
     path('mypage/', include('mypage.urls')),
+    path("goods/", include("goods.urls")),
     path('custom/', include('custom.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),   # 편집기
     path('price/', include('checkbookprice.urls')), # 바코드가격조회
