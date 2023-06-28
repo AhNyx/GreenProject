@@ -12,8 +12,14 @@
             {% for good in goods %}
           <div class="col-lg-8">
             {{ good.image }} <!--그림이 안나옴...이게아닌듯-->
-          </div>
 
+          </div>
+ <form action="{% url 'shopcart:product_add' good.id %}" method="post">
+                {% csrf_token %}
+                {{ add_to_cart }}
+                <input type="submit" value="Add to Cart"
+                       class="btn btn-primary btn-sm">
+            </form>
           <div class="col-lg-4">
             <div class="portfolio-info">
               <h2> {{ good.name }}</h2> <!--책 제목-->
