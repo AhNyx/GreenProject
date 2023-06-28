@@ -1,3 +1,6 @@
+/*전체 적용*/
+#announcement{text-align:center; margin-bottom:1rem;}
+
 /* customer */
  /* 왼쪽 메뉴 스타일 */
     .left-menu {
@@ -14,6 +17,10 @@
       width: 75%;
       padding: 20px;
     }
+    /*custom/helplist*/
+    .qnatitle{ margin-bottom:0rem;}
+
+
 
    /* content 부분 */
     /* table */
@@ -37,8 +44,9 @@
         padding: 10px 20px;
         }
         td.cst_title{width:500px;}
-    /* lock icon*/
-    .lockicon{width: 10px; height: 10px; }
+    /* helplist */
+        .board_list_wrap{    margin-left: auto}
+        .board_title{margin-bottom: 3rem;}
 
     /*side var*/
     body {
@@ -131,8 +139,7 @@ main {
 .fw-semibold { font-weight: 600; }
 .lh-tight { line-height: 1.25; }
 
-/* community 스타일 */
-.btn-a a{color: #fff; text-decoration: none;}
+/* @@@@@@@@@@community @@@@@@@@@@@@@@스타 일 */
 
 
 .container .dropBox.active {
@@ -151,3 +158,12 @@ border: 2px solid red;
 .thumb { width:200px; padding:5px; float:left; }
 .thumb > img { width:100%; }
 .thumb > .close { position:absolute; background-color:red; cursor:pointer; }
+/* 현재 부트스트랩상 a태그 기본속성이 밑줄, 파란글씨 */
+    /* 모든 버튼영역(a): 밑줄 지우고 버튼색이 파래서 글씨가 안보여 흰글씨로 변경 */
+.btn-a a{color: #fff; text-decoration: none;}
+    /* community 제목영역(a): 밑줄 지우고 테이블 class에 맞게 글씨색 변경 */
+#community a{text-decoration: none;}
+#commu-table a{color: #616161;}
+#commu-table tr:hover a{color: #212529;}
+    /* detail 카테고리영역(th): 제목스타일과 다르게 작성정보스타일에 가깝도록 글씨 색, 크기, 굵기 조정 */
+#commu-cate{color: #616161; font-size: 23px; font-weight: normal;}

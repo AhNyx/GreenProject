@@ -6,5 +6,5 @@ def index(request):
 
 
 def mypage(request):
-    return render(request, 'greenbooks/mypage.html')
+    return render(request, 'greenbooks/mypage3.html')
 

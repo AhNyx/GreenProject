@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -26,7 +25,6 @@ SECRET_KEY = 'django-insecure-hs%b$_dxod6h%m(dz2400**nb+trp9csf5cmi_uufrq@u9%)67
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -39,13 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'greenbooks',
     'common.apps.CommonConfig',
-    'community',    # 커뮤니티
+    'community',  # 커뮤니티
     'tradebook',
     'custom',
     'mypage',
-    'ckeditor',             # 폼편집기
-    'ckeditor_uploader',    # 폼편집기
-    'checkbookprice', #바코드리더
+    'ckeditor',  # 폼편집기
+    'ckeditor_uploader',  # 폼편집기
+    'checkbookprice',  # 바코드리더
+    'goods',
+    'shopcart',
 ]
 
 MIDDLEWARE = [
@@ -78,7 +78,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -88,7 +87,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -108,7 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -120,17 +117,17 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
+# 파일 첨부를 통해 채워지는 폴더
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# 편집기
+# 편집기를 통해 채워지는 폴더
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
@@ -144,3 +141,5 @@ LOGIN_REDIRECT_URL = '/'
 
 # 로그아웃시 이동하는 URL
 LOGOUT_REDIRECT_URL = '/'
+
+CART_ID = 'cart-item'

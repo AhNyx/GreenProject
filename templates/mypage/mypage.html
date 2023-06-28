@@ -8,6 +8,15 @@
     <style>
         #box1{height:50px;}
         a{text-decoration: none; color: black}
+    .date{
+        font-size: 45px;
+        color: rgb(255, 255, 255);  /* 흰색 */
+    }
+    .time{
+        font-size: 100px;
+        font-weight: bold;
+        color: rgb(179, 21, 171);  /*보라색 */
+    }
     </style>
 </head>
 <body class="m-5">
@@ -15,26 +24,52 @@
     <div class="d-flex flex-row mb-3">
         <div class="p-2 h3"><a href="{% url 'mypage:mypage' user.id %}">마이페이지</a></div>
         <div class="p-2 mx-5"><a href="{% url 'mypage:memberinfo' user.id %}">회원정보</a></div>
-        <div class="p-2 mx-5"><a href="{% url 'mypage:mypost' %}">내가쓴글</a></div>
-        <div class="p-2 mx-5">장바구니</div>
-        <div class="p-2 mx-5"><a href="{% url 'mypage:question' %}">고객상담</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'mypage:mypost' %}">좋아하는글</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'shopcart:detail' %}">장바구니</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'mypage:memo_list' %}">메모장</a></div>
     </div>
     <div id="box1"></div>
-    <table class="table text-center">
-        <thead>
-            <tr>
-                <th>아이디</th>
-                <th>닉네임</th>
-                <th>가입일</th>
-            </tr>
-            <tr>
-                <td>{{ member.username }} </td>
-                <td>{{ member.last_name }}</td>
-                <td>{{ member.date_joined }}</td>
-            </tr>
-        </thead>
-    </table>
+    <div class="card"></div>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">책 구매하기</h5>
+        <p class="card-text">책은 마음의 양식입니다</p>
+        <a href="{% url 'goods:goods' %}" class="btn btn-success">바로가기</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">중고 책거래</h5>
+        <p class="card-text">그냥 버리기 아까운 책들을 거래해보세요</p>
+        <a href="{% url 'tradebook:tradebook_list' %}" class="btn btn-success">바로가기</a>
+      </div>
+    </div>
+  </div>
+     <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">커뮤니티</h5>
+        <p class="card-text">다양한 사람들과 이야기를 나눠보세요</p>
+        <a href="{% url 'community:community' %}" class="btn btn-success">바로가기</a>
+      </div>
+    </div>
+  </div>
+     <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">고객센터</h5>
+        <p class="card-text">사이트 이용에 문제가 있을경우 찾아주세요</p>
+        <a href="{% url 'custom:qnalist' %}" class="btn btn-success">바로가기</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 </div>
 </body>
+
 {% endblock %}
