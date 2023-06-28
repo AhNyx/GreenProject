@@ -22,14 +22,15 @@
                         <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse"
                                 data-bs-target="#home-collapse" aria-expanded="false">
                             <!-- 카테고리 눌렀다면 사이드바 큰 글씨로 -->
-                            {% if current_cate.slug %}
-                            <h3>{{ current_cate.slug }}</h3>
+                            {% if current_category.slug %}
+                            <h3>{{ current_category.slug }}</h3>
                             {% else %}
                             <!-- 카테고리를 누르지 않았다면 -->
                             <h3>전체글</h3>
                             {% endif %}
                         </button>
-                        <div class="collapse show" id="home-collapse" style="">
+                        <!-- class=collapse(접힌상태) /collapse show(열린상태) -->
+                        <div class="collapse show" id="home-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <!-- 전체글 -->
                                 <li><a href="{% url 'community:community' %}" class="link-dark rounded">전체글</a></li>
@@ -46,7 +47,6 @@
             </div>
         </aside>
         <!-- 그리드: 가운데 8/12(66.67%) 영역 -->
-        <!-- 편집기 크기와 테이블 크기 맞춤 -->
         <section id="community" class="col-lg-8">
             <table id="commu-table" class="table table-hover">
                 <thead>
@@ -82,10 +82,12 @@
                             </td>
                             <!-- 제목: a태그로 연결 -->
                             <td class="text-start">
-                                <a href="{% url 'community:detail' post.id %}">
-                                    {{ post.title }}{% if post.reply %}<button type="button" class="btn btn-primary">
-    Messages <span class="badge bg-danger">{{ post.reply_set.count }}</span>{% endif %}
-  </button>
+                                <a class="label-title" href="{% url 'community:detail' post.id %}">
+                                    {{ post.title }}
+                                    <!-- 댓글이 있으면 숫자로 표시 -->
+                                    {% if post.reply_set.count > 0 %}
+                                    <span class="badge bg-commu">{{ post.reply_set.count }}</span>
+                                    {% endif %}
                                 </a>
                             </td>
                             <!-- 작성자 -->
@@ -93,10 +95,10 @@
                             <!-- 작성일 -->
                             <!-- 오늘 작성된 글은 [오전/오후 hh:mm]으로 포맷변경 -->
                             {% if post.create_date|date:"Y-m-d" == today|date:"Y-m-d" %}
-                                <td>{{ post.create_date|date:"A h:i" }}</td>
+                            <td>{{ post.create_date|date:"A h:i" }}</td>
                             <!-- 오늘 글이 아니면 [yyyy.mm.dd]으로 포맷변경 -->
                             {% else %}
-                                <td>{{ post.create_date|date:"Y.m.d" }}</td>
+                            <td>{{ post.create_date|date:"Y.m.d" }}</td>
                             {% endif %}
                             <!-- 조회수 -->
                             <td>{{ post.views }}</td>

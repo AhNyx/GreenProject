@@ -4782,7 +4782,7 @@ textarea.form-control-lg {
 .page-link {
   position: relative;
   display: block;
-  color: #0d6efd;
+  /*color: #0d6efd;*/
   text-decoration: none;
   background-color: #fff;
   border: 1px solid #dee2e6;
@@ -4795,7 +4795,7 @@ textarea.form-control-lg {
 }
 .page-link:hover {
   z-index: 2;
-  color: #0a58ca;
+  /*color: #0a58ca;*/
   background-color: #e9ecef;
   border-color: #dee2e6;
 }

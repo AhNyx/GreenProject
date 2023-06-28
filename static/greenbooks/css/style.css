@@ -101,8 +101,10 @@ main {
 }
 .btn-toggle:hover,
 .btn-toggle:focus {
-  color: rgba(0, 0, 0, .85);
-  background-color: #d2f4ea;
+  /*color: rgba(0, 0, 0, .85);*/
+  color: #fff;
+  /*background-color: #d2f4ea;*/
+  background-color: #81bf60;
 }
 
 .btn-toggle::before {
@@ -114,7 +116,7 @@ main {
 }
 
 .btn-toggle[aria-expanded="true"] {
-  color: rgba(0, 0, 0, .85);
+  /*color: rgba(0, 0, 0, .85);*/
 }
 .btn-toggle[aria-expanded="true"]::before {
   transform: rotate(90deg);
@@ -129,7 +131,9 @@ main {
 }
 .btn-toggle-nav a:hover,
 .btn-toggle-nav a:focus {
-  background-color: #d2f4ea;
+  /*background-color: #d2f4ea;*/
+    color: #fff;
+    background-color: #81bf60;
 }
 
 .scrollarea {
@@ -161,9 +165,12 @@ border: 2px solid red;
 /* 현재 부트스트랩상 a태그 기본속성이 밑줄, 파란글씨 */
     /* 모든 버튼영역(a): 밑줄 지우고 버튼색이 파래서 글씨가 안보여 흰글씨로 변경 */
 .btn-a a{color: #fff; text-decoration: none;}
-    /* community 제목영역(a): 밑줄 지우고 테이블 class에 맞게 글씨색 변경 */
+    /* community 섹션 전체 링크(a): 밑줄 지우기 */
 #community a{text-decoration: none;}
-#commu-table a{color: #616161;}
+        /* 테이블 제목(a): 테이블 class에 맞게 글씨색 변경, 링크영역 td에 모두 확대적용 */
+#commu-table a{color: #616161; display: block; width: 100%;}
 #commu-table tr:hover a{color: #212529;}
+        /* 댓글(뱃지): 테마색으로 */
+.bg-commu{color: #81bf60;}
     /* detail 카테고리영역(th): 제목스타일과 다르게 작성정보스타일에 가깝도록 글씨 색, 크기, 굵기 조정 */
 #commu-cate{color: #616161; font-size: 23px; font-weight: normal;}

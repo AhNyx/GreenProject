@@ -37,7 +37,8 @@ def category_list(request, slug):
     page_obj = paginator.get_page(page)     # 페이지 처리한 리스트
     current_cate = current_category.id      # 작성폼에서 자동선택되도록 현재 카테의 id 가져오기
     context = {'post_list': page_obj, 'categories': categories, 'today': today,
-               'current_cate': current_cate,
+               # current_cate는 id-카테글쓰기와연결  current_category는 리스트 사이드바에 카테적용
+               'current_cate': current_cate, 'current_category': current_category,
                'cate_url': reverse('community:cate_post_create', args=[slug])}     # 카테글쓰기 링크처리(이렇게 안하면 오류남)
     return render(request, 'community/community.html', context)
 
@@ -91,9 +92,9 @@ def cate_post_create(request, slug):
 # post 수정하기(post_id 필요)
 @login_required(login_url='common:login')
 def post_edit(request, post_id):
-    post = get_object_or_404(Post, pk=post_id, writer=request.user)     # post_id를 pk로 함     # writer를 user로 지정
-    categories = Category.objects.all()
-    current_cate = post.category_id
+    post = get_object_or_404(Post, pk=post_id)  # post_id를 pk로 함     # writer를 user로 지정->굳이 안하고 유지해도 될 듯
+    categories = Category.objects.all()     # 카테고리 전체 정보 가져오기
+    current_cate = post.category_id     # post_id로 알아낸 포스트 카테고리의 아이디
     if request.method == "POST":
         form = PostForm(request.POST, instance=post)    # post의 정보를 가져옴
         if form.is_valid():                     # 유효성검사 후
@@ -131,16 +132,16 @@ def post_like(request):
     return HttpResponse(json.dumps(context), content_type='application/json')   # 정보를 json형태로 반환
 
 
-# 답변 등록
+# 댓글 등록
 @login_required(login_url='common:login')
 def reply_create(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)
-    if request.method == "POST":    # 소문자(post)이면 답변이 등록되지 않음
+    post = get_object_or_404(Post, pk=post_id)  # post_id로 post 정보 갖고오기
+    if request.method == "POST":
         form = ReplyForm(request.POST)
         if form.is_valid():
-            reply = form.save(commit=False)        # content만 저장
-            reply.writer = request.user  # 로그인한(세션 권한이 있는) 글쓴이
-            reply.post = post  # 외래키 생성
+            reply = form.save(commit=False)     # content만 저장
+            reply.writer = request.user         # 댓쓴이는 현재 로그인한 사용자
+            reply.post = post  # 외래키 생성(post와 연결)
             form.save()
             return redirect('community:detail', post_id=post.id)
     else:
@@ -149,25 +150,25 @@ def reply_create(request, post_id):
     return render(request, 'community/reply_form.html', context)
 
 
-# 답변 삭제
+# 댓글 삭제
 @login_required(login_url='common:login')
 def reply_delete(request, reply_id):
-    reply = get_object_or_404(Reply, pk=reply_id)    # import
+    reply = get_object_or_404(Reply, pk=reply_id)   # reply_id로 댓글정보 가져오기
     reply.delete()
-    return redirect('community:detail', post_id=reply.post.id)     # 연결되어있으니까
+    return redirect('community:detail', post_id=reply.post.id)  # 댓글과 연결된 post 페이지로
 
 
-# 답변 수정- 수업중에 구현 x
-def reply_modify(request, reply_id):
-    reply = get_object_or_404(Reply, pk=reply_id)  # 수정을 위해 질문 1개 가져옴
+# 댓글 수정- 수업중에 구현 x
+def reply_edit(request, reply_id):
+    reply = get_object_or_404(Reply, pk=reply_id)   # reply_id로 댓글정보 가져오기
     if request.method == "POST":
-        form = ReplyForm(request.POST, instance=reply)  # 데이터가 이미 있는 폼(포스트 받은 것에서, 있는폼)
+        form = ReplyForm(request.POST, instance=reply)  # 댓글 정보가 있는 폼
         if form.is_valid():
-            reply = form.save(commit=False)  # 가저장
-            reply.modify_date = timezone.now()   # 수정일 지정
-            reply.save()     # 찐저장
+            reply = form.save(commit=False)
+            reply.modify_date = timezone.now()  # 수정일 지정
+            reply.save()
             return redirect('community:detail', post_id=reply.post.id)
     else:
         form = ReplyForm(instance=reply)
-    context = {'reply': reply}
+    context = {'form': form, 'reply': reply}
     return render(request, 'community/reply_form.html', context)

@@ -50,11 +50,11 @@ class Post(models.Model):
         return self.liked_user.count()
 
 
-# 답변 모델(테이블) - 댓글
+# 댓글 모델
 class Reply(models.Model):
     content = models.TextField()    # 댓글 내용
     writer = models.ForeignKey(User, on_delete=models.CASCADE)  # 댓쓴이
-    create_date = models.DateTimeField(auto_now_add=True)    # 등록일
+    create_date = models.DateTimeField(auto_now_add=True)       # 등록일
     modify_date = models.DateTimeField(null=True, blank=True)   # 수정일
     post = models.ForeignKey(Post, on_delete=models.CASCADE)    # 외래키
 
