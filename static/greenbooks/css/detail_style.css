@@ -1,0 +1,55 @@
+/* 왼쪽 말풍선 */
+.speech-bubble {
+    width:300px;
+    height : 100px;
+    padding:10px;
+	position: relative;
+	background: #d3d3d3;
+	border-radius: .4em;
+	text-align:center
+
+}
+
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-top-color: #d3d3d3;
+	border-bottom: 0;
+	border-right: 0;
+	margin-left: -10px;
+	margin-bottom: -20px;
+}
+
+
+.right-bubble {
+    width:300px;
+    height : 100px;
+    padding:10px;
+	position: relative;
+	background: #c2c5cc;
+	border-radius: .4em;
+}
+
+.right-bubble:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-top-color: #c2c5cc;
+	border-bottom: 0;
+	border-left: 0;
+	margin-left: -10px;
+	margin-bottom: -20px;
+}
+
+section {
+  margin: 0 auto;
+}
