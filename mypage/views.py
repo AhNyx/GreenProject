@@ -8,7 +8,8 @@ from django.utils import timezone
 
 from common.forms import UserForm
 from community.models import Post
-from mypage.models import Memo
+from mypage.forms import MyForm
+from mypage.models import Memo, Question
 
 
 # Create your views here.
@@ -60,33 +61,23 @@ def memo_create(request):
 
 
 
-# def question(request):
-#     question_list = Question.objects.order_by('-create_date')
-#
-#     return render(request, 'mypage/question.html',{'question_list':question_list})
-# def question_detail(request):
-#     pass
-#
-# def question_post(request):
-#
-#     if request.method == "POST":
-#         form = MyForm(request.POST)
-#         if form.is_valid():
-#             question = form.save(commit=False)
-#             question.author = request.user
-#             question.save()
-#             return redirect('question/')
-#     else:
-#         form = MyForm()
-#
-#     return render(request, 'mypage/question_post.html',{'form': form})
+def question(request):
+    question_list = Question.objects.order_by('-create_date')
 
-#### def cart(request):
-#     cart_list = Cart.objects.all()
-#     context = {'cart_list':cart_list }
-#     return render(request, 'mypage/cart.html', context)
-#
-# def add_cart(request, product_id):
-#     product = Product.objects.get(id=product_id)
-#     cart = get_object_or_404(Cart)
-#      return render(request, 'mypage/cart.html')
+    return render(request, 'mypage/question.html',{'question_list':question_list})
+def question_detail(request):
+    pass
+
+def question_post(request):
+
+    if request.method == "POST":
+        form = MyForm(request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.author = request.user
+            question.save()
+            return redirect('question/')
+    else:
+        form = MyForm()
+
+    return render(request, 'mypage/question_post.html',{'form': form})
