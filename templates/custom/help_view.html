@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1:1 게시판 view</title>
+<!--    <link rel="stylesheet" href="../../static/greenbooks/css/customer_style.css">-->
+    <link rel="stylesheet" href="../../static/greenbooks/css/customer_help.css">
+    <link rel="stylesheet" href="../../static/greenbooks/css/bootstrap.css">
+
+    <script src="../../ static/greenbooks/js/bootstrap.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+</head>
+<body>
+{% include 'header.html' %}
+<section class="board_wrap">
+        <div class="board_title">
+            <strong>1:1게시판</strong>
+        </div>
+        <div class="board_view_wrap">
+            <div class="board_view">
+                <div class="title">
+                    {{ help.title }}
+                </div>
+                <div class="info">
+                    <dl>
+                        <dt>번호</dt>
+                        <dd>{{ help.id }}</dd>
+                    </dl>
+                    <dl>
+                        <dt>글쓴이</dt>
+                        <dd>{{ help.author }}</dd>
+                    </dl>
+                    <dl>
+                        <dt>작성일</dt>
+                        <dd>{{ help.pub_date }}</dd>
+                    </dl>
+                    <dl>
+                        <dt>조회</dt>
+                        <dd>{{ help.views }}</dd>
+                    </dl>
+                </div>
+                <div class="cont">
+                    {{ help.content }}
+                </div>
+            </div>
+            <div id="btn" class="text-center mt-3">
+                <!-- 작성자가 자기글 -->
+                {% if help.author == request.user %}
+
+
+                <a href="{% url 'custom:help_list' %}" class="btn-a btn btn-primary">목록</a>
+                <a href="{% url 'custom:help_modify' help.id %}" class="btn-a btn btn-primary">수정</a>
+                <!-- post 작성자가 아닌 사람이 글을 봤을 때 -->
+                {% else %}
+                <a href="{% url 'custom:help_list' %}" class="btn-a btn btn-primary">목록</a>
+                {% endif %}
+            </div>
+        </div>
+     {% include 'menubar.html'%}
+</section>
+{% include 'footer.html' %}
+</body>

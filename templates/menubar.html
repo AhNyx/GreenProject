@@ -1,0 +1,92 @@
+<script>
+$(document).ready(function () {
+    var isOpen = false;
+    var testObjHeight = 40;
+    var expandedHeight = 240;
+    var tmp = parseInt($("#test_obj").css('top'));
+    var animationInProgress = false;
+
+    $(window).scroll(function () {
+        var scrollTop = $(window).scrollTop();
+        var objPosition = scrollTop + tmp + "px";
+        if (!animationInProgress) {
+            $("#test_obj").stop().animate({ "top": objPosition }, 500);
+        }
+    });
+
+    // 초기에 메뉴가 닫힌 상태로 시작하고 애니메이션 적용
+    $("#up, #home, #cart, #kakao, #ocr").hide();
+    $("#test_obj").animate({ height: testObjHeight + "px" }, 500);
+
+    $("#menu").click(function () {
+        if (animationInProgress) {
+            return;
+        }
+
+        isOpen = !isOpen;
+        animationInProgress = true;
+
+        if (isOpen) {
+            $("#up, #home, #cart, #kakao, #ocr").show();
+            testObjHeight = expandedHeight;
+        } else {
+            $("#up, #home, #cart, #kakao, #ocr").hide();
+            testObjHeight = 40;
+        }
+
+        $("#test_obj").stop().animate({ height: testObjHeight + "px" }, 500, function () {
+            animationInProgress = false;
+        });
+    });
+
+    function goTop() {
+        $('html, body').animate({ scrollTop: 0 }, 100);
+    }
+
+    // 맨 위로 이동 버튼 클릭 이벤트
+    $("#up").click(function () {
+        goTop();
+    });
+});
+</script>
+<body>
+<div id="test_obj">
+    <header>
+        <nav>
+            <a href="#" id="menu" class="kakao-button" onclick="return false;" ><img src="../../static\greenbooks\images\menu.png" class="sg_image" alt="menu"></a>
+            <a href="{% url 'index' %}" id="home" class="kakao-button"><img src="../../static\greenbooks\images\home.png" class="sg_image" alt="home"></a>
+            <a href="{% url 'price:checkbookprice' %}" id="ocr" class="kakao-button"><img src="../../static\greenbooks\images\ocr.png" class="sg_image" alt="home"></a>
+            <a href="{% url 'mypage:cart' %}" id="cart" class="kakao-button"><img src="../../static\greenbooks\images\cart.png" class="sg_image" alt="cart"></a>
+            <a onclick="goTop()" id="up" class="up-button"><img src="../../static\greenbooks\images\up.png" class="sg_image" alt="맨 위로"></a>
+            <a href="http://pf.kakao.com/_xdBNAG" id="kakao" class="kakao-button" target="_blank"><img src="../../static\greenbooks\images\kakao.png" class="sg_image" alt="카카오"></a>
+        </nav>
+    </header>
+</div>
+</body>
+
+<style>
+    .sg_image {
+        width: 40px;
+        height: 40px;
+        padding: 5px;
+    }
+
+    .up-button,
+    .kakao-button {
+        background: none;
+        border: none;
+        text-align: center;
+    }
+
+    #test_obj {
+        filter: invert(100%);
+        background-color: rgba(255, 255, 255, 0.5);
+        position: absolute;
+        width: 40px;
+        height: auto; /* 높이 자동 조절 */
+        right: 40px;
+        border-radius: 70px;
+        top: 500px;
+        transition: height 0.5s ease; /* 애니메이션 효과 추가 */
+    }
+</style>
