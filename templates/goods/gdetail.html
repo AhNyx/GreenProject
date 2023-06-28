@@ -1,30 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %} 구매 페이지!!!!!!!!!!
+{% block title %} 상세페이지입니다.
 {% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'greenbooks/css/detail_style.css' %}">
-
-    <!-- ======= Details Section ======= -->
+    <!-- ======= 상세페이지 ======= -->
     <section id="portfolio-details" class="portfolio-details">
       <div class="container">
         <div class="row gy-4">
-            {% for good in goods %}
           <div class="col-lg-8">
-            {{ good.image }} <!--그림이 안나옴...이게아닌듯-->
+            <img src="{{ goods.image.url }}"> <!--책 이미지-->
           </div>
-
           <div class="col-lg-4">
             <div class="portfolio-info">
-              <h2> {{ good.name }}</h2> <!--책 제목-->
+              <h2> {{ goods.name }}</h2> <!--책 제목-->
               <ul>
-                <li><strong>금액: ₩ {{ good.price }} </strong> </li>
-                <li><strong>수량</strong>: 1권</li>
-                <li><strong>글쓴이</strong>: 이윤하</li>
+                <li><strong> 금액: ₩ {{ goods.price }} </strong> </li>
+                <li><strong> 글쓴이 {{ goods.writer }}</strong></li>
+                <li><strong> 재고 : {{ goods.stock }} 권</strong></li>
+                <li><strong>test</strong></li>
+                <li><strong>test</strong></li>
               </ul>
             </div>
             <div>
-                <h2> 줄거리 : {{ good.description }}</h2>
+                <h2> 줄거리 : {{ goods.description }}</h2>
               <h4>※ 주의사항</h4>
               <p>
                 -중고 거래 특성 상 환불 불가합니다. <br>
@@ -35,13 +34,12 @@
               </p>
             </div>
           </div>
-
         </div>
-
       </div>
-    </section><!-- End Portfolio Details Section -->
+    </section>
 
     <h3> 한줄평 </h3>
+    <hr>
 
 <section>
     <div id = "left">
@@ -69,7 +67,8 @@
      </div>
 
 </section>
-    <h3>****댓글예정****</h3> <!--댓글 밑에 넣을예정-->
-{% endfor %}
-    </div>
+    <!--<h3>****댓글예정****</h3> &lt;!&ndash;댓글 밑에 넣을예정&ndash;&gt;-->
+
+
+
 {% endblock %}

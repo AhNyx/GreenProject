@@ -1,19 +1,62 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}구매 페이지입니다{% endblock %}
+{% block title %}구매 페이지입니다
+{% endblock %}
 {% block content %}
-<div class="row">
-    <div class="col-2">
-        <div class="list-group">
-            <a href="{% url 'goods:goods' %}"
-               class="list-group-item {% if not current_category %}active{% endif %}">All</a>
-            {% for category in categories %}
-                <a href="{{ category.get_absolute_url }}"
-                   class="list-group-item {% if current_category.slug == category.slug %}active{% endif %}">
-                    {{ category.name }}
-                </a>
-            {% endfor %}
+<!--카테고리 메모-->
+<section>
+    <div class="row">
+        <div class="col-2">
+            <div class="list-group">
+                <a href="{% url 'goods:goods' %}"
+                   class="list-group-item {% if not current_category %}active{% endif %}">All</a>
+                {% for category in categories %}
+                    <a href="{{ category.get_absolute_url }}"
+                       class="list-group-item {% if current_category.slug == category.slug %}active{% endif %}">
+                        {{ category.name }}
+                    </a>
+                {% endfor %}
+            </div>
         </div>
     </div>
-</div>
+</section>
+    <div class="row">
+          <div class="col-lg-12 d-flex justify-content-center">
+            <ul id="portfolio-flters">
+              <li data-filter="*" class="filter-active">All</li>
+              <li data-filter=".filter-app">App</li>
+              <li data-filter=".filter-card">Card</li>
+              <li data-filter=".filter-web">Web</li>
+            </ul>
+          </div>
+        </div>
+
+<!--상품-->
+ <section class="py-5">
+     {% for good in goods %}
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- 그림-->
+                        <img class="card-img-top" src="{{ good.image.url }}" alt="책 사진(alt)" />
+                        <!-- 이름-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- 책이름-->
+                                <h5 class="fw-bolder">{{ good.name }}</h5>
+                                <!-- 책가격-->
+                                ₩ {{ good.price }}
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{{ good.get_absolute_url }}">상세보기</a></div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 {% endblock %}
