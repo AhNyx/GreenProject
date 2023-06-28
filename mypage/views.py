@@ -4,11 +4,11 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
+from django.utils import timezone
 
 from common.forms import UserForm
 from community.models import Post
-from mypage.forms import MyForm
-from mypage.models import Question, Cart, Product
+from mypage.models import Memo
 
 
 # Create your views here.
@@ -32,42 +32,61 @@ def membermodify(request):
 
 def mypost(request):
     post = Post.objects.all().order_by('-create_date')
-    post_list = post.filter(writer_id=request.user.id)
+#    post_list = post.filter(writer_id=request.user.id)
+    post_list = post.filter(liked_user=request.user.id)
 
     context = {'post_list': post_list}
     return render(request, 'mypage/mypost.html', context)
 
-def question(request):
-    question_list = Question.objects.order_by('-create_date')
+def memo_list(request):
+    memo_list = Memo.objects.all().order_by('-created_date')
+    context = {'memo_list':memo_list}
+    return render(request, 'mypage/memo_list.html', context)
 
-    return render(request, 'mypage/question.html',{'question_list':question_list})
-def question_detail(request):
-    pass
 
-def question_post(request):
+def memo_delete(request, memo_id):
+    memo = Memo.objects.get(id=memo_id)
+    memo.delete()
+    return redirect('mypage:memo_list')
 
-    if request.method == "POST":
-        form = MyForm(request.POST)
-        if form.is_valid():
-            question = form.save(commit=False)
-            question.author = request.user
-            question.save()
-            return redirect('question/')
-    else:
-        form = MyForm()
+def memo_create(request):
+    content = request.POST.get('content')
+    create_date = timezone.now()
+    memo = Memo(content=content, created_date=create_date)
+    memo.save()
 
-    return render(request, 'mypage/question_post.html',{'form': form})
+    return redirect('mypage:memo_list')
 
-def cart(request):
-    cart_list = Cart.objects.all()
-    context = {'cart_list':cart_list }
-    return render(request, 'mypage/cart.html', context)
 
-def add_cart(request, user_id):
-   product = Product.objects.get(id=user_id)
-   try:
-        cart = Cart.objects.get(product)
-   except:
-        Cart.product.create(product=product.product_id,quantity=1)
 
-   return render(request, 'mypage/cart.html')
+
+# def question(request):
+#     question_list = Question.objects.order_by('-create_date')
+#
+#     return render(request, 'mypage/question.html',{'question_list':question_list})
+# def question_detail(request):
+#     pass
+#
+# def question_post(request):
+#
+#     if request.method == "POST":
+#         form = MyForm(request.POST)
+#         if form.is_valid():
+#             question = form.save(commit=False)
+#             question.author = request.user
+#             question.save()
+#             return redirect('question/')
+#     else:
+#         form = MyForm()
+#
+#     return render(request, 'mypage/question_post.html',{'form': form})
+
+#### def cart(request):
+#     cart_list = Cart.objects.all()
+#     context = {'cart_list':cart_list }
+#     return render(request, 'mypage/cart.html', context)
+#
+# def add_cart(request, product_id):
+#     product = Product.objects.get(id=product_id)
+#     cart = get_object_or_404(Cart)
+#      return render(request, 'mypage/cart.html')
