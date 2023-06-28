@@ -14,7 +14,7 @@ class Category(models.Model):
 
     def get_absolute_url(self):
         # return f'/community/category/{self.slug}'   # 카테고리에 해당하는 절대 slug형 url을 반환
-        return reverse('community:cate_page', args=[self.slug])     # reverse 방식으로 변경
+        return reverse('community:cate_list', args=[self.slug])     # reverse 방식으로 변경
 
     class Meta:     # 중첩모델
         verbose_name = 'category'
