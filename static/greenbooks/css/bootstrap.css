@@ -230,11 +230,11 @@ sup {
 }
 
 a {
-  color: #0d6efd;
+  color: #81bf60;
   text-decoration: underline;
 }
 a:hover {
-  color: #0a58ca;
+  color: #537441;
 }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
@@ -3009,13 +3009,13 @@ textarea.form-control-lg {
 
 .btn-primary {
   color: #fff;
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  background-color: #81bf60;
+  border-color: #81bf6080;
 }
 .btn-primary:hover {
   color: #fff;
-  background-color: #0b5ed7;
-  border-color: #0a58ca;
+  background-color: #54833b;
+  border-color: #6c757d;
 }
 .btn-check:focus + .btn-primary, .btn-primary:focus {
   color: #fff;
@@ -3921,7 +3921,7 @@ textarea.form-control-lg {
 .nav-link {
   display: block;
   padding: 0.5rem 1rem;
-  color: #0d6efd;
+  color: #81bf60;
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
@@ -3931,7 +3931,7 @@ textarea.form-control-lg {
   }
 }
 .nav-link:hover, .nav-link:focus {
-  color: #0a58ca;
+  color: #537441;
 }
 .nav-link.disabled {
   color: #6c757d;
@@ -3950,7 +3950,7 @@ textarea.form-control-lg {
   border-top-right-radius: 0.25rem;
 }
 .nav-tabs .nav-link:hover, .nav-tabs .nav-link:focus {
-  border-color: #e9ecef #e9ecef #dee2e6;
+  border-color: #000  ;
   isolation: isolate;
 }
 .nav-tabs .nav-link.disabled {
@@ -3978,7 +3978,7 @@ textarea.form-control-lg {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #0d6efd;
+  background-color: #81bf60;
 }
 
 .nav-fill > .nav-link,
@@ -4642,14 +4642,14 @@ textarea.form-control-lg {
     border-bottom-left-radius: 0;
   }
 }
-
+/*아코디언바 저만쓰는데 머지시켜주세용 ㅠ*/
 .accordion-button {
   position: relative;
   display: flex;
   align-items: center;
   width: 100%;
   padding: 2rem 1.25rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #212529;
   text-align: left;
   background-color: #fff;
@@ -4664,8 +4664,8 @@ textarea.form-control-lg {
   }
 }
 .accordion-button:not(.collapsed) {
-  color: #0c63e4;
-  background-color: #e7f1ff;
+  color: #54833b;
+  background-color: #8aca6a14;
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
 }
 .accordion-button:not(.collapsed)::after {
@@ -4813,14 +4813,14 @@ textarea.form-control-lg {
 .page-item.active .page-link {
   z-index: 3;
   color: #fff;
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  background-color: #81bf60;
+  border-color: #81bf60;
 }
 .page-item.disabled .page-link {
   color: #6c757d;
   pointer-events: none;
   background-color: #fff;
-  border-color: #dee2e6;
+  border-color: #81bf60;
 }
 
 .page-link {
@@ -7531,6 +7531,8 @@ textarea.form-control-lg {
 
 .pb-2 {
   padding-bottom: 0.5rem !important;
+  text-align:center;
+  margin-bottom:1rem;
 }
 
 .pb-3 {

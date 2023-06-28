@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    {% if image_list %}
+        {% for image in image_list %}
+            <img src="{{ image.image.url }}" style="width:300px; height:300px;">
+            <button type="button" onclick="location.href='{% url 'price:barcodereader' image.id %}'"
+            class="btn btn-primary">전송</button>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
