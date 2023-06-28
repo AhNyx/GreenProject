@@ -9,22 +9,21 @@
       <div class="container">
         <div class="row gy-4">
           <div class="col-lg-8">
-            <img src="{{ goods.image.url }}"> <!--책 이미지-->
+            <img src="{{ goods.image.url }}" class="img-thumbnail"> <!--책 이미지-->
           </div>
           <div class="col-lg-4">
-            <div class="portfolio-info">
+            <div class="portfolio-info my-4">
               <h2> {{ goods.name }}</h2> <!--책 제목-->
               <ul>
                 <li><strong> 금액: ₩ {{ goods.price }} </strong> </li>
                 <li><strong> 글쓴이 {{ goods.writer }}</strong></li>
                 <li><strong> 재고 : {{ goods.stock }} 권</strong></li>
-                <li><strong>test</strong></li>
-                <li><strong>test</strong></li>
               </ul>
             </div>
             <div>
-                <h2> 줄거리 : {{ goods.description }}</h2>
-              <h4>※ 주의사항</h4>
+                <h4 class="my-3"> 줄거리 : <br>
+                    {{ goods.description }}</h4>
+              <h4 class="my-3">※ 주의사항</h4>
               <p>
                 -중고 거래 특성 상 환불 불가합니다. <br>
                 -제품에 따라 오염 현상이 있습니다. <br>
@@ -38,10 +37,11 @@
       </div>
     </section>
 
-    <h3> 한줄평 </h3>
-    <hr>
 
-<section>
+
+<section id = review>
+    <h3 class="my-3"> 한줄평 </h3>
+    <hr>
     <div id = "left">
         <div class="speech-bubble">오랜만에 감명깊게 읽은책입니다
         ★★★★★★ <br>

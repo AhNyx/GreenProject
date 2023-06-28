@@ -7,7 +7,7 @@
 <section>
     <div class="row">
         <div class="col-2">
-            <div class="list-group">
+            <div class="list-group mx-5">
                 <a href="{% url 'goods:goods' %}"
                    class="list-group-item {% if not current_category %}active{% endif %}">All</a>
                 {% for category in categories %}
@@ -20,22 +20,14 @@
         </div>
     </div>
 </section>
-    <div class="row">
-          <div class="col-lg-12 d-flex justify-content-center">
-            <ul id="portfolio-flters">
-              <li data-filter="*" class="filter-active">All</li>
-              <li data-filter=".filter-app">App</li>
-              <li data-filter=".filter-card">Card</li>
-              <li data-filter=".filter-web">Web</li>
-            </ul>
-          </div>
-        </div>
 
 <!--상품-->
+
  <section class="py-5">
-     {% for good in goods %}
+
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                {% for good in goods %}
                 <div class="col mb-5">
                     <div class="card h-100">
                         <!-- 그림-->
@@ -46,6 +38,7 @@
                                 <!-- 책이름-->
                                 <h5 class="fw-bolder">{{ good.name }}</h5>
                                 <!-- 책가격-->
+
                                 ₩ {{ good.price }}
                             </div>
                         </div>
