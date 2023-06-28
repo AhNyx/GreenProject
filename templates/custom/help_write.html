@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1:1 게시판작성 및 수정</title>
+    <link rel="stylesheet" href="../../static/greenbooks/css/customer_style.css">
+    <link rel="stylesheet" href="../../static/greenbooks/css/customer_help.css">
+    <link rel="stylesheet" href="../../static/greenbooks/css/bootstrap.css">
+
+     <script src="../../ static/greenbooks/js/bootstrap.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+</head>
+<body>
+{% include 'header.html' %}
+<section class="board_wrap">
+    <form action="" method="post"
+          enctype="multipart/form-data"> >
+        {% csrf_token %}
+        <!-- 유효성 검사 -->
+        {% include 'form_errors.html' %}
+        <div class="board_title">
+            <strong>1:1 게시판</strong>
+            <p>문의사항을 자세히 작성해주세요</p>
+        </div>
+        <div class="board_write_wrap">
+            <div class="board_write">
+                <div class="title">
+                    <dl>
+                        <dt>제목</dt>
+                        <dd><input type="text" class="form-control" name="title" id="title"
+                                   value="{{ form.title.value|default_if_none:'' }}"
+                                   placeholder="제목을 입력해주세요"></dd>
+                    </dl>
+                </div>
+                <div class="cont">
+                    <textarea class="form-control" name="content" id="content" rows="10"
+                              placeholder="내용을 입력해주세요">{{ form.content.value|default_if_none:'' }}</textarea>
+                </div>
+            </div>
+            <div id="btn" class="text-center">
+                <button type="reset" class="btn btn-primary">취소</button>
+                <a href="{% url 'custom:help_list' %}" class="btn-a btn btn-primary">목록</a>
+                <button type="submit" class="btn btn-primary">작성</button>
+            </div>
+        </div>
+
+    </form>
+</section>
+{% include 'footer.html' %}
+</body>
+</html>
