@@ -8,8 +8,11 @@ urlpatterns = [
     path('category/<str:slug>/', views.category_list, name='cate_list'),    # 카테고리리스트(slug기능)
     path('<int:post_id>/', views.detail, name='detail'),                    # post_id로 상세보기
     path('write/', views.post_create, name='post_create'),                  # post 작성
-    path('write/<str:slug>/', views.cate_post_create, name='cate_post_create'),  # cate_post 작성
-    path('edit/<int:post_id>/', views.post_edit, name='post_edit'),         # post 수정
-    path('delete/<int:post_id>/', views.post_delete, name='post_delete'),   # post_id로 삭제
+    path('<str:slug>/write/', views.cate_post_create, name='cate_post_create'),  # cate_post 작성
+    path('<int:post_id>/edit/', views.post_edit, name='post_edit'),         # post 수정
+    path('<int:post_id>/delete/', views.post_delete, name='post_delete'),   # post_id로 삭제
     path('likes/', views.post_like, name='post_like'),                      # 추천
+    path('<int:post_id>/reply/', views.reply_create, name='re_create'),     # 답변 등록
+    path('reply/<int:reply_id>/modify/', views.reply_modify, name='re_modify'),     # 답변 수정(수업 중 구현x)
+    path('reply/<int:reply_id>/delete/', views.reply_delete, name='re_delete'),     # 답변 삭제
 ]

@@ -21,7 +21,8 @@ class Category(models.Model):
         verbose_name_plural = 'categories'  # 복수형 단어 직접 지정
 
 
-class Post(models.Model):   # 포스트 모델
+# 포스트 모델
+class Post(models.Model):
     title = models.CharField(max_length=200)    # 제목: Char필드는 제한필요(최대=한글100자)
     writer = models.ForeignKey(User, on_delete=models.CASCADE)  # 글쓴이: FK, User모델에서 가져옴 삭제연동
     create_date = models.DateTimeField(auto_now_add=True)       # 생성일: 최초 생성시 자동생성, 수정시 변경안됨
@@ -47,3 +48,20 @@ class Post(models.Model):   # 포스트 모델
     # 포스트의 추천인 수
     def count_liked_user(self):
         return self.liked_user.count()
+
+
+# 답변 모델(테이블) - 댓글
+class Reply(models.Model):
+    content = models.TextField()    # 댓글 내용
+    writer = models.ForeignKey(User, on_delete=models.CASCADE)  # 댓쓴이
+    create_date = models.DateTimeField(auto_now_add=True)    # 등록일
+    modify_date = models.DateTimeField(null=True, blank=True)   # 수정일
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)    # 외래키
+
+    def __str__(self):
+        return self.content
+
+    class Meta:
+        ordering = ['create_date']     # 작성일순 정렬
+        verbose_name = 'reply'
+        verbose_name_plural = 'replies'  # 여러 개일때는 문법적인 복수형으로 뜨도록, 안붙이면 그냥 replys가 됨

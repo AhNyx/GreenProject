@@ -83,7 +83,9 @@
                             <!-- 제목: a태그로 연결 -->
                             <td class="text-start">
                                 <a href="{% url 'community:detail' post.id %}">
-                                    {{ post.title }}
+                                    {{ post.title }}{% if post.reply %}<button type="button" class="btn btn-primary">
+    Messages <span class="badge bg-danger">{{ post.reply_set.count }}</span>{% endif %}
+  </button>
                                 </a>
                             </td>
                             <!-- 작성자 -->

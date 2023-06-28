@@ -9,8 +9,8 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 
-from community.forms import PostForm
-from community.models import Post, Category
+from community.forms import PostForm, ReplyForm
+from community.models import Post, Category, Reply
 
 
 # post 리스트 페이지
@@ -38,8 +38,9 @@ def category_list(request, slug):
     current_cate = current_category.id      # 작성폼에서 자동선택되도록 현재 카테의 id 가져오기
     context = {'post_list': page_obj, 'categories': categories, 'today': today,
                'current_cate': current_cate,
-               'cate_url': reverse('community:cate_post_create', args=[slug]),}     # 카테글쓰기 링크처리(이렇게 안하면 오류남)
+               'cate_url': reverse('community:cate_post_create', args=[slug])}     # 카테글쓰기 링크처리(이렇게 안하면 오류남)
     return render(request, 'community/community.html', context)
+
 
 # post 상세보기(post_id 필요)
 def detail(request, post_id):
@@ -103,7 +104,7 @@ def post_edit(request, post_id):
     else:
         form = PostForm(instance=post)
     context = {'form': form, 'categories': categories, 'current_cate': current_cate}
-    return render(request, 'community/post_form_ck.html', context)
+    return render(request, 'community/detail_ck.html', context)
 
 
 # post 삭제하기(post_id 필요)
@@ -128,3 +129,47 @@ def post_like(request):
         liked = True
     context = {'likes_count': post.count_liked_user(), 'liked': liked}   # 해당 포스트 추천인 수 전달
     return HttpResponse(json.dumps(context), content_type='application/json')   # 정보를 json형태로 반환
+
+
+# 답변 등록
+@login_required(login_url='common:login')
+def reply_create(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    if request.method == "POST":    # 소문자(post)이면 답변이 등록되지 않음
+        form = ReplyForm(request.POST)
+        if form.is_valid():
+            reply = form.save(commit=False)        # content만 저장
+            reply.writer = request.user  # 로그인한(세션 권한이 있는) 글쓴이
+            reply.post = post  # 외래키 생성
+            form.save()
+            return redirect('community:detail', post_id=post.id)
+    else:
+        form = ReplyForm()     # 빈 폼 생성
+    context = {'post': post, 'form': form}
+    return render(request, 'community/detail.html', context)
+
+
+# 답변 삭제
+@login_required(login_url='common:login')
+def reply_delete(request, reply_id):
+    reply = get_object_or_404(Reply, pk=reply_id)    # import
+    reply.delete()
+    return redirect('community:detail', post_id=reply.post.id)     # 연결되어있으니까
+
+
+# 답변 수정- 수업중에 구현 x
+@login_required(login_url='common:login')
+def reply_modify(request, reply_id):
+    reply = get_object_or_404(Reply, pk=reply_id)  # 수정을 위해 질문 1개 가져옴
+    if request.method == "POST":
+        form = ReplyForm(request.POST, instance=reply)  # 데이터가 이미 있는 폼(포스트 받은 것에서, 있는폼)
+        post = get_object_or_404(Post, pk=reply.post.id)
+        if form.is_valid():
+            reply = form.save(commit=False)  # 가저장
+            reply.modify_date = timezone.now()   # 수정일 지정
+            reply.save()     # 찐저장
+            return redirect('community:detail', post_id=post.id)
+    else:
+        form = ReplyForm(instance=reply)  # 데이터가 이미 있는 폼
+    context = {'form': form}
+    return render(request, 'community/detail_ck.html', context)
