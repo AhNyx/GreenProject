@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} 구매 페이지!!!!!!!!!!
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'greenbooks/css/detail_style.css' %}">
+
+    <!-- ======= Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+        <div class="row gy-4">
+            {% for good in goods %}
+          <div class="col-lg-8">
+            {{ good.image }} <!--그림이 안나옴...이게아닌듯-->
+
+          </div>
+ <form action="{% url 'shopcart:product_add' good.id %}" method="post">
+                {% csrf_token %}
+                {{ add_to_cart }}
+                <input type="submit" value="Add to Cart"
+                       class="btn btn-primary btn-sm">
+            </form>
+          <div class="col-lg-4">
+            <div class="portfolio-info">
+              <h2> {{ good.name }}</h2> <!--책 제목-->
+              <ul>
+                <li><strong>금액: ₩ {{ good.price }} </strong> </li>
+                <li><strong>수량</strong>: 1권</li>
+                <li><strong>글쓴이</strong>: 이윤하</li>
+              </ul>
+            </div>
+            <div>
+                <h2> 줄거리 : {{ good.description }}</h2>
+              <h4>※ 주의사항</h4>
+              <p>
+                -중고 거래 특성 상 환불 불가합니다. <br>
+                -제품에 따라 오염 현상이 있습니다. <br>
+                  불량이 아니므로 환불 불가합니다. <br>
+                -실물 색상은 모니터와 휴대전화의 기종과 해상도에 따라 상이할 수 있습니다.<br>
+                -품절시 재입고가 어려울 수 있습니다.<br>
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Portfolio Details Section -->
+
+    <h3> 한줄평 </h3>
+
+<section>
+    <div id = "left">
+        <div class="speech-bubble">오랜만에 감명깊게 읽은책입니다
+        ★★★★★★ <br>
+        -이*연-</div>
+        <div class="speech-bubble:after"></div>
+        <br>
+        <div class="speech-bubble">인생책이에요 추천합니다. ★★★★★★  <br>- 김*명 -</div>
+        <div class="speech-bubble:after">
+    </div>
+    <br>
+        <!-- thums-up image -->
+    <div id="img">
+        <img src="{% static 'greenbooks/images/girl.jpg' %}" alt = "미모티콘">
+    </div>
+
+    <div id="right">
+        </div> <div class="right-bubble">오랜만에 감명깊게 읽은책입니다 ★★★★★★ <br> -경*진 -</div>
+        <div class="right-bubble:after"></div>
+        <br>
+        <div class="right-bubble">소장용으로 한권 더 구매할 예정입니다. ★★★★★★  <br>- 고*현</div>
+        <div class="right-bubble:after"></div>
+        <br>
+     </div>
+
+</section>
+    <h3>****댓글예정****</h3> <!--댓글 밑에 넣을예정-->
+{% endfor %}
+    </div>
+{% endblock %}

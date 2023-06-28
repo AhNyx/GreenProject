@@ -16,31 +16,29 @@
     <div class="d-flex flex-row mb-5">
         <div class="p-2 h3"><a href="{% url 'mypage:mypage' user.id %}">마이페이지</a></div>
         <div class="p-2 mx-5"><a href="{% url 'mypage:memberinfo' user.id %}">회원정보</a></div>
-        <div class="p-2 mx-5"><a href="{% url 'mypage:mypost' %}">내가쓴글</a></div>
-        <div class="p-2 mx-5"><a href="{% url 'mypage:cart' %}">장바구니</a></div>
-        <div class="p-2 mx-5"><a href="{% url 'mypage:question' %}">고객상담</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'mypage:mypost' %}">좋아하는글</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'shopcart:detail' %}">장바구니</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'mypage:memo_list' %}">메모장</a></div>
     </div>
 <div class="container px-4 py-5">
     <section id="mypost">
             <div id="title">
-                <h2 class="pb-2 border-bottom">내가쓴글</h2>
+                <h2 class="pb-2 border-bottom">좋아하는글</h2>
+                <h6 class="my-3">좋아요를 누른 게시물들이 모여있어요</h6>
             </div>
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <td>번호</td>
                         <td>제목</td>
                         <td>작성자</td>
                         <td>작성일</td>
                         <td>조회</td>
-                        <td>추천</td>
                     </tr>
                 </thead>
                 <tbody>
                     {% if post_list %}
                         {% for post in post_list %}
                         <tr>
-                            <td>{{ post.id }}</td>
                             <td>
                                 <a href="{% url 'community:detail' post.id %}">
                                     {{ post.title }}
