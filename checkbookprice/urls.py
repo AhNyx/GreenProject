@@ -8,6 +8,9 @@ app_name = 'price'
 
 urlpatterns = [
     path('', views.checkbookprice, name='checkbookprice'),
+    path('setting', views.settingbarcode, name='settingbarcode'),
+    path('<int:image_id>', views.BarcodeReader, name='barcodereader'),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL,
