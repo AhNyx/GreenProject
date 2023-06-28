@@ -3,7 +3,7 @@ from datetime import date
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.utils import timezone
@@ -145,8 +145,8 @@ def reply_create(request, post_id):
             return redirect('community:detail', post_id=post.id)
     else:
         form = ReplyForm()     # 빈 폼 생성
-    context = {'post': post, 'form': form}
-    return render(request, 'community/detail.html', context)
+    context = {'form': form}
+    return render(request, 'community/reply_form.html', context)
 
 
 # 답변 삭제
@@ -158,18 +158,16 @@ def reply_delete(request, reply_id):
 
 
 # 답변 수정- 수업중에 구현 x
-@login_required(login_url='common:login')
 def reply_modify(request, reply_id):
     reply = get_object_or_404(Reply, pk=reply_id)  # 수정을 위해 질문 1개 가져옴
     if request.method == "POST":
         form = ReplyForm(request.POST, instance=reply)  # 데이터가 이미 있는 폼(포스트 받은 것에서, 있는폼)
-        post = get_object_or_404(Post, pk=reply.post.id)
         if form.is_valid():
             reply = form.save(commit=False)  # 가저장
             reply.modify_date = timezone.now()   # 수정일 지정
             reply.save()     # 찐저장
-            return redirect('community:detail', post_id=post.id)
+            return redirect('community:detail', post_id=reply.post.id)
     else:
-        form = ReplyForm(instance=reply)  # 데이터가 이미 있는 폼
-    context = {'form': form}
-    return render(request, 'community/detail_ck.html', context)
+        form = ReplyForm(instance=reply)
+    context = {'reply': reply}
+    return render(request, 'community/reply_form.html', context)
