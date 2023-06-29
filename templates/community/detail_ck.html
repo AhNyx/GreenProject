@@ -86,41 +86,55 @@
                         {{ post.description|safe }}
                     </td>
                 </tr>
-                <!-- 댓글 영역 -->
-                <tr>
-                    <td colspan="4" class="text-end">
-                        <p>댓글 {{ post.reply_set.count }}개</p>
-                    </td>
-                </tr>
-                {% for reply in post.reply_set.all %}
-                <tr>
-                    <td class="text-start">{{ reply.writer }}</td>
-                    <td colspan="2" class="text-end sm">
-                        {{ reply.create_date }}
-                        {% if reply.modify_date %},&nbsp;이후 수정됨{% endif %}
-                    </td>
-                    <td class="text-end">
-                    <!-- 글쓴이와 로그인한 사람이 일치할때만 -->
-                    {% if reply.writer == request.user %}
-                        <a class="edit-reply-btn btn-a btn btn-sm btn-primary"
-                           href="{% url 'community:re_edit' reply.id %}"
-                           data-reply-id="{{ reply.id }}">수정</a>
-                        <a href="#" data-uri="{% url 'community:re_delete' reply.id %}"
-                           class="delete btn btn-sm btn-outline-secondary">삭제</a>
-                    {% endif %}
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4" class="text-start">
-                        <p style="white-space:pre-line;">{{ reply.content }}</p>
-                    </td>
-                </tr>
-                {% endfor %}
             </table>
+            <!-- 댓글 영역 -->
+            <div class="reply">
+                <div colspan="4" class="text-end">
+                    <p>댓글 {{ post.reply_set.count }}</p>
+                </div>
+                <hr>
+                <div class="reply-list list-group" style="font-size: small;">
+                    {% for reply in post.reply_set.all %}
+                    <ul>
+                        <li class="list-group-item">
+                            <div class="writer-info">
+                                <i class="fa-solid fa-circle-user fa-2xl"></i>
+                                <span class="writer-name">
+                                    {{ reply.writer }}
+                                </span>
+                                <span class="date" style="font-size: xx-small;">
+                                    {{ reply.create_date|date:"Y.m.d A h:i" }}{% if reply.modify_date %},&nbsp;{{ reply.modify_date|date:"Y.m.d A h:i" }} 수정됨{% endif %}
+                                </span>
+                                <span class="control">
+                                {% if reply.writer == request.user %}
+                                    <!-- 수정 및 삭제 버튼 -->
+                                    <div id="comment-more-{{ reply.id }}" class="float-end">
+                                        <!-- 수정버튼 -->
+                                        <a class="btn btn-secondary btn-sm"
+                                           href="{% url 'community:re_edit' reply.id %}">
+                                            <i class="fa-solid fa-gear fa-2xs"></i>
+                                        </a>
+                                        <!-- 삭제버튼 자바스크립트구동을 위해 delete클래스 필수 -->
+                                        <a class="delete btn btn-danger btn-sm" href="#" data-uri="{% url 'community:re_delete' reply.id %}">
+                                            <i class="fa-solid fa-trash fa-2xs"></i>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                                </span>
+                            </div>
+                            <p style="white-space:pre-line;">
+                                {{ reply.content }}
+                            </p>
+                        </li>
+                        <!-- 답댓글 영역 -->
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
             <!-- 댓글 등록 폼 -->
             <div>
                 <a href="{% url 'community:re_create' post.id %}"
-                   class="btn btn-primary d-flex justify-content-end">댓글 등록</a>
+                   class="btn btn-primary d-flex justify-content-center">댓글 등록</a>
             </div>
         </section>
     </div>
@@ -179,6 +193,12 @@
                     console.error(error); // error message to console
                 }
             });
+        });
+
+        // 버튼 토글
+        document.getElementById("moreButton").addEventListener("click", function() {
+            var hiddenButton = document.getElementById("hiddenButton");
+            hiddenButton.classList.remove("d-none");
         });
 
         // 댓글수정 ajax 처리

@@ -35,10 +35,9 @@ def category_list(request, slug):
     page = request.GET.get('page', '1')     # 페이지 처리 - 여기에서도 해주어야 start_index를 받아 올 수 있음
     paginator = Paginator(post_list, 10)    # 1페이지당 10개씩 페이지처리
     page_obj = paginator.get_page(page)     # 페이지 처리한 리스트
-    current_cate = current_category.id      # 작성폼에서 자동선택되도록 현재 카테의 id 가져오기
     context = {'post_list': page_obj, 'categories': categories, 'today': today,
-               # current_cate는 id-카테글쓰기와연결  current_category는 리스트 사이드바에 카테적용
-               'current_cate': current_cate, 'current_category': current_category,
+               # current_category는 리스트 사이드바에 카테적용
+               'current_category': current_category,
                'cate_url': reverse('community:cate_post_create', args=[slug])}     # 카테글쓰기 링크처리(이렇게 안하면 오류남)
     return render(request, 'community/community.html', context)
 
@@ -83,9 +82,8 @@ def cate_post_create(request, slug):
             return redirect('community:cate_list', slug=slug)   # 해당 카테고리 리스트로
     else:
         form = PostForm()
-    category = get_object_or_404(Category, slug=slug)   # 슬러그로 현재 카테 정보 가져오기
-    current_cate = category.id      # 작성폼에서 자동선택되도록 현재 카테의 id 가져오기
-    context = {'form': form, 'categories': categories, 'current_cate': current_cate}
+    current_category = get_object_or_404(Category, slug=slug)   # 슬러그로 현재 카테 정보 가져오기
+    context = {'form': form, 'categories': categories, 'current_category': current_category}
     return render(request, 'community/post_form_ck.html', context)
 
 
@@ -94,7 +92,7 @@ def cate_post_create(request, slug):
 def post_edit(request, post_id):
     post = get_object_or_404(Post, pk=post_id)  # post_id를 pk로 함     # writer를 user로 지정->굳이 안하고 유지해도 될 듯
     categories = Category.objects.all()     # 카테고리 전체 정보 가져오기
-    current_cate = post.category_id     # post_id로 알아낸 포스트 카테고리의 아이디
+    current_category = post.category        # post_id로 알아낸 포스트 카테고리
     if request.method == "POST":
         form = PostForm(request.POST, instance=post)    # post의 정보를 가져옴
         if form.is_valid():                     # 유효성검사 후
@@ -104,7 +102,7 @@ def post_edit(request, post_id):
             return redirect('community:detail', post_id=post_id)    # 수정한 post 페이지로 넘어가기
     else:
         form = PostForm(instance=post)
-    context = {'form': form, 'categories': categories, 'current_cate': current_cate}
+    context = {'form': form, 'categories': categories, 'current_category': current_category}
     return render(request, 'community/detail_ck.html', context)
 
 

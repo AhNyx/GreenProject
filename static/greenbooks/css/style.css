@@ -174,3 +174,5 @@ border: 2px solid red;
 .bg-commu{color: #81bf60;}
     /* detail 카테고리영역(th): 제목스타일과 다르게 작성정보스타일에 가깝도록 글씨 색, 크기, 굵기 조정 */
 #commu-cate{color: #616161; font-size: 23px; font-weight: normal;}
+#detail .reply ul{border-bottom-style: inset; border-bottom-width: 1px;}
+#detail .list-group-item{color: #616161; border: 0px;}
