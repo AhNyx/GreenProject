@@ -50,6 +50,9 @@
 	margin-bottom: -20px;
 }
 
-section {
-  margin: 0 auto;
+#review {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }

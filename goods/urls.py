@@ -4,7 +4,12 @@ from . import views
 
 app_name = 'goods'
 
+
 urlpatterns = [
-    path('', views.goods, name='goods'),  #상품구매페이지
-    path('<int:goods_id>/', views.gdetail, name='gdetail'),  # 상품 상세페이지
-]
+    path('', views.goods_in_category, name='goods'),  # 구매페이지
+    path('<slug:category_slug>/', views.goods_in_category, name='goods_in_category'),
+    path('<int:id>/<goods_slug>/', views.goods_detail, name='goods_detail'),
+
+
+
+    ]
