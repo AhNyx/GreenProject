@@ -49,10 +49,20 @@
 	margin-left: -10px;
 	margin-bottom: -20px;
 }
+/*주의사항 css*/
+#caution{
 
+}
+
+
+/*한줄평 css*/
 #review {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background-color: #f0f0f0;
+
 }
+
+

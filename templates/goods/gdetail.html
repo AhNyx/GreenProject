@@ -4,33 +4,37 @@
 {% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'greenbooks/css/detail_style.css' %}">
-    <!-- ======= 상세페이지 ======= -->
 
-<form action="{% url 'shopcart:product_add' goods.id %}" method="post">
-                            {% csrf_token %}
-                            {{ add_to_cart }}
-                            <input type="submit" value="Add to Cart"
-                                   class="btn btn-primary btn-sm">
-            </form>-->
+<section id="details" class="details"> <!-- ======= 상세페이지 ======= -->
+  <div class="container">
+    <div class="row justify-content-center"> <!-- 가운데 정렬 -->
+      <div class="col-lg-5">
+        <img src="{{ goods.image.url }}" class="img-thumbnail"> <!--책 이미지-->
+      </div>
+      <div class="col-lg-5">
+        <div class="portfolio-info mt-3">
+          <h1>{{ goods.name }}</h1> <!--책 제목-->
+          <ul class="mt-3">
+            <li><h5><strong>금액 :</strong>  ￦ {{ goods.price }} </h5></li>
+            <li><strong>글쓴이</strong> : {{ goods.writer }}</li>
+          </ul>
+        </div>
+        <div>
+            <h5 class="pb-3"> {{ goods.description }}</h5>
+            <!--장바구니-->
+            <form action="{% url 'shopcart:product_add' goods.id %}" method="post">
+                {% csrf_token %}
+                {{ add_to_cart }}
+                <input type="submit" value="Add to Cart" class="btn btn-primary btn-sm">
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section id="portfolio-details" class="portfolio-details">
-      <div class="container">
-        <div class="row gy-4">
-          <div class="col-lg-8">
-            <img src="{{ goods.image.url }}" class="img-thumbnail"> <!--책 이미지-->
-          </div>
-          <div class="col-lg-4">
-            <div class="portfolio-info">
-              <h2> {{ good.name }}</h2> <!--책 제목-->
-              <ul>
-                  <li><span class="badge bg-dark">금액 </span> ₩ {{ good.price }} </li>
-                <li><strong>수량</strong>: 1권</li>
-                <li><strong>글쓴이</strong>: 이윤하</li>
-              </ul>
-            </div>
-            <div>
-                <h2> 줄거리 : {{ good.description }}</h2>
-              <h4>※ 주의사항</h4>
+    <div id = "cauton" " >
+        <h4>※ 주의사항</h4>
               <p>
                 -중고 거래 특성 상 환불 불가합니다. <br>
                 -제품에 따라 오염 현상이 있습니다. <br>
@@ -38,17 +42,10 @@
                 -실물 색상은 모니터와 휴대전화의 기종과 해상도에 따라 상이할 수 있습니다.<br>
                 -품절시 재입고가 어려울 수 있습니다.<br>
               </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <h3> 한줄평 </h3>
-
+    </div>
 
 <section id = review>
-    <h3 class="my-3"> 한줄평 </h3>
+    <h3 class="mt-5"> 한줄평 </h3>
     <hr>
     <div id = "left">
         <div class="speech-bubble">오랜만에 감명깊게 읽은책입니다

@@ -4,7 +4,7 @@
 {% endblock %}
 {% block content %}
 <!--카테고리 메모-->
-<section>
+<!--<section>
     <div class="row">
         <div class="col-2">
             <div class="list-group mx-5">
@@ -12,23 +12,48 @@
                    class="list-group-item {% if not current_category %}active{% endif %}">All</a>
                 {% for category in categories %}
                     <a href="{{ category.get_absolute_url }}"
-                       class="list-group-item {% if current_category.slug == category.slug %}active{% endif %}">
-                        {{ category.name }}
+                       class="list-group-item ">
+
                     </a>
                 {% endfor %}
             </div>
         </div>
     </div>
-</section>
+</section>-->
+<div class="d-flex justify-content-center"> <!--# 가운데정렬-->
+    <ul class="list-group list-group-horizontal"> <!--리스트 그룹을 수평으로 나열하도록 지정하는 클래스-->
+        <a href="{% url 'goods:goods' %}">
+            <li class="list-group-item"><button type="button" class="btn btn-link" data-mdb-ripple-color="dark">VIEW ALL</button></li>
+        </a>
+        {% for category in categories %}
+        <a href="{{ category.get_absolute_url }}">
+            <li class= "list-group-item {% if current_category.slug == category.slug %}active{% endif %}"><button type="button" class="btn btn-link" data-mdb-ripple-color="dark">{{ category.name }}</button></li>
+        </a>
+        {% endfor %}
+    </ul>
+</div>
+
+<!--<ul class="nav nav-tabs justify-content-center">
+  <li class="nav-item">
+    <a href="{% url 'goods:goods' %}" class="nav-link {% if not current_category %}active{% endif %}">ALL</a>
+  </li>
+  <div class="row">
+    {% for category in categories %}
+      <div class="col">
+        <a href="{{ category.get_absolute_url }}" class="list-group-item {% if current_category.slug == category.slug %}active{% endif %} btn btn-primary my-3">
+          {{ category.name }}
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</ul>-->
+
 
 <!--상품-->
 
  <section class="py-5">
 
         <div class="container px-4 px-lg-5 mt-5">
-            <div>
-                <img src="{% static 'greenbooks/images/lbbook.jpg' %}" alt = "책gif">
-            </div>
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 {% for good in goods %}
                 <div class="col mb-5">
