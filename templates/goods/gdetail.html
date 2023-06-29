@@ -1,18 +1,16 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %} 구매 페이지!!!!!!!!!!
+{% block title %} 상세페이지입니다.
 {% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'greenbooks/css/detail_style.css' %}">
-
-    <!-- ======= Details Section ======= -->
+    <!-- ======= 상세페이지 ======= -->
     <section id="portfolio-details" class="portfolio-details">
       <div class="container">
         <div class="row gy-4">
             {% for good in goods %}
           <div class="col-lg-8">
-            {{ good.image }} <!--그림이 안나옴...이게아닌듯-->
-
+            <img src="{{ goods.image.url }}" class="img-thumbnail"> <!--책 이미지-->
           </div>
  <form action="{% url 'shopcart:product_add' good.id %}" method="post">
                 {% csrf_token %}
@@ -41,15 +39,16 @@
               </p>
             </div>
           </div>
-
         </div>
-
       </div>
-    </section><!-- End Portfolio Details Section -->
+    </section>
 
     <h3> 한줄평 </h3>
 
-<section>
+
+<section id = review>
+    <h3 class="my-3"> 한줄평 </h3>
+    <hr>
     <div id = "left">
         <div class="speech-bubble">오랜만에 감명깊게 읽은책입니다
         ★★★★★★ <br>
