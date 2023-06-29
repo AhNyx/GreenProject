@@ -8,22 +8,28 @@
     <section id="portfolio-details" class="portfolio-details">
       <div class="container">
         <div class="row gy-4">
+            {% for good in goods %}
           <div class="col-lg-8">
             <img src="{{ goods.image.url }}" class="img-thumbnail"> <!--책 이미지-->
           </div>
+ <form action="{% url 'shopcart:product_add' good.id %}" method="post">
+                {% csrf_token %}
+                {{ add_to_cart }}
+                <input type="submit" value="Add to Cart"
+                       class="btn btn-primary btn-sm">
+            </form>
           <div class="col-lg-4">
-            <div class="portfolio-info my-4">
-              <h2> {{ goods.name }}</h2> <!--책 제목-->
+            <div class="portfolio-info">
+              <h2> {{ good.name }}</h2> <!--책 제목-->
               <ul>
-                <li><strong> 금액: ₩ {{ goods.price }} </strong> </li>
-                <li><strong> 글쓴이 {{ goods.writer }}</strong></li>
-                <li><strong> 재고 : {{ goods.stock }} 권</strong></li>
+                <li><strong>금액: ₩ {{ good.price }} </strong> </li>
+                <li><strong>수량</strong>: 1권</li>
+                <li><strong>글쓴이</strong>: 이윤하</li>
               </ul>
             </div>
             <div>
-                <h4 class="my-3"> 줄거리 : <br>
-                    {{ goods.description }}</h4>
-              <h4 class="my-3">※ 주의사항</h4>
+                <h2> 줄거리 : {{ good.description }}</h2>
+              <h4>※ 주의사항</h4>
               <p>
                 -중고 거래 특성 상 환불 불가합니다. <br>
                 -제품에 따라 오염 현상이 있습니다. <br>
@@ -37,6 +43,7 @@
       </div>
     </section>
 
+    <h3> 한줄평 </h3>
 
 
 <section id = review>
@@ -67,8 +74,7 @@
      </div>
 
 </section>
-    <!--<h3>****댓글예정****</h3> &lt;!&ndash;댓글 밑에 넣을예정&ndash;&gt;-->
-
-
-
+    <h3>****댓글예정****</h3> <!--댓글 밑에 넣을예정-->
+{% endfor %}
+    </div>
 {% endblock %}

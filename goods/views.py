@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from. models import *
+from shopcart.forms import AddProductForm
 
 def goods_in_category(request, category_slug=None):
     current_category = None
@@ -20,8 +21,12 @@ def goods_in_category(request, category_slug=None):
 
 def goods_detail(request, id, goods_slug=None):
     goods = get_object_or_404(Goods, id=id, slug=goods_slug)
-    #장바구니 추가해야함 add_to_cart
+    add_to_cart = AddProductForm(initial={'quantity': 1})
     context = {'goods': goods}
     return render(request, 'goods/gdetail.html', context)
+
+
+
+
 
 

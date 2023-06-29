@@ -1,0 +1,33 @@
+<aside class="col-lg-2">
+            <!-- class=p-3 bg-white style=width: 180px; 삭제 -->
+            <div class="flex-shrink-0" style="font-size: 16px;">
+                <ul class="list-unstyled ps-0">
+                    <li class="mb-1">
+                        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse"
+                                data-bs-target="#home-collapse" aria-expanded="true">
+                            <!-- 카테고리 눌렀다면 사이드바 큰 글씨로 -->
+                            {% if current_category.slug %}
+                            <h3>{{ current_category.slug }}</h3>
+                            {% else %}
+                            <!-- 카테고리를 누르지 않았다면 -->
+                            <h3>고객센터</h3>
+                            {% endif %}
+                        </button>
+                        <div class="collapse show" id="home-collapse" style="">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+
+                                <li><a href="{% url 'custom:help_notice' %}" class="link-dark rounded">
+                                    공지사항
+                                </a></li>
+                                 <li><a href="{% url 'custom:qnalist' %}" class="link-dark rounded">
+                                    FAQ
+                                </a></li>
+                                 <li><a href="{% url 'custom:help_list' %}" class="link-dark rounded">
+                                    Q&A
+                                </a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </aside>

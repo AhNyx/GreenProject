@@ -32,8 +32,8 @@ def membermodify(request):
 
 def mypost(request):
     post = Post.objects.all().order_by('-create_date')
-    post_list = post.filter(writer_id=request.user.id)
-#    post_list = post.filter(liked_user=request.user.id)
+#    post_list = post.filter(writer_id=request.user.id)
+    post_list = post.filter(liked_user=request.user.id)
 
     context = {'post_list': post_list}
     return render(request, 'mypage/mypost.html', context)

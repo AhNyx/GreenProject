@@ -16,6 +16,7 @@ urlpatterns = [
     path('custom/', include('custom.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),   # 편집기
     path('price/', include('checkbookprice.urls')), # 바코드가격조회
+    path('shopcart/', include('shopcart.urls'))
 ]
 
 urlpatterns += static(settings.MEDIA_URL,
