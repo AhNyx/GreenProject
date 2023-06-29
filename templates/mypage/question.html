@@ -61,6 +61,44 @@
         </div>
         {% endif %}
         </section>
+
+
+
+    <ul class="pagination justify-content-center">
+        {% if question_list.has_previous %}
+        <li class="page-item">
+            <a href="?page={{ post_list.previous_page_number }}" class="page-link">
+                <i class="fa-solid fa-backward"></i>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <i class="fa-solid fa-backward"></i>
+        </li>
+        {% endif %}
+        {% for page_number in question_list.paginator.page_range %}
+         {% if page_number == post_list.number %}
+            <li class="page-item">
+                <a href="?page={{ page_number }}" class="page-link active">{{page_number}}</a>
+            </li>
+        {% else %}
+            <li class="page-item">
+                <a href="?page={{ page_number }}" class="page-link">{{ page_number }}</a>
+            </li>
+        {% endif %}
+        {% endfor %}
+        {% if question_list.has_next %}
+        <li class="page-item">
+            <a href="?page={{ question_list.next_page_number }}" class="page-link">
+                <i class="fa-solid fa-forward"></i>
+            </a>
+
+        </li>
+        {% else %}
+         <li>&raquo;</li>
+        {% endif %}
+        </ul>
+
 </div>
 </div>
 </body>

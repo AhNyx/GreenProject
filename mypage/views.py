@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
 from django.utils import timezone
@@ -64,10 +65,16 @@ def memo_create(request):
 def question(request):
     question_list = Question.objects.order_by('-create_date')
 
-    return render(request, 'mypage/question.html',{'question_list':question_list})
+    page = request.GET.get('page', '1')
+    paginator = Paginator(question_list, 10)
+    page_obj = paginator.get_page(page)
+
+    context = {'question_list':page_obj}
+    return render(request, 'mypage/question.html', context)
 def question_detail(request, question_id):
 
     board = get_object_or_404(Question, id=question_id)
+    board.update_views
     context = {'list':board}
     return render(request, 'mypage/question_detail.html', context)
 

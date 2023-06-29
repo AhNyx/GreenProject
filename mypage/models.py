@@ -21,4 +21,8 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
-
+    @property
+    def update_views(self):
+        self.views += 1
+        self.save()
+        return self.views
