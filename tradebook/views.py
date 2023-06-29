@@ -1,5 +1,6 @@
-from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from tradebook.forms import TradePostForm
@@ -11,9 +12,14 @@ def tradebook_list(request):
     trade_list = trade_post.objects.order_by('-pub_date')
     trade_category = tradeCategory.objects.all()
     page = request.GET.get('page','1')
+    kw = request.GET.get('kw','')
+    if kw:
+        trade_list = trade_list.filter(
+            Q(title__icontains=kw)
+        ).distinct()
     paginator = Paginator(trade_list, 10)
     page_obj = paginator.get_page(page)
-    context = {'trade_list':page_obj,'trade_category':trade_category}
+    context = {'trade_list': page_obj, 'page': page, 'trade_category': trade_category, 'kw': kw}
     return render(request, 'tradebook/tradebook_list.html',context)
 
 def trade_category_page(request, slug):
