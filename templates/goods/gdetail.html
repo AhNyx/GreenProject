@@ -1,30 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %} 구매 페이지!!!!!!!!!!
+{% block title %} 상세페이지입니다.
 {% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'greenbooks/css/detail_style.css' %}">
+    <!-- ======= 상세페이지 ======= -->
 
-    <!-- ======= Details Section ======= -->
+<form action="{% url 'shopcart:product_add' goods.id %}" method="post">
+                            {% csrf_token %}
+                            {{ add_to_cart }}
+                            <input type="submit" value="Add to Cart"
+                                   class="btn btn-primary btn-sm">
+            </form>-->
+
     <section id="portfolio-details" class="portfolio-details">
       <div class="container">
         <div class="row gy-4">
-            {% for good in goods %}
           <div class="col-lg-8">
-            {{ good.image }} <!--그림이 안나옴...이게아닌듯-->
-
+            <img src="{{ goods.image.url }}" class="img-thumbnail"> <!--책 이미지-->
           </div>
- <form action="{% url 'shopcart:product_add' good.id %}" method="post">
-                {% csrf_token %}
-                {{ add_to_cart }}
-                <input type="submit" value="Add to Cart"
-                       class="btn btn-primary btn-sm">
-            </form>
           <div class="col-lg-4">
             <div class="portfolio-info">
               <h2> {{ good.name }}</h2> <!--책 제목-->
               <ul>
-                <li><strong>금액: ₩ {{ good.price }} </strong> </li>
+                  <li><span class="badge bg-dark">금액 </span> ₩ {{ good.price }} </li>
                 <li><strong>수량</strong>: 1권</li>
                 <li><strong>글쓴이</strong>: 이윤하</li>
               </ul>
@@ -41,15 +40,16 @@
               </p>
             </div>
           </div>
-
         </div>
-
       </div>
-    </section><!-- End Portfolio Details Section -->
+    </section>
 
     <h3> 한줄평 </h3>
 
-<section>
+
+<section id = review>
+    <h3 class="my-3"> 한줄평 </h3>
+    <hr>
     <div id = "left">
         <div class="speech-bubble">오랜만에 감명깊게 읽은책입니다
         ★★★★★★ <br>
@@ -76,6 +76,5 @@
 
 </section>
     <h3>****댓글예정****</h3> <!--댓글 밑에 넣을예정-->
-{% endfor %}
     </div>
 {% endblock %}
