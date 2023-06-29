@@ -3,6 +3,7 @@ from datetime import date
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
@@ -18,7 +19,16 @@ def community(request):
     post_list = Post.objects.order_by('-create_date')   # 내림차순, 새로운 글이 맨위로 가도록 설정
     categories = Category.objects.all()                 # 카테고리 가져오기
     today = date.today()                                # 작성일과 비교하기 위해 오늘날짜 준비
-    page = request.GET.get('page', '1')                 # 페이지 처리 시작 - 페이지 가져오기
+    # 검색 처리(페이지 처리 전에)
+    kw = request.GET.get('kw', '')      # 키워드 가져오기
+    if kw:
+        post_list = post_list.filter(   # 검색키워드가 있으면 리스트가 검색된 리스트로 대체됨. 없으면 리스트는 그대로
+            Q(title__icontains=kw) |    # 제목 검색
+            Q(description__icontains=kw) |      # 내용 검색
+            Q(reply__content__icontains=kw)     # 댓글 내용 검색
+        ).distinct()    # 중복처리함
+    # 페이지 처리
+    page = request.GET.get('page', '1')                 # 페이지 가져오기
     paginator = Paginator(post_list, 10)                # 장고내장모듈을 통해 페이지처리. 10개가 1페이지
     page_obj = paginator.get_page(page)                 # 페이지 처리한 리스트
     context = {'post_list': page_obj, 'categories': categories, 'today': today}    # 보낼 준비

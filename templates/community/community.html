@@ -142,17 +142,36 @@
                 </li>
                 {% endif %}
             </ul>
-            <!-- 로그인시에만 글쓰기 버튼 보이게 -->
-            {% if user.is_authenticated %}
-            <!-- 마진탑 -->
-            <div id="btn_write" class="text-end mt-3">
-                {% if cate_url %}
-                <a href="{{ cate_url }}" class="btn-a btn btn-primary">글쓰기</a>
-                {% else %}
-                <a href="{% url 'community:post_create' %}" class="btn-a btn btn-primary">글쓰기</a>
+            <!-- 검색과 글쓰기 영역 -->
+            <!-- 배치를 위해 그리드 적용 -->
+            <div id="footer" class="row mt-3">
+                <span class="col-4"></span>
+                <span class="col-4 text-center">
+                    <!-- 검색 영역 -->
+                    <!-- 배치를 위해 그리드 적용 -->
+                    <form action="" method="get" class="row">
+                        {% csrf_token %}
+                        <!-- 글씨 영역 -->
+                        <!-- name=kw 지우면 안됨!!! value는 검색 후에 검색어 남아있는 기능 -->
+                        <input type="text" name="kw" value="{{ kw }}" class="col-10">
+                        <!-- 버튼 영역 -->
+                        <button type="submit" class="btn btn-primary col-2">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+                </span>
+                <span class="col-4 text-end">
+                <!-- 로그인시에만 글쓰기 버튼 보이게 -->
+                {% if user.is_authenticated %}
+                    {% if cate_url %}
+                    <a href="{{ cate_url }}" class="btn-a btn btn-primary">글쓰기</a>
+                    {% else %}
+                    <a href="{% url 'community:post_create' %}" class="btn-a btn btn-primary">글쓰기</a>
+                    {% endif %}
                 {% endif %}
+                </span>
             </div>
-            {% endif %}
+
         </section>
         <!-- 그리드: 오른쪽 2/12(16.67%) 영역 - 여백으로 남음 -->
     </div>

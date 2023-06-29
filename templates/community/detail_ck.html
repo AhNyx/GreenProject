@@ -109,14 +109,14 @@
                                 {% if reply.writer == request.user %}
                                     <!-- 수정 및 삭제 버튼 -->
                                     <div id="comment-more-{{ reply.id }}" class="float-end">
+                                        <!-- 삭제버튼 자바스크립트구동을 위해 delete클래스 필수 -->
+                                        <a class="delete btn btn-danger btn-sm" href="#" data-uri="{% url 'community:re_delete' reply.id %}">
+                                            <i class="fa-solid fa-trash fa-2xs"></i>
+                                        </a>
                                         <!-- 수정버튼 -->
                                         <a class="btn btn-secondary btn-sm"
                                            href="{% url 'community:re_edit' reply.id %}">
                                             <i class="fa-solid fa-gear fa-2xs"></i>
-                                        </a>
-                                        <!-- 삭제버튼 자바스크립트구동을 위해 delete클래스 필수 -->
-                                        <a class="delete btn btn-danger btn-sm" href="#" data-uri="{% url 'community:re_delete' reply.id %}">
-                                            <i class="fa-solid fa-trash fa-2xs"></i>
                                         </a>
                                     </div>
                                 {% endif %}
