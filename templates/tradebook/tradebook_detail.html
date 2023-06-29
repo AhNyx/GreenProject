@@ -6,11 +6,15 @@
     <section id="detail">
         <h2 class="pb-2 border-bottom">내용보기</h2>
         <table class="table">
+
             <tr>
                 <!-- 제목 -->
                 <th colspan="4">{{ trade_post_detail.title }}</th>
             </tr>
             <tr>
+                {% if trade_post_detail.trade_category %}
+                <td><span class="badge bg-secondary">{{ trade_post_detail.trade_category }}</span></td>
+                {% endif %}
                 <!-- post 정보 -->
                 <td>글쓴이: {{ trade_post_detail.writer }}</td>
                 <!-- 수정된 경우 수정일시, 아닌 경우 작성일시 표시 -->
@@ -24,16 +28,15 @@
 
             </tr>
             <tr>
-                <!-- post 내용 -->
-
+                <td colspan="4" class="text-start">
+                    {{ trade_post_detail.content|safe }}
+                    {% if trade_post_detail.photo %}
+                        <img src="{{ trade_post_detail.photo.url }}">
+                    {% endif %}
+                </td>
             </tr>
         </table>
-        <div>
-        <p>{{ trade_post_detail.content }}</p>
-            {% if trade_post_detail.photo %}
-                <img src="{{ trade_post_detail.photo.url }}">
-            {% endif %}
-        </div>
+
         <div id="btn" class="text-center">
             <!-- post작성자가 자기 글을 봤을 때 - 삭제, 수정 -->
             {% if trade_post_detail.writer == request.user %}

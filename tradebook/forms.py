@@ -6,8 +6,12 @@ from tradebook.models import trade_post
 class TradePostForm(forms.ModelForm):
     class Meta:
         model = trade_post
-        fields = ['title',
-                  'content',
-                  'photo',
-                  'status_choice',
+        fields = [
+            'title',
+            'content',
+            'trade_category',
                   ]
+        labels = {
+            'title': '',
+            'content': '',
+        }
