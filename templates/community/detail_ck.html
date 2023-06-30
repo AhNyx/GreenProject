@@ -113,8 +113,8 @@
                                         <a class="delete btn btn-danger btn-sm" href="#" data-uri="{% url 'community:re_delete' reply.id %}">
                                             <i class="fa-solid fa-trash fa-2xs"></i>
                                         </a>
-                                        <!-- 수정버튼 -->
-                                        <a class="btn btn-secondary btn-sm"
+                                        <!-- 수정폼을 불러오는 버튼 -->
+                                        <a id="reply-edit-btn" class="btn btn-secondary btn-sm"
                                            href="{% url 'community:re_edit' reply.id %}">
                                             <i class="fa-solid fa-gear fa-2xs"></i>
                                         </a>
@@ -126,16 +126,21 @@
                                 {{ reply.content }}
                             </p>
                         </li>
-                        <!-- 답댓글 영역 -->
+                        <!-- 수정폼, 답댓글 영역 -->
                     </ul>
                     {% endfor %}
                 </div>
             </div>
-            <!-- 댓글 등록 폼 -->
+            <!-- 댓글 등록 폼을 불러오는 버튼 -->
+            {% if user.is_authenticated %}
             <div>
-                <a href="{% url 'community:re_create' post.id %}"
-                   class="btn btn-primary d-flex justify-content-center">댓글 등록</a>
+                <a href="" id="reply-form-btn" class="btn btn-primary d-flex justify-content-center">댓글 등록</a>
             </div>
+            <!-- 댓글 등록 폼 -->
+            <div id="reply-form-wrapper" style="display: none;">
+                {% include 'community/reply_form.html' %}
+            </div>
+            {% endif %}
         </section>
     </div>
     <!-- 마진탑 -->
@@ -168,7 +173,6 @@
                 location.href=$(this).data('uri');
             }
         });
-
         // 추천 ajax처리
         $(".like").click(function () {
             var button = $(this);   // 버튼 특정하기
@@ -194,29 +198,46 @@
                 }
             });
         });
-
-        // 버튼 토글
-        document.getElementById("moreButton").addEventListener("click", function() {
-            var hiddenButton = document.getElementById("hiddenButton");
-            hiddenButton.classList.remove("d-none");
+        // 댓글 폼 토글
+        $('#reply-form-btn').click(function(e) {
+            e.preventDefault();
+            if ($('#reply-form-wrapper').css('display') === 'none') {
+                // 폼이 숨겨진 상태인 경우
+                $('#reply-form-wrapper').css('display', 'block');
+                $('#reply-form-btn').text('취소');
+                $('html, body').animate({
+                scrollTop: $('#reply-form-wrapper').offset().top
+                }, 0);
+            } else {
+                // 폼이 보이는 상태인 경우
+                $('#reply-form-wrapper').css('display', 'none');
+                $('#reply-form-btn').text('댓글 작성');
+            }
         });
-
-        // 댓글수정 ajax 처리
-        $('.edit-reply-btn').click(function() {
-            var replyId = $(this).data('reply-id');
-            $('.edit-reply-form[data-reply-id="' + replyId + '"]').show();
-        });
-        $('.edit-reply-form').submit(function(event) {
-            event.preventDefault();
-            var replyId = $(this).data('reply-id');
-            var formData = $(this).serialize();
+                // 댓글 등록 폼 제출 시 Ajax 요청
+        $("#reply-form").submit(function(event) {
+            event.preventDefault();  // 기본 제출 동작 막기
+            // 댓글 내용 가져오기
+            var content = $("textarea[name='content']").val();
+            // Ajax 요청 보내기
             $.ajax({
-                url: '/community/reply/' + replyId + '/edit/',
-                type: 'POST',
-                data: {'formData': formData, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
-                success: function(data) {
-                    $('.reply[data-reply-id="' + replyId + '"] p').text(data.content);  // 클래스 안에 p요소에
-                    $('.edit-reply-form[data-reply-id="' + replyId + '"]').hide();
+                url: "{% url 'community:re_create' post_id=post.id %}",  // 댓글 등록 뷰의 URL
+                type: "POST",
+                data: {
+                    content: content,
+                    csrfmiddlewaretoken: "{{ csrf_token }}",    // 폼 오류방지 토큰
+                },
+                success: function(response) {
+                    // Ajax 요청 성공 시 새로운 댓글을 동적으로 추가
+                    var reply = response.reply;  // 서버에서 반환한 댓글 정보
+                    var replyElement = "<div>" + reply.content + "</div>";  // 새로운 댓글 HTML 요소 생성
+                    $("#reply-list").append(replyElement);  // 댓글 리스트에 새로운 댓글 추가
+                    // 폼 초기화
+                    $("textarea[name='content']").val("");
+                },
+                error: function(xhr, errmsg, err) {
+                    // Ajax 요청 실패 시 오류 처리
+                    console.log(xhr.status + ": " + xhr.responseText);
                 }
             });
         });

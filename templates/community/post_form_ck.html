@@ -51,7 +51,8 @@
                         <td style="width: 20%;">
                             <!-- 셀렉트 옵션으로 카테고리 선택 -->
                             <select class="form-select" name="category" id="category">
-                                <option value="">----------</option>
+                                <!-- 기본선택 -->
+                                <option value="5"> 일상글 </option>
                                 {% for category in categories %}
                                 <!-- 뷰에서 넘어온 카테 정보가 있으면 일치하는 카테고리를 자동선택 -->
                                 <option value="{{ category.id }}" {% if category == current_category %} selected{% endif %}>

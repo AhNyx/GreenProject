@@ -1,7 +1,4 @@
-{% extends 'base.html' %}
-{% block content %}
-<div class="container mt-3">
-  <form method="post" class="mb-3">
+<form method="post" id="reply-form" class="mb-3">
     {%csrf_token %}
     {% include 'form_errors.html' %}
     <div class="mb-3 mt-3">
@@ -15,6 +12,21 @@
     <div class="d-flex justify-content-end">
       <button type="submit" class="btn btn-primary">작성</button>
     </div>
-  </form>
-</div>
+</form>
+{% block script %}
+<script>
+    // 댓글 등록 폼 제출 시 콘솔에 댓글 내용 출력
+    document.querySelector("#reply-form").addEventListener("submit", function(event) {
+        event.preventDefault();  // 기본 제출 동작 막기
+
+        // 댓글 내용 가져오기
+        var content = document.querySelector("textarea[name='content']").value;
+
+        // 댓글 내용 콘솔에 출력
+        console.log("댓글 내용: " + content);
+
+        // 실제로 제출하기
+        this.submit();
+    });
+</script>
 {% endblock %}

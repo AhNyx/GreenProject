@@ -113,7 +113,7 @@ def post_edit(request, post_id):
     else:
         form = PostForm(instance=post)
     context = {'form': form, 'categories': categories, 'current_category': current_category}
-    return render(request, 'community/detail_ck.html', context)
+    return render(request, 'community/post_form_ck.html', context)
 
 
 # post 삭제하기(post_id 필요)
@@ -143,17 +143,27 @@ def post_like(request):
 # 댓글 등록
 @login_required(login_url='common:login')
 def reply_create(request, post_id):
-    post = get_object_or_404(Post, pk=post_id)  # post_id로 post 정보 갖고오기
+    post = get_object_or_404(Post, pk=post_id)  # post_id로 post 정보 가져오기
     if request.method == "POST":
         form = ReplyForm(request.POST)
         if form.is_valid():
-            reply = form.save(commit=False)     # content만 저장
-            reply.writer = request.user         # 댓쓴이는 현재 로그인한 사용자
+            reply = form.save(commit=False)  # content만 저장
+            reply.writer = request.user  # 댓쓴이는 현재 로그인한 사용자
             reply.post = post  # 외래키 생성(post와 연결)
-            form.save()
-            return redirect('community:detail', post_id=post.id)
+            reply.save()
+
+            # JSON 형식의 응답 생성
+            response_data = {
+                'reply': {
+                    'content': reply.content,
+                }
+            }
+            return JsonResponse(response_data)
+        else:
+            return JsonResponse({'error': 'Form is not valid'}, status=400)
     else:
-        form = ReplyForm()     # 빈 폼 생성
+        form = ReplyForm()  # 빈 폼 생성
+
     context = {'form': form}
     return render(request, 'community/reply_form.html', context)
 
