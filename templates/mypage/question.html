@@ -5,8 +5,6 @@
 <style>
         #box1{height:50px;}
         a{text-decoration: none; color: black}
-
-
 </style>
 <body class="m-5">
 <div class="container text-center">
@@ -35,9 +33,7 @@
                     </button>
                     <div class="collapse show" id="home-collapse" style="">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <!-- 전체글 -->
                             <li><a href="{% url 'mypage:question' %}" class="link-dark rounded">전체글</a></li>
-                            <!-- 카테고리 이름으로 리스트 설정 -->
                             {% for category in categories %}
                             <li><a href="{{ category.get_absolute_url }}" class="link-dark rounded">
                                 {{ category.name }}
@@ -107,9 +103,12 @@
                         {% else %}
                     <li class="page-item">
                         {% endif %}
-                        <a class="page-link" href="?page={{ page_number }}">
-                            {{ page_number }}
-                        </a>
+                    <a href="#" data-page="{{ page_number }}" class="page-link">
+                        {{ page_number }}
+                    </a>
+<!--                        <a class="page-link" href="?page={{ page_number }}">-->
+<!--                            {{ page_number }}-->
+<!--                        </a>-->
                     </li>
                     {% endfor %}
                     {% if post_list.has_next %}
@@ -128,15 +127,41 @@
             </li>
         </ul>
 
-        <div id="btn_write" class="text-end mt-3">
+        <div id="btn_write" class="d-flex justify-content-between mt-3">
+            <div class="search">
+                <input style="height:35px" type="text" class="kw" value="{{ kw|default_if_none:'' }}">
+                <button type="button" id="btn_search" class="btn btn-primary">찾기</button>
+            </div>
         {% if user.is_authenticated %}
             <a href="{% url 'mypage:question_post' %}" class="btn-a btn btn-primary">글쓰기</a>
         {% endif %}
+
         </div>
 
     </div>
+    <form action="" method="get" id="searchForm">
+        <input type="hidden" id="kw" name="kw">
+        <input type="hidden" id="page" name="page">
+    </form>
 </div>
 
 
 </body>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(function(){
+        $('.page-link').click(function(){
+            $('#page').val($(this).data('page'));
+            $('#searchForm').submit();
+        });
+
+        $('#btn_search').click(function(){
+            $('#kw').val($('.kw').val());
+            $('#page').val(1);
+            $('#searchForm').submit();
+        });
+    });
+</script>
 {% endblock %}

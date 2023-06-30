@@ -66,16 +66,22 @@ def memo_create(request):
 
 def question(request):
     question_list = Question.objects.order_by('-create_date')
-
-
-    categories = Category.objects.all()
-
     page = request.GET.get('page', '1')
+    kw = request.GET.get('kw', '')
+
+    if kw:
+        question_list = question_list.filter(
+            Q(title__icontains=kw)|
+            Q(content__icontains=kw)|
+            Q(author__username__icontains=kw)
+        ).distinct()
+
     paginator = Paginator(question_list, 10)
     page_obj = paginator.get_page(page)
+    categories = Category.objects.all()
 
     today = date.today()
-    context = {'question_list':page_obj, 'today':today, 'categories':categories}
+    context = {'question_list':page_obj, 'today':today, 'categories':categories, 'page':page ,'kw':kw}
     return render(request, 'mypage/question.html', context)
 def question_detail(request, question_id):
 
@@ -131,3 +137,20 @@ def question_delete(request, question_id):
     question = get_object_or_404(Question, id=question_id)
     question.delete()
     return redirect('mypage:question')
+
+@login_required(login_url='/')
+def comment_create(request, pk):
+    post = get_object_or_404(Question, pk=pk)
+    if request.method == 'POST':
+        form = CusCommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.pub_date = timezone.now()
+            comment.post = post
+            comment.save()
+            return redirect('mypage:question_read', question_id=post.id)
+    else:
+        form = CusCommentForm()
+    context = {'form' : form }
+    return render(request, 'mypage/comment_form.html', context)
