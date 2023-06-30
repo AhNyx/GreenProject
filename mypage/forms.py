@@ -10,11 +10,12 @@ class MyForm(forms.ModelForm):
     class Meta:
         model = Question
         fields = (
-            'title', 'content'
+            'title', 'content', 'category'
         )
         label = [
             {'제목': 'title'},
             {'내용': 'content'},
+            {'카테고리': 'category'}
 
         ]
 
