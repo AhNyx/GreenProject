@@ -175,3 +175,4 @@ border: 2px solid red;
 #commu-cate{color: #616161; font-size: 23px; font-weight: normal;}
 #detail .reply ul{border-bottom-style: inset; border-bottom-width: 1px;}
 #detail .list-group-item{color: #616161; border: 0px;}
+#commu-table a:focus, a:active{background-color: transparent;}

@@ -97,7 +97,7 @@
                     {% for reply in post.reply_set.all %}
                     <ul>
                         <li class="list-group-item">
-                            <div class="writer-info">
+                            <div class="writer-info mb-3">
                                 <i class="fa-solid fa-circle-user fa-2xl"></i>
                                 <span class="writer-name">
                                     {{ reply.writer }}
@@ -107,26 +107,19 @@
                                 </span>
                                 <span class="control">
                                 {% if reply.writer == request.user %}
-                                    <!-- 수정 및 삭제 버튼 -->
-                                    <div id="comment-more-{{ reply.id }}" class="float-end">
+                                    <!-- 댓글 삭제 버튼 -->
+                                    <div class="float-end">
                                         <!-- 삭제버튼 자바스크립트구동을 위해 delete클래스 필수 -->
-                                        <a class="delete btn btn-danger btn-sm" href="#" data-uri="{% url 'community:re_delete' reply.id %}">
+                                        <a class="delete" href="#" data-uri="{% url 'community:re_delete' reply.id %}">
                                             <i class="fa-solid fa-trash fa-2xs"></i>
-                                        </a>
-                                        <!-- 수정폼을 불러오는 버튼 -->
-                                        <a id="reply-edit-btn" class="btn btn-secondary btn-sm"
-                                           href="{% url 'community:re_edit' reply.id %}">
-                                            <i class="fa-solid fa-gear fa-2xs"></i>
                                         </a>
                                     </div>
                                 {% endif %}
                                 </span>
                             </div>
-                            <p style="white-space:pre-line;">
-                                {{ reply.content }}
-                            </p>
+                            <p id="reply-content-{{ reply.id }}"
+                               style="white-space:pre-line;">{{ reply.content }}</p>
                         </li>
-                        <!-- 수정폼, 답댓글 영역 -->
                     </ul>
                     {% endfor %}
                 </div>
@@ -198,7 +191,7 @@
                 }
             });
         });
-        // 댓글 폼 토글
+        // 댓글폼버튼 토글
         $('#reply-form-btn').click(function(e) {
             e.preventDefault();
             if ($('#reply-form-wrapper').css('display') === 'none') {
@@ -214,7 +207,7 @@
                 $('#reply-form-btn').text('댓글 작성');
             }
         });
-                // 댓글 등록 폼 제출 시 Ajax 요청
+        // 댓글 등록 폼 제출
         $("#reply-form").submit(function(event) {
             event.preventDefault();  // 기본 제출 동작 막기
             // 댓글 내용 가져오기
@@ -225,7 +218,7 @@
                 type: "POST",
                 data: {
                     content: content,
-                    csrfmiddlewaretoken: "{{ csrf_token }}",    // 폼 오류방지 토큰
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
                 },
                 success: function(response) {
                     // Ajax 요청 성공 시 새로운 댓글을 동적으로 추가

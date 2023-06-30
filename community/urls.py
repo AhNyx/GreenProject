@@ -12,7 +12,6 @@ urlpatterns = [
     path('<int:post_id>/edit/', views.post_edit, name='post_edit'),         # post 수정
     path('<int:post_id>/delete/', views.post_delete, name='post_delete'),   # post_id로 삭제
     path('<int:post_id>/reply/', views.reply_create, name='re_create'),     # 댓글 등록
-    path('reply/<int:reply_id>/edit/', views.reply_edit, name='re_edit'),   # 댓글 수정(수업 중 구현x)
     path('reply/<int:reply_id>/delete/', views.reply_delete, name='re_delete'),     # 댓글 삭제
     path('likes/', views.post_like, name='post_like'),  # 추천
 ]

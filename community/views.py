@@ -174,19 +174,3 @@ def reply_delete(request, reply_id):
     reply = get_object_or_404(Reply, pk=reply_id)   # reply_id로 댓글정보 가져오기
     reply.delete()
     return redirect('community:detail', post_id=reply.post.id)  # 댓글과 연결된 post 페이지로
-
-
-# 댓글 수정- 수업중에 구현 x
-def reply_edit(request, reply_id):
-    reply = get_object_or_404(Reply, pk=reply_id)   # reply_id로 댓글정보 가져오기
-    if request.method == "POST":
-        form = ReplyForm(request.POST, instance=reply)  # 댓글 정보가 있는 폼
-        if form.is_valid():
-            reply = form.save(commit=False)
-            reply.modify_date = timezone.now()  # 수정일 지정
-            reply.save()
-            return redirect('community:detail', post_id=reply.post.id)
-    else:
-        form = ReplyForm(instance=reply)
-    context = {'form': form, 'reply': reply}
-    return render(request, 'community/reply_form.html', context)
