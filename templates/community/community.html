@@ -20,7 +20,7 @@
                 <ul class="list-unstyled ps-0">
                     <li class="mb-1">
                         <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse"
-                                data-bs-target="#home-collapse" aria-expanded="true">
+                                data-bs-target="#home-collapse" aria-expanded="false">
                             <!-- 카테고리 눌렀다면 사이드바 큰 글씨로 -->
                             {% if current_category.slug %}
                             <h3>{{ current_category.slug }}</h3>
@@ -29,7 +29,8 @@
                             <h3>전체글</h3>
                             {% endif %}
                         </button>
-                        <div class="collapse show" id="home-collapse" style="">
+                        <!-- class=collapse(접힌상태) /collapse show(열린상태) -->
+                        <div class="collapse show" id="home-collapse">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                 <!-- 전체글 -->
                                 <li><a href="{% url 'community:community' %}" class="link-dark rounded">전체글</a></li>
@@ -46,19 +47,20 @@
             </div>
         </aside>
         <!-- 그리드: 가운데 8/12(66.67%) 영역 -->
-        <!-- 편집기 크기와 테이블 크기 맞춤 -->
         <section id="community" class="col-lg-8">
             <table id="commu-table" class="table table-hover">
                 <thead>
                     <tr>
-                        <td>번호</td>
+                        <!-- 좌우 패딩 0 -->
+                        <td class="px-0">번호</td>
                         <!-- 카테고리 추가 -->
-                        <td>카테고리</td>
+                        <td> 분류 </td>
                         <td>제목</td>
                         <td>작성자</td>
                         <td>작성일</td>
-                        <td>조회</td>
-                        <td>추천</td>
+                        <!-- 왼쪽 패딩 0 -->
+                        <td class="ps-0">조회</td>
+                        <td class="px-0">추천</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,15 +75,19 @@
                                 {{ post_list.paginator.count|sub:post_list.start_index|sub:forloop.counter0|add:1 }}
                             </td>
                             <!-- 카테고리 -->
-                            <td>
+                            <td class="px-0" style="font-size: 0.9rem;">
                                 {% if post.category %}
-                                {{ post.category }}
+                                [{{ post.category }}]
                                 {% endif %}
                             </td>
                             <!-- 제목: a태그로 연결 -->
-                            <td>
-                                <a href="{% url 'community:detail' post.id %}">
+                            <td class="text-start">
+                                <a class="label-title" href="{% url 'community:detail' post.id %}">
                                     {{ post.title }}
+                                    <!-- 댓글이 있으면 숫자로 표시 -->
+                                    {% if post.reply_set.count > 0 %}
+                                    <span class="badge bg-commu">{{ post.reply_set.count }}</span>
+                                    {% endif %}
                                 </a>
                             </td>
                             <!-- 작성자 -->
@@ -89,69 +95,83 @@
                             <!-- 작성일 -->
                             <!-- 오늘 작성된 글은 [오전/오후 hh:mm]으로 포맷변경 -->
                             {% if post.create_date|date:"Y-m-d" == today|date:"Y-m-d" %}
-                                <td>{{ post.create_date|date:"A h:i" }}</td>
+                            <td>{{ post.create_date|date:"A h:i" }}</td>
                             <!-- 오늘 글이 아니면 [yyyy.mm.dd]으로 포맷변경 -->
                             {% else %}
-                                <td>{{ post.create_date|date:"Y.m.d" }}</td>
+                            <td>{{ post.create_date|date:"Y.m.d" }}</td>
                             {% endif %}
                             <!-- 조회수 -->
                             <td>{{ post.views }}</td>
-                            <!-- 좋아요 -->
+                            <!-- 추천수 -->
                             <td>{{ post.count_liked_user }}</td>
                         </tr>
                         {% endfor %}
                     <!-- post가 없으면 -->
                     {% else %}
                     <tr>
-                        <td colspan="6" class="text-center">게시글이 없습니다.</td>
+                        <td colspan="7" class="text-center">게시글이 없습니다.</td>
                     </tr>
                     {% endif %}
                 </tbody>
             </table>
             <!-- 페이지 처리 영역 -->
             <ul class="pagination justify-content-center">
-                <!-- 이전 페이지 -->
+                <!-- 이전 페이지가 존재하면 아이콘 표시 -->
                 {% if post_list.has_previous %}
                 <li class="page-item">
                     <a class="page-link" href="?page={{ post_list.previous_page_number }}">
-                {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link" href="">
-                {% endif %}
                         <i class="fa-solid fa-backward"></i>
                     </a>
                 </li>
-                <!-- 현재 페이지 -->
+                {% endif %}
+                <!-- 페이지 처리된 리스트 범위를 모두 표시 -->
                 {% for page_number in post_list.paginator.page_range %}
-                    {% if page_number == post_list.number %}
-                    <li class="page-item active">
-                    {% else %}
-                    <li class="page-item">
-                    {% endif %}
+                    <!-- 현재 페이지인 경우 class에 active를 주어 표시 -->
+                    <li class="page-item{% if page_number == post_list.number %} active{% endif %}">
                         <a class="page-link" href="?page={{ page_number }}">
                             {{ page_number }}
                         </a>
                     </li>
                 {% endfor %}
-                <!-- 다음 페이지 -->
+                <!-- 다음 페이지가 존재하면 아이콘 표시 -->
                 {% if post_list.has_next %}
                 <li class="page-item">
                     <a class="page-link" href="?page={{ post_list.next_page_number }}">
-                {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link" href="">
-                {% endif %}
                         <i class="fa-solid fa-forward"></i>
                     </a>
                 </li>
+                {% endif %}
             </ul>
-            <!-- 로그인시에만 글쓰기 버튼 보이게 -->
-            {% if user.is_authenticated %}
-            <!-- 마진탑 -->
-            <div id="btn_write" class="text-end mt-3">
-                <a href="{% url 'community:post_create' %}" class="btn-a btn btn-primary">글쓰기</a>
+            <!-- 검색과 글쓰기 영역 -->
+            <!-- 배치를 위해 그리드 적용 -->
+            <div id="footer" class="row mt-3">
+                <span class="col-4"></span>
+                <span class="col-4 text-center">
+                    <!-- 검색 영역 -->
+                    <!-- 배치를 위해 그리드 적용 -->
+                    <form action="" method="get" class="row">
+                        {% csrf_token %}
+                        <!-- 글씨 영역 -->
+                        <!-- name=kw 지우면 안됨!!! value는 검색 후에 검색어 남아있는 기능 -->
+                        <input type="text" name="kw" value="{{ kw }}" class="col-10">
+                        <!-- 버튼 영역 -->
+                        <button type="submit" class="btn btn-primary col-2">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+                </span>
+                <span class="col-4 text-end">
+                <!-- 로그인시에만 글쓰기 버튼 보이게 -->
+                {% if user.is_authenticated %}
+                    {% if cate_url %}
+                    <a href="{{ cate_url }}" class="btn-a btn btn-primary">글쓰기</a>
+                    {% else %}
+                    <a href="{% url 'community:post_create' %}" class="btn-a btn btn-primary">글쓰기</a>
+                    {% endif %}
+                {% endif %}
+                </span>
             </div>
-            {% endif %}
+
         </section>
         <!-- 그리드: 오른쪽 2/12(16.67%) 영역 - 여백으로 남음 -->
     </div>

@@ -16,6 +16,7 @@ class Help(models.Model):
     def __str__(self):
         return self.title
 
+      
 class Answer(models.Model):
     title = models.CharField(max_length=200)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
