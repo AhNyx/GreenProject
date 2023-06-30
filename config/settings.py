@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'checkbookprice',  # 바코드리더
     'goods',
     'shopcart',
+    'django.contrib.humanize', # 원화표시(gdetail)
 ]
 
 MIDDLEWARE = [

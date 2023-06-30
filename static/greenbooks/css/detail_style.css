@@ -65,4 +65,20 @@
 
 }
 
+#left {
+        float: left;
+        text-align: center;
+        width: 50%;
+    }
+
+    #img {
+        display: inline-block;
+        text-align: center;
+    }
+
+    #right {
+        float: right;
+        text-align: center;
+        width: 50%;
+    }
 

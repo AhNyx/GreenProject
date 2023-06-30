@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %} 상세페이지입니다.
+{% load humanize %} <!--원화로 표시하기위해 -->
 {% endblock %}
 {% block content %}
 <link rel="stylesheet" href="{% static 'greenbooks/css/detail_style.css' %}">
-
 <section id="details" class="details"> <!-- ======= 상세페이지 ======= -->
   <div class="container">
     <div class="row justify-content-center"> <!-- 가운데 정렬 -->
@@ -15,7 +15,7 @@
         <div class="portfolio-info mt-3">
           <h1>{{ goods.name }}</h1> <!--책 제목-->
           <ul class="mt-3">
-            <li><h5><strong>금액 :</strong>  ￦ {{ goods.price }} </h5></li>
+            <li><h5><strong>금액 :</strong> {{ goods.price|intcomma }} </h5></li>
             <li><strong>글쓴이</strong> : {{ goods.writer }}</li>
           </ul>
         </div>
@@ -28,13 +28,8 @@
                 <input type="submit" value="Add to Cart" class="btn btn-primary btn-sm">
             </form>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-    <div id = "cauton" " >
-        <h4>※ 주의사항</h4>
+        <div id = "cauton" >
+            <h4 class = 'mt-3'>※ 주의사항</h4>
               <p>
                 -중고 거래 특성 상 환불 불가합니다. <br>
                 -제품에 따라 오염 현상이 있습니다. <br>
@@ -42,24 +37,26 @@
                 -실물 색상은 모니터와 휴대전화의 기종과 해상도에 따라 상이할 수 있습니다.<br>
                 -품절시 재입고가 어려울 수 있습니다.<br>
               </p>
+        </div>
+      </div>
     </div>
-
+  </div>
+</section>
 <section id = review>
-    <h3 class="mt-5"> 한줄평 </h3>
+    <h3 class="mt-5"> 판매자의 말! </h3>
     <hr>
     <div id = "left">
-        <div class="speech-bubble">오랜만에 감명깊게 읽은책입니다
-        ★★★★★★ <br>
-        -이*연-</div>
+        <div class="speech-bubble">상태 좋습니다 댓글주세요~ <br>
+        싸게 올렸어요~:D</div>
         <div class="speech-bubble:after"></div>
         <br>
-        <div class="speech-bubble">인생책이에요 추천합니다. ★★★★★★  <br>- 김*명 -</div>
+        <div class="speech-bubble"> 연락주시면 바로 답변 드리겠습니다~-</div>
         <div class="speech-bubble:after">
     </div>
     <br>
-        <!-- thums-up image -->
+     <!--   &lt;!&ndash; thums-up image &ndash;&gt;
     <div id="img">
-        <img src="{% static 'greenbooks/images/girl.jpg' %}" alt = "미모티콘">
+        <img src="{% static 'greenbooks/images/girl_re.png' %}" alt = "미모티콘">
     </div>
 
     <div id="right">
@@ -69,9 +66,33 @@
         <div class="right-bubble">소장용으로 한권 더 구매할 예정입니다. ★★★★★★  <br>- 고*현</div>
         <div class="right-bubble:after"></div>
         <br>
-     </div>
+     </div>-->
 
 </section>
-    <h3>****댓글예정****</h3> <!--댓글 밑에 넣을예정-->
-    </div>
+    <h3>dfdf</h3> <!--댓글 밑에 넣을예정-->
+
+
+<div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://mysite-4hfy1silzj.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
 {% endblock %}
+
+
