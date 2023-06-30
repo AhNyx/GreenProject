@@ -19,5 +19,6 @@ urlpatterns = [
     path("question/<int:question_id>/", views.question_detail,name='question_read'),
     path("question_post/", views.question_post, name='question_post'),
     path("question_modify/<int:question_id>/", views.question_modify, name='question_modify'),
-    path("question_delete/<int:question_id>/", views.question_delete, name='question_delete')
+    path("question_delete/<int:question_id>/", views.question_delete, name='question_delete'),
+    path('category/<str:slug>/', views.category_page,name='category_page'),
 ]

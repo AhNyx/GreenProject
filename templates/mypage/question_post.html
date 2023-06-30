@@ -4,11 +4,21 @@
 <div class="container text-center">
     <section class="question_post w-auto">
         <h2 class="my-5">고객상담</h2>
+
         <form action="" method="post">
             {% csrf_token %}
             {{ form.media }}
-            <input style="margin:0 auto;" type="text" name="title" class="form-control w-50 my-3"
-                   placeholder="제목을 입력해주세요" value="{{ form.title.value|default_if_none:'' }}">
+            <div style="width:68%; margin:0 auto" class="d-flex justify-content-between">
+                <select class="form-select w-25 my-3" name="category" id="category">
+                    <option value="" selected>카테고리</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+
+                <input  type="text" name="title" class="form-control w-75 my-3"
+                       placeholder="제목을 입력해주세요" value="{{ form.title.value|default_if_none:'' }}">
+            </div>
             {{ form.content }}
             {% if user.is_authenticated %}
             <div class="text-center mt-3">
@@ -25,6 +35,7 @@
         </form>
     </section>
 </div>
+
 
 
 {% endblock %}

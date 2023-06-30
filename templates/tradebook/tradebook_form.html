@@ -1,11 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <h3>글쓰기</h3>
+    <div id="announcement">
+        <h2 class="pb-2 border-bottom">글쓰기</h2>
+        <hr>
+    </div>
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">저장하기</button>
+        {% include 'form_errors.html' %}
+        <div style="width:760px; float:none; margin:0 auto;" class="col-md-3">
+            {{ form.trade_category }}
+            <input type="text"
+                   class="form-control my-3 mb-3" name="title" id="title"
+                   value="{{ form.title.value|default_if_none:'' }}"
+                   placeholder="제목을 입력해주세요">
+        {{ form.media }}
+        {{ form.content }}
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <button class="btn btn-primary" type="button" onclick="location.href='{% url 'tradebook:tradebook_list' %}'">목록</button>
+                <button class="btn btn-primary" type="submit">저장하기</button>
+            </div>
+        </div>
     </form>
+
 </div>
 {% endblock %}
