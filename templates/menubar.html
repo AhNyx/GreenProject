@@ -95,6 +95,12 @@ $(document).ready(function () {
 <div id="test_obj">
     <header>
         <nav>
+            <a href="#" id="menu" class="kakao-button" onclick="return false;" ><img src="../../static\greenbooks\images\menu.png" class="sg_image" alt="menu"></a>
+            <a href="{% url 'index' %}" id="home" class="kakao-button"><img src="../../static\greenbooks\images\home.png" class="sg_image" alt="home"></a>
+            <a href="{% url 'price:barcodereader' %}" id="ocr" class="kakao-button"><img src="../../static\greenbooks\images\ocr.png" class="sg_image" alt="home"></a>
+            <a href="{}" id="cart" class="kakao-button"><img src="../../static\greenbooks\images\cart.png" class="sg_image" alt="cart"></a>
+            <a onclick="goTop()" id="up" class="up-button"><img src="../../static\greenbooks\images\up.png" class="sg_image" alt="맨 위로"></a>
+            <a href="http://pf.kakao.com/_xdBNAG" id="kakao" class="kakao-button" target="_blank"><img src="../../static\greenbooks\images\kakao.png" class="sg_image" alt="카카오"></a>
             <a href="#" id="menu" class="kakao-button" onclick="return false;"><img src="{% static 'greenbooks/images/menu.png' %}" class="sg_image" alt="menu"></a>
             <a href="{% url 'index' %}" id="home" class="kakao-button"><img src="{% static 'greenbooks/images/home.png' %}" class="sg_image" alt="home"></a>
             <a href="{% url 'price:checkbookprice' %}" id="ocr" class="kakao-button"><img src="{% static 'greenbooks/images/ocr.png' %}" class="sg_image" alt="home"></a>

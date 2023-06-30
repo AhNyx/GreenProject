@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div style="text-align:center;">
+        <hr>
+    <h1>바코드로 책 찾기</h1>
+        <hr>
+    {% if title %}
+    {% else %}
+        <div class="my-3">
+            <form method="POST" class="post-form" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="save btn btn-primary my-3" value="upload">찾기</button>
+            </form>
+        </div>
+    {% endif %}
+    {% if title %}
+        <div>
+            <img src="{{cover}}">
+        </div>
+        <div>
+            <h2>책 제목 : {{title}}</h2>
+            <h2>판매가 : {{price}}, 정가 : {{pricestandard}}</h2>
+            <a href="{{link}}">알라딘 판매처 링크</a>
+            <h2>isbn : {{isbn13}}</h2>
+        </div>
+    {% endif %}
+    </div>
+</div>
+{% endblock %}

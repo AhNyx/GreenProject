@@ -35,7 +35,7 @@ class trade_post(models.Model):
         return self.hit
 
 class Comment(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    trade_author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     pub_date = models.DateTimeField()
     modify_date = models.DateTimeField(null=True, blank=True)
