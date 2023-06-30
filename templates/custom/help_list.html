@@ -1,69 +1,92 @@
 {% extends 'base.html' %}
 <!-- 템플릿 필터 적용을 위해 추가 -->
 {% load static %}
-{%block title%} - Q&A{%endblock%}
+{% block title %} - Q&A{% endblock %}
 {% block content %}
 <div class="container px-4 py-5">
-    <div class="board_title">
-
+    <div id="announcement">
         <div class="pb-2 border-bottom">
-            <h2>고객센터<br> Q&A </h2>
-            <strong>안녕하세요 Q&A입니다. 궁금하신 점을 게시글로 작성해주세요.</strong>
+            <h2>고객센터<br>
+                <p style="font-size:1.3rem">Q&A</p></h2>
+            <strong><p style="font-size:0.75rem; color:#ac2c38b5">
+                * 단순비방, 비인격적인 용어 기재시 임의삭제 될 수 있습니다.<br>
+                * 주말, 공휴일, 평일 근무시간(08:30~17:30) 이후 문의에 대해서는 답변이 지연될 수 있습니다.</p></strong>
 
             <hr>
         </div>
-        <div class="row">
-            {% include 'custom/custom_menu.html'%}
-
-
-            <section id="help_list" class="col-lg-8">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <td class="num">번호</td>
-                            <td class="title">제목</td>
-                            <td class="writer">고객명</td>
-                            <td class="date">작성일</td>
-                            <td class="count">조회</td>
-                        </tr>
-                    </thead>
+    </div>
+    <div class="row">
+        {% include 'custom/custom_menu.html' %}
+        <section id="help_list" class="col-lg-8">
+            <table class="table table-hover">
+                <thead>
+                    {% if request.user.is_superuser %}
+                        <h5>관리자 게시판 창입니다.</h5>
+                    {% else %}
+                        <h5>{{ request.user }}님의 Q&A게시판입니다.</h5>
+                    {% endif %}
+                    <tr>
+                        <th scope="col">상태</th>
+                        <th scope="col">No</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">고객명</th>
+                        <th scope="col">작성일</th>
+                        <th scope="col">삭제</th>
+                    </tr>
+                </thead>
+                <tbody>
                     {% if help_list %}
-                    <!-- 포스트 가져옴 -->
+                        <!-- 포스트 가져옴 -->
                         {% for help in help_list %}
-                            <tbody>
                             <tr>
-                                <td class="num">{{ help.id }}</td>
-                                <td class="title"><a href="{% url 'custom:help_view' help.id %}">{{ help.title }}</a></td>
-                                <td class="writer">{{ help.author }}</td>
-                                <td class="date">{{ help.pub_date }}</td>
-                                <td class="count">{{ help.views }}</td>
+                                <td>
+                                    {% if help.answers.all %}
+                                        <!-- 답변이 있는 경우 -->
+                                        <img id="yes-icon" src="{% static 'greenbooks/images/yes.png' %}" alt="확인">
+                                    {% else %}
+                                        <img id="no-icon" src="{% static 'greenbooks/images/no.png' %}" alt="대기">
+                                    {% endif %}
+                                </td>
+                                <td>{{ help.id }}</td>
+                                <td class="title">
+                                    <a href="{% url 'custom:help_view' help.id %}">{{ help.title }}</a>
+                                </td>
+                                <td>{{ help.author }}</td>
+                                <td>{{ help.pub_date }}</td>
+                                <td class="delete">
+                                    <a href="{% url 'custom:help_delete' help.id %}">
+                                        <img id="delete-icon1" src="{% static 'greenbooks/images/delete.png' %}" alt="휴지통">
+                                    </a>
+                                </td>
                             </tr>
-                            </tbody>
+                            {% if help.answers.all %}
+                                <!-- 답변이 있는 경우 -->
+                                {% for answer in help.answers.all %}
+                                    <tr>
+                                        <td></td>
+                                        <td>{{ answer.id }}</td>
+                                        <td class="title" style="padding-left: {{ answer.indent }}em;">답변</td>
+                                        <td>{{ answer.author }}</td>
+                                        <td>{{ answer.create_date }}</td>
+                                        <td class="delete"></td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
                         {% endfor %}
-                </table>
-            </section>
-
-                {% else %}
-                <p>포스트가 없습니다.</p>
-                {% endif %}
-
-            <div class="board_page">
-                <a href="#" class="bt first"><<</a>
-                <a href="#" class="bt prev"><</a>
-                <a href="#" class="num on">1</a>
-                <a href="#" class="num">2</a>
-                <a href="#" class="num">3</a>
-                <a href="#" class="num">4</a>
-                <a href="#" class="num">5</a>
-                <a href="#" class="bt next">></a>
-                <a href="#" class="bt last">>></a>
-            </div>
-            <div class="bt_wrap">
-                <a href="{% url 'custom:help_write' %}" class="on">등록</a>
-                <!--<a href="#">수정</a>-->
-            </div>
-        </div>
+                    {% else %}
+                        <!-- 리스트가 없으면 -->
+                        <tr>
+                            <td colspan="6" class="text-center">게시글이 없습니다.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            {% if not request.user.is_superuser %}
+                <div id="btn_write" class="text-end mt-3">
+                    <a href="{% url 'custom:help_write' %}" class="btn-a btn btn-primary">질문 등록</a>
+                </div>
+            {% endif %}
+        </section>
     </div>
 </div>
- {% include 'menubar.html'%}
 {% endblock %}

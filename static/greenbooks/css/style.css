@@ -102,7 +102,7 @@ main {
 .btn-toggle:hover,
 .btn-toggle:focus {
   color: rgba(0, 0, 0, .85);
-  background-color: #d2f4ea;
+  background-color: #2f821a26;
 }
 
 .btn-toggle::before {
@@ -129,7 +129,7 @@ main {
 }
 .btn-toggle-nav a:hover,
 .btn-toggle-nav a:focus {
-  background-color: #d2f4ea;
+  background-color: #2f821a26;
 }
 
 .scrollarea {
@@ -137,7 +137,23 @@ main {
 }
 
 .fw-semibold { font-weight: 600; }
-.lh-tight { line-height: 1.25; }
+.lh-tight { line-height: 1.25px; }
+
+#talk24, #yes-icon, #no-icon{
+        width: 23px;
+        height: 23px;
+        margin :auto;
+        margin-left:0.2rem;
+       }
+
+#delete-icon1, #delete-icon2{
+         width: 23px;
+        height: 23px;
+        margin :auto;
+        margin-left:0.2rem;
+
+}
+
 
 /* @@@@@@@@@@community @@@@@@@@@@@@@@스타 일 */
 
@@ -167,3 +183,5 @@ border: 2px solid red;
 #commu-table tr:hover a{color: #212529;}
     /* detail 카테고리영역(th): 제목스타일과 다르게 작성정보스타일에 가깝도록 글씨 색, 크기, 굵기 조정 */
 #commu-cate{color: #616161; font-size: 23px; font-weight: normal;}
+
+

@@ -1,54 +1,66 @@
-!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지사항</title>
+{% extends 'base.html' %}
+<!-- 템플릿 필터 적용을 위해 추가 -->
+{% load static %}
+{%block title%} - Q&A{%endblock%}
+{% block content %}
+<div class="container px-4 py-5">
+    <div id="announcement">
+        <div class="pb-2 border-bottom">
+            <h2>고객센터<br>
+                <p style="font-size:1.3rem">Q&A</p></h2>
+            <strong><p style="font-size:0.75rem; color:#ac2c38b5">
+                * 단순비방, 비인격적인 용어 기재시 임의삭제 될 수 있습니다.<br>
+                * 주말, 공휴일, 평일 근무시간(08:30~17:30) 이후 문의에 대해서는 답변이 지연될 수 있습니다.<br></p></strong>
 
-   <link rel="stylesheet" href="../../static/greenbooks/css/customer_style.css">
-    <link rel="stylesheet" href="../../static/greenbooks/css/customer_help.css">
-</head>
-<body>
-    <div class="board_wrap">
-        <div class="board_title">
-            <strong style="font-size:20rem">1:1 문의</strong>
-            <p>궁금한 점을 빠르고 정확하게 안내해드립니다.  <small>(답변까지 2~3일의 시간이 소요될 수 있습니다.)</small></p>
-        </div>
-        <div class="board_write_wrap">
-            <div class="board_write">
-                <div class="title">
-                    <dl>
-                        <dt>제목</dt>
-                        <dd><input type="text" placeholder="제목 입력" value="글 제목이 들어갑니다"></dd>
-                    </dl>
-                </div>
-                <div class="info">
-                    <dl>
-                        <dt>글쓴이</dt>
-                        <dd><input type="text" placeholder="글쓴이 입력" value="김이름"></dd>
-                    </dl>
-                    <dl>
-                        <dt>비밀번호</dt>
-                        <dd><input type="password" placeholder="비밀번호 입력" value="1234"></dd>
-                    </dl>
-                </div>
-                <div class="cont">
-                    <textarea placeholder="내용 입력">
-글 내용이 들어갑니다.
-글 내용이 들어갑니다.
-글 내용이 들어갑니다.
-글 내용이 들어갑니다.
-글 내용이 들어갑니다.
-글 내용이 들어갑니다.
-글 내용이 들어갑니다.
-글 내용이 들어갑니다.</textarea>
-                </div>
-            </div>
-            <div class="bt_wrap">
-                <a href="view.html" class="on">수정</a>
-                <a href="view.html">취소</a>
-            </div>
+            <hr>
         </div>
     </div>
-</body>
-</html>
+    <div class="row">
+        {% include 'custom/custom_menu.html'%}
+        <section id="help_list" class="col-lg-8">
+            <form action="" method="post"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- 유효성 검사 -->
+                {% include 'form_errors.html' %}
+                <h4>질문을 수정할 수 있습니다.</h4>
+                <strong><p style="font-size:0.9rem; color:#ac2c38b5">< 고객센터에서 답변을 완료하면 고객님께 확인 메일이 전송됩니다. ></p></strong>
+                <div class="board_write_wrap">
+                    <div class="board_write" style="background color:#EBEBE8">
+                        <div class="title">
+                            <dl>
+                                <dt>제목</dt>
+                                <dd><input type="text" class="form-control" name="title" id="title"
+                                           value="{{ form.title.value|default_if_none:'' }}"
+                                           placeholder="제목을 입력해주세요"></dd>
+
+                            </dl>
+                        </div>
+
+                        <div class="email">
+                            <dl>
+                                <dt>이메일</dt>
+                                <dd><input type="text" class="form-control" name="email" id="email"
+                                           value="{{ form.email.value|default_if_none:'' }}"
+                                           placeholder="이메일을 입력해주세요"></dd>
+                            </dl>
+                        </div>
+                        <dt>본문</dt>
+                        <div class="cont">
+                            <textarea class="form-control" name="content" id="content" rows="10"
+                                      placeholder="내용을 입력해주세요">{{ form.content.value|default_if_none:'' }}</textarea>
+                        </div>
+                    </div>
+                    <div id="btn" class="text-center mt-2">
+                        <button type="reset" class="btn btn-primary">취소</button>
+                        <a href="{% url 'custom:help_list' %}" class="btn-a btn btn-primary">목록</a>
+                        <button type="submit" class="btn btn-primary">수정</button>
+                    </div>
+                </div>
+
+            </form>
+        </section>
+    </div>
+</div>
+
+{% endblock %}
