@@ -1,5 +1,6 @@
+
 from django.db import models
-from django.db.models.functions import datetime
+
 from django.urls import reverse
 
 
@@ -45,3 +46,9 @@ class Goods(models.Model):
 
     def get_absolute_url(self): # 상세페이지 경로
         return reverse('goods:goods_detail', args=[self.id,self.slug])
+
+#댓슬
+class Question:
+    pass
+
+

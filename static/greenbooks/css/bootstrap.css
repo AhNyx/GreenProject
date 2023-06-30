@@ -3457,8 +3457,8 @@ textarea.form-control-lg {
 
 .btn-link {
   font-weight: 400;
-  color: #0d6efd;
-  text-decoration: underline;
+  color: #white;
+/*  text-decoration: underline;*/
 }
 .btn-link:hover {
   color: #0a58ca;
@@ -5101,8 +5101,8 @@ textarea.form-control-lg {
 .list-group-item.active {
   z-index: 2;
   color: #fff;
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  background-color: #81bf60;
+  border-color: #81bf6080;
 }
 .list-group-item + .list-group-item {
   border-top-width: 0;

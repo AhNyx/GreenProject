@@ -4,7 +4,7 @@
 {% endblock %}
 {% block content %}
 <!--카테고리 메모-->
-<section>
+<!--<section>
     <div class="row">
         <div class="col-2">
             <div class="list-group mx-5">
@@ -12,23 +12,65 @@
                    class="list-group-item {% if not current_category %}active{% endif %}">All</a>
                 {% for category in categories %}
                     <a href="{{ category.get_absolute_url }}"
-                       class="list-group-item {% if current_category.slug == category.slug %}active{% endif %}">
-                        {{ category.name }}
+                       class="list-group-item ">
+
                     </a>
                 {% endfor %}
             </div>
         </div>
     </div>
-</section>
+</section>-->
+<!--카테고리-->
+<!--li안에 a -->
+<div class="d-flex justify-content-center"> <!--# 가운데정렬-->
+    <ul class="list-group list-group-horizontal"> <!--리스트 그룹을 수평으로 나열하도록 지정하는 클래스-->
+        <li class="list-group-item {% if not current_category %}active{% endif %}">
+            <a href="{% url 'goods:goods' %}" class="btn btn-link" data-mdb-ripple-color="dark">VIEW ALL</a> <!--전체메뉴로 가기-->
+        </li>
+        {% for category in categories %}
+        <li class="list-group-item {% if current_category.slug == category.slug %}active{% endif %}">
+            <a href="{{ category.get_absolute_url }}" class="btn btn-link" data-mdb-ripple-color="dark">{{ category.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!--검색-->
+<div class="container my-3">
+    <div class="row mb-2">
+        <div class="col-8"></div>
+        <div class="col-4 d-flex justify-content-end">
+        <form action="" method="get" id="searchForm">
+            {% csrf_token %}
+            제목으로 검색
+            <input type="hidden" id="kw" name="kw" value="{{ kw }} ">
+            <input type="text" class="kw" value="{{ kw|default_if_none:'' }}">
+            <button type="button" id="btn_search">SEARCH</button>
+        </form>
+    </div>
+
+</div>
+
+<!--<ul class="nav nav-tabs justify-content-center">
+  <li class="nav-item">
+    <a href="{% url 'goods:goods' %}" class="nav-link {% if not current_category %}active{% endif %}">ALL</a>
+  </li>
+  <div class="row">
+    {% for category in categories %}
+      <div class="col">
+        <a href="{{ category.get_absolute_url }}" class="list-group-item {% if current_category.slug == category.slug %}active{% endif %} btn btn-primary my-3">
+          {{ category.name }}
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</ul>-->
+
 
 <!--상품-->
 
- <section class="py-5">
-
+ <section class="py-1">
         <div class="container px-4 px-lg-5 mt-5">
-            <div>
-                <img src="{% static 'greenbooks/images/lbbook.jpg' %}" alt = "책gif">
-            </div>
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 {% for good in goods %}
                 <div class="col mb-5">
@@ -41,7 +83,6 @@
                                 <!-- 책이름-->
                                 <h5 class="fw-bolder">{{ good.name }}</h5>
                                 <!-- 책가격-->
-
                                 ₩ {{ good.price }}
                             </div>
                         </div>
@@ -55,4 +96,16 @@
             </div>
         </div>
     </section>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(function(){
+        //검색 처리
+        $('#btn_search').click(function(){
+            $('#kw').val($('.kw').val());  //입력폼에서 입력된 키워드를 hidden 타입
+            $('#searchForm').submit();     //폼을 전송함 - view로
+        });
+    });
+</script>
 {% endblock %}
