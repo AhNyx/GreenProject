@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 <!-- 템플릿 필터 적용을 위해 추가 -->
 {% load static %}
-{%block title%} - Q&A{%endblock%}
+{% block title %} - Q&A{% endblock %}
 {% block content %}
 <div class="container px-4 py-5">
     <div id="announcement">
@@ -11,12 +11,11 @@
             <strong><p style="font-size:0.75rem; color:#ac2c38b5">
                 * 실명미사용, 단순비방, 비인격적인 용어 기재시 임의삭제 될 수 있습니다.<br>
                 * 주말, 공휴일, 평일 근무시간(08:30~17:30) 이후 문의에 대해서는 답변이 지연될 수 있습니다.</p></strong>
-
             <hr>
         </div>
     </div>
     <div class="row">
-        {% include 'custom/custom_menu.html'%}
+        {% include 'custom/custom_menu.html' %}
         <section id="help_list" class="col-lg-8">
             <div class="board_title">
                 <strong>1:1게시판</strong>
@@ -54,17 +53,13 @@
                 </div>
                 <div id="btn" class="text-center mt-3">
                     <a href="{% url 'custom:help_list' %}" class="btn-a btn btn-primary">목록</a>
-                    <a href="{% url 'custom:help_modify' help.id %}" class="btn-a btn btn-primary">수정</a>
-                    <a href="{% url 'custom:help_delete' help.id %}" class="delete btn-a btn btn-primary">삭제</a>
                     {% if user.is_superuser %}
-                        <a href="{% url 'custom:help_answer' help.id %}" class="btn-a btn btn-primary">답글 작성</a>
+                        <a href="{% url 'custom:help_modify' help.id %}" class="btn-a btn btn-primary">수정</a>
+                        <a href="{% url 'custom:help_delete' help.id %}" class="delete btn-a btn btn-primary">삭제</a>
                     {% endif %}
                 </div>
-
             </div>
         </section>
     </div>
-
 </div>
-
 {% endblock %}

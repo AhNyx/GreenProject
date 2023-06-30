@@ -129,6 +129,7 @@ main {
   margin-left: 1.25rem;
   text-decoration: none;
 }
+
 .btn-toggle-nav a:hover, a:focus, a:active {
   /*background-color: #d2f4ea;*/
     color: #fff;
@@ -140,7 +141,23 @@ main {
 }
 
 .fw-semibold { font-weight: 600; }
-.lh-tight { line-height: 1.25; }
+.lh-tight { line-height: 1.25px; }
+
+#talk24, #yes-icon, #no-icon{
+        width: 23px;
+        height: 23px;
+        margin :auto;
+        margin-left:0.2rem;
+       }
+
+#delete-icon1, #delete-icon2{
+         width: 23px;
+        height: 23px;
+        margin :auto;
+        margin-left:0.2rem;
+
+}
+
 
 /* @@@@@@@@@@community @@@@@@@@@@@@@@스타 일 */
 
@@ -176,3 +193,4 @@ border: 2px solid red;
 #detail .reply ul{border-bottom-style: inset; border-bottom-width: 1px;}
 #detail .list-group-item{color: #616161; border: 0px;}
 #commu-table a:focus, a:active{background-color: transparent;}
+
