@@ -1,22 +1,76 @@
-    {% extends "base.html" %}
+{% extends "base.html" %}
 {% block content %}
- {% load static %}
+{% load static %}
 <div class="container text-center">
-  <section class="question_post w-auto">
-   <h2 class="my-5">고객상담</h2>
-   <form action="" method="post">
-       {% csrf_token %}
-    <input style="margin:0 auto;" type="text" name="title" class="form-control w-50 my-3" value="ㅎㅇㅎㅇㅎㅇ">
-       <textarea style="margin:0 auto;" name="content" class="form-control w-50 my-3" rows="10"></textarea>
+    <section class="question_post w-auto ">
+        <h2 class="my-5">고객상담</h2>
+        <form action="" method="post">
+            {% csrf_token %}
+            <section id="detail" class="col-lg-8" style="margin: 0 auto">
+                <table  class="table">
+                    <tr>
+                        <th colspan="4">
+                            {% if post.category %}
+                            <span id="commu-cate">[{{ post.category }}]</span>&nbsp;{{ post.title }}
+                            {% else %}
+                            {{ list.title }}
+                            {% endif %}
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>글쓴이: {{ list.author }}</td>
+                        <td>
+                            작성: {{ list.create_date|date:"y-n-j G:i" }}
+                            {% if list.modify_date %}
+                            ,&nbsp;&nbsp;수정: {{ list.modify_date|date:"y-n-j G:i" }}
+                            {% endif %}
+                        </td>
+                        <td>조회: {{ list.views }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="text-start">
+                            {{ list.content|safe }}
+                        </td>
+                    </tr>
+                </table>
+            </section>
 
-       {% if user.is_authenticated %}
-        <div id="btn_write" class="text-center">
-            <button type="submit" class="btn-a btn btn-primary">글쓰기</button>
-        </div>
-        {% endif %}
-   </form>
-  </section>
-</div>
+            {% if request.user == list.author %}
+            <div class="text-center mt-3">
+                <div style="display:inline-block" class="">
+                    <a href="{% url 'mypage:question_modify' list.id %}" class="btn-a btn btn-primary">
+                        수정
+                    </a>
+                </div>
+                <div style="display:inline-block" class="">
+                    <a href="{% url 'mypage:question' %}" class="btn-a btn btn-primary">
+                        목록
+                    </a>
+                </div>
+                <div style="display:inline-block" class="">
+                    <a href="" data-uri="{% url 'mypage:question_delete' list.id %}" class="delete btn-a btn btn-primary">
+                        삭제
+                    </a>
+                </div>
+            </div>
+            {% else %}
+            <div style="display:inline-block" class="">
+                <a href="{% url 'mypage:question' %}"class="btn-a btn btn-primary">
+                    목록
+                </a>
+            </div>
+            {% endif %}
+        </form>
+{% endblock %}
 
-
+{% block script %}
+<script>
+    $(document).ready(function() {
+        $('.delete').click(function() {
+            if(confirm('정말 삭제하시겠습니까?')) {
+                location.href=$(this).data('uri');
+            };
+        });
+    });
+</script>
 {% endblock %}

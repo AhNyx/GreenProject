@@ -27,7 +27,7 @@ def goods_in_category(request, category_slug=None):
 def goods_detail(request, id, goods_slug=None):
     goods = get_object_or_404(Goods, id=id, slug=goods_slug)
     add_to_cart = AddProductForm(initial={'quantity': 1})
-    context = {'goods': goods,'add_to_cart':add_to_cart}
+    context = {'goods': goods, 'add_to_cart': add_to_cart}
     return render(request, 'goods/gdetail.html', context)
 
 

@@ -2,64 +2,166 @@
 {% block content %}
 
 {% load static %}
-    <style>
+<style>
         #box1{height:50px;}
         a{text-decoration: none; color: black}
-    </style>
+</style>
 <body class="m-5">
 <div class="container text-center">
     <div class="d-flex flex-row mb-5">
         <div class="p-2 h3"><a href="{% url 'mypage:mypage' user.id %}">마이페이지</a></div>
         <div class="p-2 mx-5"><a href="{% url 'mypage:memberinfo' user.id %}">회원정보</a></div>
         <div class="p-2 mx-5"><a href="{% url 'mypage:mypost' %}">내가쓴글</a></div>
-        <div class="p-2 mx-5"><a href="{% url 'mypage:cart' %}">장바구니</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'shopcart:detail' %}">장바구니</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'mypage:memo_list' %}">메모장</a></div>
         <div class="p-2 mx-5"><a href="{% url 'mypage:question' %}">고객상담</a></div>
     </div>
-<div class="container px-4 py-5">
-    <section id="question">
-            <div id="title">
-                <h2 class="pb-2 border-bottom">고객상담</h2>
-            </div>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <td>번호</td>
-                        <td>제목</td>
-                        <td>작성자</td>
-                        <td>작성일</td>
-                        <td>조회</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if question_list %}
-                        {% for question in question_list %}
-                        <tr>
-                            <td>{{ question.id }}</td>
-                            <td>
-                                <a href="">
-                                    {{ question.title }}
-                                </a>
-                            </td>
-                            <td>{{ question.author }}</td>
-                            <td>{{ question.create_date }}</td>
-                            <td>{{ question.views }}</td>
-                        </tr>
-                        {% endfor %}
-                    <!-- post가 없으면 -->
-                    {% else %}
-                    <tr>
-                        <td colspan="6" class="text-center">게시글이 없습니다.</td>
-                    </tr>
-                    {% endif %}
-                </tbody>
-            </table>
-        {% if user.is_authenticated %}
-        <div id="btn_write" class="text-end">
-            <a href="{% url 'mypage:question_post' %}" class="btn-a btn btn-primary">글쓰기</a>
+</div>
+
+<div class="row text-center">
+    <aside class="col-lg-2">
+        <div class="flex-shrink-0" style="font-size: 16px;">
+            <ul class="list-unstyled ps-0">
+                <li class="mb-1">
+                    <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse"
+                            data-bs-target="#home-collapse" aria-expanded="true">
+                        {% if current_category.slug %}
+                        <h3>{{ current_category.slug }}</h3>
+                        {% else %}
+                        <h3>전체글</h3>
+                        {% endif %}
+                    </button>
+                    <div class="collapse show" id="home-collapse" style="">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li><a href="{% url 'mypage:question' %}" class="link-dark rounded">전체글</a></li>
+                            {% for category in categories %}
+                            <li><a href="{{ category.get_absolute_url }}" class="link-dark rounded">
+                                {{ category.name }}
+                            </a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </li>
+            </ul>
         </div>
+    </aside>
+    <div class="col-lg-10 justify-content-center">
+        <table class="table table-hover justify-content-center">
+            <thead>
+            <tr>
+                <td>번호</td>
+                <td>카테고리</td>
+                <td>제목</td>
+                <td>작성자</td>
+                <td>작성일</td>
+                <td>조회</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% if question_list %}
+            {% for question in question_list %}
+            <tr>
+                <td>{{ question.id }}</td>
+                <td>{{ question.category }}</td>
+                <td>
+                    <a href="{% url 'mypage:question_read' question.id %}">
+                        {{ question.title }}
+                    </a>
+                </td>
+                <td>{{ question.author }}</td>
+                {% if question.create_date|date:"Y-m-d" == today|date:"Y-m-d" %}
+                <td>{{ question.create_date|date:"A h:i" }}</td>
+                {% else %}
+                <td>{{ question.create_date|date:"Y.m.d" }}</td>
+                {% endif %}
+                <td>{{ question.views }}</td>
+            </tr>
+            {% endfor %}
+
+            {% else %}
+            <tr>
+                <td colspan="6" class="text-center align-item-">게시글이 없습니다.</td>
+            </tr>
+            {% endif %}
+            </tbody>
+        </table>
+
+        <ul class="pagination justify-content-center">
+            {% if question_list.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ post_list.previous_page_number }}">
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="">
+                            {% endif %}
+                            <i class="fa-solid fa-backward"></i>
+                        </a>
+                    </li>
+                    {% for page_number in question_list.paginator.page_range %}
+                    {% if page_number == question_list.number %}
+                    <li class="page-item active">
+                        {% else %}
+                    <li class="page-item">
+                        {% endif %}
+                    <a href="#" data-page="{{ page_number }}" class="page-link">
+                        {{ page_number }}
+                    </a>
+<!--                        <a class="page-link" href="?page={{ page_number }}">-->
+<!--                            {{ page_number }}-->
+<!--                        </a>-->
+                    </li>
+                    {% endfor %}
+                    {% if post_list.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ post_list.next_page_number }}">
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="">
+                                    {% endif %}
+                                    <i class="fa-solid fa-forward"></i>
+                                </a>
+                            </li>
+                        </a>
+                    </li>
+                </a>
+            </li>
+        </ul>
+
+        <div id="btn_write" class="d-flex justify-content-between mt-3">
+            <div class="search">
+                <input style="height:35px" type="text" class="kw" value="{{ kw|default_if_none:'' }}">
+                <button type="button" id="btn_search" class="btn btn-primary">찾기</button>
+            </div>
+        {% if user.is_authenticated %}
+            <a href="{% url 'mypage:question_post' %}" class="btn-a btn btn-primary">글쓰기</a>
         {% endif %}
-        </section>
+
+        </div>
+
+    </div>
+    <form action="" method="get" id="searchForm">
+        <input type="hidden" id="kw" name="kw">
+        <input type="hidden" id="page" name="page">
+    </form>
 </div>
-</div>
+
+
 </body>
+{% endblock %}
+
+{% block script %}
+<script>
+    $(function(){
+        $('.page-link').click(function(){
+            $('#page').val($(this).data('page'));
+            $('#searchForm').submit();
+        });
+
+        $('#btn_search').click(function(){
+            $('#kw').val($('.kw').val());
+            $('#page').val(1);
+            $('#searchForm').submit();
+        });
+    });
+</script>
 {% endblock %}

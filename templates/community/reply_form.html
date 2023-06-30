@@ -1,0 +1,28 @@
+<!-- 폼: id로 자바스크립트 연결 -->
+<form method="post" id="reply-form" class="mb-3">
+    {%csrf_token %}
+    {% include 'form_errors.html' %}
+    <div class="mb-3 mt-3">
+      <textarea name="content" class="form-control" rows="5" style="resize: none;"
+                placeholder="댓글을 입력해주세요"
+                {% if not user.is_authenticated %}
+                disabled
+                {% endif %}>{{ form.content.value|default_if_none:'' }}</textarea>
+    </div>
+    <!-- 오른쪽 정렬 -->
+    <div class="d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary">작성</button>
+    </div>
+</form>
+{% block script %}
+<script>
+    // 댓글 등록 폼 제출 시 콘솔에 댓글 내용 출력
+    document.querySelector("#reply-form").addEventListener("submit", function(event) {
+        event.preventDefault();  // 기본 제출 동작 막기
+        // 댓글 내용 가져오기
+        var content = document.querySelector("textarea[name='content']").value;
+        // 실제로 제출하기
+        this.submit();
+    });
+</script>
+{% endblock %}
