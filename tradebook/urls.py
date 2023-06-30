@@ -11,4 +11,7 @@ urlpatterns = [
     path('create/', views.tradebook_create, name='tradebook_create'),
     path('delete/<int:trade_post_detail_id>', views.trade_post_delete, name='tradebook_delete'),
     path('modify/<int:trade_post_detail_id>', views.trade_post_modify, name='tradebook_modify'),
+    path('comment/create/<int:pk>/', views.comment_create, name='comment_create'),
+    path('comment/delete/<int:pk>/', views.comment_delete, name='comment_delete'),
+    path('comment/modify/<int:pk>/', views.comment_modify, name='comment_modify')
 ]

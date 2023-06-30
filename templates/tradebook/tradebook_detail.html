@@ -4,9 +4,9 @@
 {% block content %}
 <div class="container px-4 py-5">
     <section id="detail">
-        <h2 class="pb-2 border-bottom">내용보기</h2>
+        <h2 class="pb-2 border-bottom">중고책거래</h2>
+        <hr>
         <table class="table">
-
             <tr>
                 <!-- 제목 -->
                 <th colspan="4">{{ trade_post_detail.title }}</th>
@@ -25,7 +25,6 @@
                 {% endif %}
                 </td>
                 <td>조회수: {{ trade_post_detail.update_counter }}</td>
-
             </tr>
             <tr>
                 <td colspan="4" class="text-start">
@@ -52,6 +51,26 @@
             {% endif %}
         </div>
     </section>
+    <div id="comment-container" class="my-3">
+        <!-- 댓글 내용 -->
+        {% for comment in trade_post_detail.comment_set.all %}
+        <div id="comment" style="border: 1px solid #ccc">
+        <p>{{ comment.content }}</p>
+        <p>
+            - {{ comment.author }}, {{ comment.pub_date }}
+        </p>
+        {% if request.user == comment.author %}
+            <a href="{% url 'tradebook:comment_modify' comment.id %}">수정</a>
+            <a href="#" class="delete"
+               data-uri="{% url 'tradebook:comment_delete' comment.id %}">삭제</a>
+        {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    <div>
+        <a href="{% url 'tradebook:comment_create' trade_post_detail.id %}"
+        class="small">댓글 추가</a>
+    </div>
 </div>
 {% endblock %}
 {% block script %}

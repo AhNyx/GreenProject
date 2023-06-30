@@ -3,8 +3,8 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
-from tradebook.forms import TradePostForm
-from tradebook.models import trade_post, tradeCategory
+from tradebook.forms import TradePostForm, CommentForm
+from tradebook.models import trade_post, tradeCategory, Comment
 
 
 # Create your views here.
@@ -78,3 +78,43 @@ def trade_post_delete(request, trade_post_detail_id):
     post = get_object_or_404(trade_post, pk=trade_post_detail_id)
     post.delete()
     return redirect('tradebook:tradebook_list')
+
+@login_required(login_url='common:login')
+def comment_create(request, pk):
+    post = get_object_or_404(trade_post, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.pub_date = timezone.now()
+            comment.post = post
+            comment.save()
+            return redirect('tradebook:tradebook_detail', post.id)
+    else:
+        form = CommentForm()
+    context = {'form':form}
+    return render(request, 'tradebook/comment_form.html', context)
+
+@login_required(login_url='common:login')
+def comment_delete(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    comment.delete()
+    return redirect('tradebook:tradebook_detail', comment.post.id)
+
+
+@login_required(login_url='common:login')
+def comment_modify(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.modify_date = timezone.now()
+            comment.save()
+            return redirect('tradebook:tradebook_detail', comment.post.id)
+    else:
+        form = CommentForm(instance=comment)
+    context = {'form':form}
+    return render(request, 'tradebook/comment_form.html', context)

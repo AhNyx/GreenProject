@@ -34,3 +34,11 @@ class trade_post(models.Model):
         self.save()
         return self.hit
 
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    pub_date = models.DateTimeField()
+    modify_date = models.DateTimeField(null=True, blank=True)
+    post = models.ForeignKey(trade_post, null=True,blank=True,on_delete=models.CASCADE)
+
+

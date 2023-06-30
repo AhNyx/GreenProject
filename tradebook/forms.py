@@ -1,6 +1,7 @@
 from django import forms
 
-from tradebook.models import trade_post
+from tradebook.models import trade_post, Comment
+
 
 # 포스트 폼 생성
 class TradePostForm(forms.ModelForm):
@@ -15,3 +16,9 @@ class TradePostForm(forms.ModelForm):
             'title': '',
             'content': '',
         }
+        
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        labels = {'content':'댓글 내용'}
