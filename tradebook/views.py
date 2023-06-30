@@ -86,7 +86,7 @@ def comment_create(request, pk):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.author = request.user
+            comment.trade_author = request.user
             comment.pub_date = timezone.now()
             comment.post = post
             comment.save()
@@ -110,7 +110,7 @@ def comment_modify(request, pk):
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.author = request.user
+            comment.trade_author = request.user
             comment.modify_date = timezone.now()
             comment.save()
             return redirect('tradebook:tradebook_detail', comment.post.id)

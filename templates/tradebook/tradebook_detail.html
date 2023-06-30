@@ -57,9 +57,9 @@
         <div id="comment" style="border: 1px solid #ccc">
         <p>{{ comment.content }}</p>
         <p>
-            - {{ comment.author }}, {{ comment.pub_date }}
+            - {{ comment.trade_author }}, {{ comment.pub_date }}
         </p>
-        {% if request.user == comment.author %}
+        {% if request.user == comment.trade_author %}
             <a href="{% url 'tradebook:comment_modify' comment.id %}">수정</a>
             <a href="#" class="delete"
                data-uri="{% url 'tradebook:comment_delete' comment.id %}">삭제</a>
