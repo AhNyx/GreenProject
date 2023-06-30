@@ -12,6 +12,7 @@
         <div class="p-2 mx-5"><a href="{% url 'mypage:mypost' %}">좋아하는글</a></div>
         <div class="p-2 mx-5"><a href="{% url 'shopcart:detail' %}">장바구니</a></div>
         <div class="p-2 mx-5"><a href="{% url 'mypage:memo_list' %}">메모장</a></div>
+        <div class="p-2 mx-5"><a href="{% url 'mypage:question' %}">고객상담</a></div>
     </div>
     <div id="box1"></div>
 
@@ -35,11 +36,11 @@
       {% with product=item.product %}
       <tr>
         <td class="align-middle">
-          <img src="{{ item.good.image.url }}" alt="" width="30%">
+          <img src="{{ item.product.image.url }}" alt="" width="30%">
         </td>
         <td class="align-middle">{{ item.product.name }}</td>
         <td class="align-middle">
-          <form action="{% url 'shopcart:good_add' product.id %}" method="post">
+          <form action="{% url 'shopcart:product_add' product.id %}" method="post">
             {{ item.quantity_form.quantity }}
             {{ item.quantity_form.is_update }}
             <input type="submit" class="btn btn-primary my-1" value="변경">

@@ -53,13 +53,12 @@
                     </div>
                 </div>
                 <div id="btn" class="text-center mt-3">
-                    <a href="{% url 'custom:help_list' %}" class="btn-a btn btn-primary">목록</a>
+                <a href="{% url 'custom:help_list' %}" class="btn-a btn btn-primary">목록</a>
+                {% if user.is_superuser %}
                     <a href="{% url 'custom:help_modify' help.id %}" class="btn-a btn btn-primary">수정</a>
                     <a href="{% url 'custom:help_delete' help.id %}" class="delete btn-a btn btn-primary">삭제</a>
-                    {% if user.is_superuser %}
-                        <a href="{% url 'custom:help_answer' help.id %}" class="btn-a btn btn-primary">답글 작성</a>
-                    {% endif %}
-                </div>
+                {% endif %}
+            </div>
 
             </div>
         </section>

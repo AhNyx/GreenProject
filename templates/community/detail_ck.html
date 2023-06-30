@@ -44,13 +44,10 @@
                 <!-- [카테고리] 제목 -->
                 <tr>
                     <th colspan="4">
-                    {% if post.category %}
                     <!-- 카테고리가 있으면 카테고리를 제목 옆에 -->
-                        <span id="commu-cate">[{{ post.category }}]</span>&nbsp;{{ post.title }}
-                    {% else %}
-                    <!-- 카테고리가 없으면 제목만 -->
-                        {{ post.title }}
-                    {% endif %}
+                    {% if post.category %}
+                        <span id="commu-cate">[{{ post.category }}]</span>
+                        {% endif %}&nbsp;{{ post.title }}
                     </th>
                 </tr>
                 <!-- post 정보 -->
@@ -90,10 +87,58 @@
                     </td>
                 </tr>
             </table>
+            <!-- 댓글 영역 -->
+            <div class="reply">
+                <div colspan="4" class="text-end">
+                    <p>댓글 {{ post.reply_set.count }}</p>
+                </div>
+                <hr>
+                <div class="reply-list list-group" style="font-size: small;">
+                    {% for reply in post.reply_set.all %}
+                    <ul>
+                        <li class="list-group-item">
+                            <div class="writer-info mb-3">
+                                <i class="fa-solid fa-circle-user fa-2xl"></i>
+                                <span class="writer-name">
+                                    {{ reply.writer }}
+                                </span>
+                                <span class="date" style="font-size: xx-small;">
+                                    {{ reply.create_date|date:"Y.m.d A h:i" }}{% if reply.modify_date %},&nbsp;{{ reply.modify_date|date:"Y.m.d A h:i" }} 수정됨{% endif %}
+                                </span>
+                                <span class="control">
+                                {% if reply.writer == request.user %}
+                                    <!-- 댓글 삭제 버튼 -->
+                                    <div class="float-end">
+                                        <!-- 삭제버튼 자바스크립트구동을 위해 delete클래스 필수 -->
+                                        <a class="delete" href="#" data-uri="{% url 'community:re_delete' reply.id %}">
+                                            <i class="fa-solid fa-trash fa-2xs"></i>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                                </span>
+                            </div>
+                            <p id="reply-content-{{ reply.id }}"
+                               style="white-space:pre-line;">{{ reply.content }}</p>
+                        </li>
+                    </ul>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- 댓글 등록 폼을 불러오는 버튼 -->
+            {% if user.is_authenticated %}
+            <div>
+                <a href="" id="reply-form-btn" class="btn btn-primary d-flex justify-content-center">댓글 등록</a>
+            </div>
+            <!-- 댓글 등록 폼 -->
+            <div id="reply-form-wrapper" style="display: none;">
+                {% include 'community/reply_form.html' %}
+            </div>
+            {% endif %}
         </section>
     </div>
     <!-- 마진탑 -->
     <div id="btn" class="text-center mt-3">
+        <!-- post 삭제, 수정 -->
         <!-- post작성자가 자기 글을 봤을 때 - 삭제, 수정 -->
         {% if post.writer == request.user %}
             <!-- 삭제시 자바스크립트 연결 -->
@@ -121,7 +166,6 @@
                 location.href=$(this).data('uri');
             }
         });
-
         // 추천 ajax처리
         $(".like").click(function () {
             var button = $(this);   // 버튼 특정하기
@@ -147,6 +191,49 @@
                 }
             });
         });
-    })
+        // 댓글폼버튼 토글
+        $('#reply-form-btn').click(function(e) {
+            e.preventDefault();
+            if ($('#reply-form-wrapper').css('display') === 'none') {
+                // 폼이 숨겨진 상태인 경우
+                $('#reply-form-wrapper').css('display', 'block');
+                $('#reply-form-btn').text('취소');
+                $('html, body').animate({
+                scrollTop: $('#reply-form-wrapper').offset().top
+                }, 0);
+            } else {
+                // 폼이 보이는 상태인 경우
+                $('#reply-form-wrapper').css('display', 'none');
+                $('#reply-form-btn').text('댓글 작성');
+            }
+        });
+        // 댓글 등록 폼 제출
+        $("#reply-form").submit(function(event) {
+            event.preventDefault();  // 기본 제출 동작 막기
+            // 댓글 내용 가져오기
+            var content = $("textarea[name='content']").val();
+            // Ajax 요청 보내기
+            $.ajax({
+                url: "{% url 'community:re_create' post_id=post.id %}",  // 댓글 등록 뷰의 URL
+                type: "POST",
+                data: {
+                    content: content,
+                    csrfmiddlewaretoken: "{{ csrf_token }}",
+                },
+                success: function(response) {
+                    // Ajax 요청 성공 시 새로운 댓글을 동적으로 추가
+                    var reply = response.reply;  // 서버에서 반환한 댓글 정보
+                    var replyElement = "<div>" + reply.content + "</div>";  // 새로운 댓글 HTML 요소 생성
+                    $("#reply-list").append(replyElement);  // 댓글 리스트에 새로운 댓글 추가
+                    // 폼 초기화
+                    $("textarea[name='content']").val("");
+                },
+                error: function(xhr, errmsg, err) {
+                    // Ajax 요청 실패 시 오류 처리
+                    console.log(xhr.status + ": " + xhr.responseText);
+                }
+            });
+        });
+    });
 </script>
 {% endblock %}

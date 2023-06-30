@@ -1,3 +1,4 @@
+{% load static %}
 <aside class="col-lg-2">
             <!-- class=p-3 bg-white style=width: 180px; 삭제 -->
             <div class="flex-shrink-0" style="font-size: 16px;">
@@ -25,6 +26,12 @@
                                  <li><a href="{% url 'custom:help_list' %}" class="link-dark rounded">
                                     Q&A
                                 </a></li>
+                                 <li>
+                                    <a href="http://pf.kakao.com/_xdBNAG" target="_blank" class="link-dark rounded">
+                                        카톡 상담<img id="talk24" src="{% static 'greenbooks/images/talk.png' %}" alt="카톡">
+
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </li>
