@@ -1,3 +1,4 @@
+from importlib.resources import path
 from os import path
 
 from django.contrib import admin
@@ -21,4 +22,7 @@ urlpatterns = [
     path("question_modify/<int:question_id>/", views.question_modify, name='question_modify'),
     path("question_delete/<int:question_id>/", views.question_delete, name='question_delete'),
     path('category/<str:slug>/', views.category_page,name='category_page'),
+    path('comment/create/<int:pk>/',views.comment_create,name='comment_create'),
+    path('comment/delete/<int:pk>/', views.comment_delete, name='comment_delete'),
+    path('comment/modify/<int:pk>/', views.comment_modify, name='comment_modify'),
 ]
