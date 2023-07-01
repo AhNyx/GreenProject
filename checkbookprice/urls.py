@@ -1,6 +1,6 @@
 from django.conf.urls.static import static
 
-from django.urls import path
+from django.urls import path, re_path
 from django.conf import settings
 
 from . import views
@@ -8,7 +8,7 @@ from . import views
 app_name = 'price'
 
 urlpatterns = [
-    path(r'^barcodereader/$',views.barcodereader,name='barcodereader'),
+    re_path(r'^barcodereader/$',views.barcodereader,name='barcodereader'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL,

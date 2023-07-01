@@ -30,7 +30,8 @@ class Goods(models.Model):
     writer = models.CharField(max_length=100, db_index=True)     # 작가
     image = models.ImageField(upload_to='goods/%Y/%m/%d',) # 책이미지
     description = models.TextField(blank=True)     # 상세내용
-    price = models.DecimalField(max_digits=10, decimal_places=2) #10자리숫자까지 만듨 있음 / 소수리 2까지  총 8자리 금액임
+    #price = models.DecimalField(max_digits=10, decimal_places=2) #10자리숫자까지 만듨 있음 / 소수리 2까지  총 8자리 금액임
+    price = models.IntegerField() # 한국돈
     stock = models.PositiveIntegerField()   # 재고 (정수로)
     available_display = models.BooleanField('Display', default=True)
     available_order = models.BooleanField('Order', default=True)
