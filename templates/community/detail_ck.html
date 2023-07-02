@@ -165,23 +165,6 @@
 {% endblock %}
 {% block script %}
 <script>
-    // 반응형 사이드바
-    function sidebarEffect() {
-        if ($(window).innerWidth() >= 992) {
-            $('.btn-toggle').css('display', 'inline-flex');
-            $('#list-bar').removeClass('d-flex');
-            $('#list-bar').removeClass('justify-content-center');
-        } else {
-            $('.btn-toggle').css('display', 'none');
-            $('#list-bar').addClass('d-flex');
-            $('#list-bar').addClass('justify-content-center');
-        }
-    }
-    // 초기 로딩 시 실행
-    sidebarEffect();
-    // 윈도우 크기 변경 시 실행
-    $(window).resize(sidebarEffect);
-
     $(document).ready(function() {
         // 삭제시 경고창
         // delete 클래스를 클릭시
@@ -260,5 +243,22 @@
             });
         });
     });
+
+    // 반응형 사이드바
+    function sidebarEffect() {
+        if ($(window).innerWidth() >= 992) {
+            $('.btn-toggle').css('display', 'inline-flex');
+            $('#list-bar').removeClass('d-flex');
+            $('#list-bar').removeClass('justify-content-center');
+        } else {
+            $('.btn-toggle').css('display', 'none');
+            $('#list-bar').addClass('d-flex');
+            $('#list-bar').addClass('justify-content-center');
+        }
+    }
+    // 초기 로딩 시 실행
+    sidebarEffect();
+    // 윈도우 크기 변경 시 실행
+    $(window).resize(sidebarEffect);
 </script>
 {% endblock %}
