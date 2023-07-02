@@ -3,35 +3,28 @@
 $(document).ready(function () {
     var isOpen = false;
     var testObjHeight = 80;
-    var expandedHeight = 360;
+    var expandedHeight = 420;
     var tmp = parseInt($("#test_obj").css('top'));
     var animationInProgress = false;
+
     // 툴팁임
-        $("#menu").mouseover(function() {
+    $("#menu").mouseover(function() {
         $("#tooltipContent").addClass("active");
-      }).mouseout(function() {
+    }).mouseout(function() {
         $("#tooltipContent").removeClass("active");
-      });
+    });
 
     // 쿠키에서 메뉴 상태 확인
     var menuState = getCookie("menuState");
     if (menuState === "open") {
         isOpen = true;
-        $("#up, #home, #cart, #kakao, #ocr").show();
+        $("#up, #home, #cart, #kakao, #ocr, #menuhelp").show();
         testObjHeight = expandedHeight;
     } else {
-        $("#up, #home, #cart, #kakao, #ocr").hide();
+        $("#up, #home, #cart, #kakao, #ocr, #menuhelp").hide();
         testObjHeight = 80;
     }
     $("#test_obj").height(testObjHeight);
-
-    $(window).scroll(function () {
-        var scrollTop = $(window).scrollTop();
-        var objPosition = scrollTop + tmp + "px";
-        if (!animationInProgress) {
-            $("#test_obj").css("top", objPosition);
-        }
-    });
 
     $("#menu").click(function () {
         if (animationInProgress) {
@@ -42,12 +35,12 @@ $(document).ready(function () {
         animationInProgress = true;
 
         if (isOpen) {
-            $("#up, #home, #cart, #kakao, #ocr").show();
+            $("#up, #home, #cart, #kakao, #ocr, #menuhelp").show();
             testObjHeight = expandedHeight;
             // 메뉴 상태를 쿠키에 저장
             setCookie("menuState", "open", 7);
         } else {
-            $("#up, #home, #cart, #kakao, #ocr").hide();
+            $("#up, #home, #cart, #kakao, #ocr, #menuhelp").hide();
             testObjHeight = 80;
             // 메뉴 상태를 쿠키에서 제거
             deleteCookie("menuState");
@@ -77,7 +70,7 @@ $(document).ready(function () {
             expires = "; expires=" + date.toUTCString();
         }
         document.cookie = name + "=" + (value || "") + expires + "; path=/";
-    };
+    }
 
     // 쿠키 가져오기 함수
     function getCookie(name) {
@@ -94,42 +87,61 @@ $(document).ready(function () {
     // 쿠키 삭제 함수
     function deleteCookie(name) {
         document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    };
+    }
 });
 </script>
 <body>
 <div id="test_obj">
-
-    <header>
-        <nav>
-            <a href="#" id="menu" class="kakao-button" onclick="return false;" ><img src="../../static\greenbooks\images\menu.png" class="sg_image" alt="menu"></a>
-            <a href="{% url 'index' %}" id="home" class="kakao-button"><img src="../../static\greenbooks\images\home.png" class="sg_image" alt="home"></a>
-            <a href="{% url 'price:barcodereader' %}" id="ocr" class="kakao-button"><img src="../../static\greenbooks\images\ocr.png" class="sg_image" alt="home"></a>
-            <a href="{}" id="cart" class="kakao-button"><img src="../../static\greenbooks\images\cart.png" class="sg_image" alt="cart"></a>
-            <a onclick="goTop()" id="up" class="up-button"><img src="../../static\greenbooks\images\up.png" class="sg_image" alt="맨 위로"></a>
-            <a href="http://pf.kakao.com/_xdBNAG" id="kakao" class="kakao-button" target="_blank"><img src="../../static\greenbooks\images\kakao.png" class="sg_image" alt="카카오"></a>
-            <a href="#" id="menu" class="kakao-button" onclick="return false;"><img src="{% static 'greenbooks/images/menu.png' %}" class="sg_image" alt="menu"></a>
-            <a href="{% url 'index' %}" id="home" class="kakao-button"><img src="{% static 'greenbooks/images/home.png' %}" class="sg_image" alt="home"></a>
-            <a href="{% url 'price:barcodereader' %}" id="ocr" class="kakao-button"><img src="{% static 'greenbooks/images/ocr.png' %}" class="sg_image" alt="home"></a>
-            <a href="{% url 'shopcart:detail' %}" id="cart" class="kakao-button"><img src="{% static 'greenbooks/images/cart.png' %}" class="sg_image" alt="cart"></a>
-            <a onclick="goTop()" id="up" class="up-button"><img src="{% static 'greenbooks/images/up.png' %}" class="sg_image" alt="맨 위로"></a>
-            <a href="http://pf.kakao.com/_xdBNAG" id="kakao" class="kakao-button" target="_blank"><img src="{% static 'greenbooks/images/kakao.png' %}" class="sg_image" alt="카카오"></a>
-        </nav>
-    </header>
-
+  <header>
+    <nav>
+      <div id="menu" class="kakao-button">
+        <img src="{% static 'greenbooks/images/menu.png' %}" class="sg_image" alt="menu">
+        <div class="tooltip">메뉴 펼치기</div>
+      </div>
+      <div id="up" class="up-button">
+        <img src="{% static 'greenbooks/images/up.png' %}" class="sg_image" alt="맨 위로">
+        <div class="tooltip">맨 위로</div>
+      </div>
+      <div id="home" class="kakao-button">
+        <a href="{% url 'index' %}">
+          <img src="{% static 'greenbooks/images/home.png' %}" class="sg_image" alt="home">
+          <div class="tooltip">홈</div>
+        </a>
+      </div>
+      <div id="ocr" class="kakao-button">
+        <a href="{% url 'price:barcodereader' %}">
+          <img src="{% static 'greenbooks/images/ocr.png' %}" class="sg_image" alt="home">
+          <div class="tooltip">OCR</div>
+        </a>
+      </div>
+      <div id="cart" class="kakao-button">
+        <a href="{% url 'shopcart:detail' %}">
+          <img src="{% static 'greenbooks/images/cart.png' %}" class="sg_image" alt="cart">
+          <div class="tooltip">장바구니</div>
+        </a>
+      </div>
+      <div id="menuhelp" class="kakao-button">
+        <a href="{% url 'custom:help_list' %}">
+          <img src="{% static 'greenbooks/images/answer.png' %}" class="sg_image" alt="qna">
+          <div class="tooltip">Q&A</div>
+        </a>
+      </div>
+      <div id="kakao" class="kakao-button">
+        <a href="http://pf.kakao.com/_xdBNAG" target="_blank">
+          <img src="{% static 'greenbooks/images/kakao.png' %}" class="sg_image" alt="카카오">
+          <div class="tooltip">카카오 고객상담</div>
+        </a>
+      </div>
+    </nav>
+  </header>
 </div>
-
-
 <div id="tooltipContent" class="tooltip"></div>
-
 </body>
-
 <style>
     .sg_image {
         width: 60px;
         height: 60px;
         padding: 5px;
-
     }
 
     .up-button,
@@ -142,7 +154,7 @@ $(document).ready(function () {
     #test_obj {
     filter: invert(100%);
     background-color: #FB80FF;
-    position: absolute;
+    position: fixed;
     width: 60px;
     height: 65px;
     right: 150px;
@@ -156,7 +168,8 @@ $(document).ready(function () {
     #ocr,
     #cart,
     #up,
-    #kakao {
+    #kakao
+    #menuhelp{
     cursor: pointer;
     }
 

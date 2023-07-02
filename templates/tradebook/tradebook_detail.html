@@ -5,15 +5,22 @@
 <div class="container px-4 py-5">
     <section id="detail">
         <h2 class="pb-2 border-bottom">중고책거래</h2>
-        <hr>
-        <table class="table">
+        <table class="table my-3">
             <tr>
                 <!-- 제목 -->
                 <th colspan="4">{{ trade_post_detail.title }}</th>
             </tr>
             <tr>
                 {% if trade_post_detail.trade_category %}
-                <td><span class="badge bg-secondary">{{ trade_post_detail.trade_category }}</span></td>
+                    {% if trade_post_detail.trade_category.slug == "팝니다" %}
+                            <td><span class="badge bg-primary">{{ trade_post_detail.trade_category }}</span></td>
+                        {% elif trade_post_detail.trade_category.slug == "삽니다" %}
+                            <td><span class="badge bg-danger">{{ trade_post_detail.trade_category }}</span></td>
+                        {% elif trade_post_detail.trade_category.slug == "거래중" %}
+                            <td><span class="badge bg-success">{{ trade_post_detail.trade_category }}</span></td>
+                        {% else %}
+                            <td><span class="badge bg-dark">{{ trade_post_detail.trade_category }}</span></td>
+                        {% endif %}
                 {% endif %}
                 <!-- post 정보 -->
                 <td>글쓴이: {{ trade_post_detail.writer }}</td>

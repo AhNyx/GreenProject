@@ -158,7 +158,34 @@ main {
 
 }
 
+.pagination {
+    text-align: center;
+    justify-content: center;
+}
 
+.pagination .pagination-btn {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    text-decoration: none;
+}
+
+.pagination .current-page {
+    font-weight: bold;
+}
+.notice-card {
+    background-color: #f2f2f2; /* 배경색을 약간 회색으로 지정 */
+    padding: 10px; /* 양옆 여백을 조정 */
+    margin: 0 10px; /* 양옆 여백을 조정 */
+    border-radius: 5px; /* 모서리를 둥글게 설정 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
+}
 /* @@@@@@@@@@community @@@@@@@@@@@@@@스타 일 */
 
 
