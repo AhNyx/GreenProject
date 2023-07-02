@@ -6,12 +6,13 @@ $(document).ready(function () {
     var expandedHeight = 420;
     var tmp = parseInt($("#test_obj").css('top'));
     var animationInProgress = false;
+
     // 툴팁임
-        $("#menu").mouseover(function() {
+    $("#menu").mouseover(function() {
         $("#tooltipContent").addClass("active");
-      }).mouseout(function() {
+    }).mouseout(function() {
         $("#tooltipContent").removeClass("active");
-      });
+    });
 
     // 쿠키에서 메뉴 상태 확인
     var menuState = getCookie("menuState");
@@ -20,18 +21,10 @@ $(document).ready(function () {
         $("#up, #home, #cart, #kakao, #ocr, #menuhelp").show();
         testObjHeight = expandedHeight;
     } else {
-        $("#up, #home, #cart, #kakao, #ocr ,#menuhelp").hide();
+        $("#up, #home, #cart, #kakao, #ocr, #menuhelp").hide();
         testObjHeight = 80;
     }
     $("#test_obj").height(testObjHeight);
-
-    $(window).scroll(function () {
-        var scrollTop = $(window).scrollTop();
-        var objPosition = scrollTop + tmp + "px";
-        if (!animationInProgress) {
-            $("#test_obj").css("top", objPosition);
-        }
-    });
 
     $("#menu").click(function () {
         if (animationInProgress) {
@@ -77,7 +70,7 @@ $(document).ready(function () {
             expires = "; expires=" + date.toUTCString();
         }
         document.cookie = name + "=" + (value || "") + expires + "; path=/";
-    };
+    }
 
     // 쿠키 가져오기 함수
     function getCookie(name) {
@@ -94,7 +87,7 @@ $(document).ready(function () {
     // 쿠키 삭제 함수
     function deleteCookie(name) {
         document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    };
+    }
 });
 </script>
 <body>
@@ -127,9 +120,6 @@ $(document).ready(function () {
           <div class="tooltip">장바구니</div>
         </a>
       </div>
-
-
-
       <div id="menuhelp" class="kakao-button">
         <a href="{% url 'custom:help_list' %}">
           <img src="{% static 'greenbooks/images/answer.png' %}" class="sg_image" alt="qna">
@@ -145,18 +135,13 @@ $(document).ready(function () {
     </nav>
   </header>
 </div>
-
-
 <div id="tooltipContent" class="tooltip"></div>
-
 </body>
-
 <style>
     .sg_image {
         width: 60px;
         height: 60px;
         padding: 5px;
-
     }
 
     .up-button,
@@ -169,7 +154,7 @@ $(document).ready(function () {
     #test_obj {
     filter: invert(100%);
     background-color: #FB80FF;
-    position: absolute;
+    position: fixed;
     width: 60px;
     height: 65px;
     right: 150px;
