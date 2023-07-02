@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}구매 페이지입니다
+{% load humanize %} <!--원화로 표시하기위해 -->
 {% endblock %}
 {% block content %}
 <!--카테고리 메모-->
@@ -83,7 +84,7 @@
                                 <!-- 책이름-->
                                 <h5 class="fw-bolder">{{ good.name }}</h5>
                                 <!-- 책가격-->
-                                ₩ {{ good.price }}
+                                ₩ {{ good.price|intcomma }}
                             </div>
                         </div>
                         <!-- Product actions-->
@@ -101,11 +102,19 @@
 {% block script %}
 <script>
     $(function(){
-        //검색 처리
+        //검색 처리 버튼을 클릭햇을때
         $('#btn_search').click(function(){
             $('#kw').val($('.kw').val());  //입력폼에서 입력된 키워드를 hidden 타입
             $('#searchForm').submit();     //폼을 전송함 - view로
         });
+        <!--// 엔터로 검색했을 때도 조회되도록
+        $('.kw').keypress(function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                $('#searchForm').submit();
+            }
+        });-->
+
     });
 </script>
 {% endblock %}

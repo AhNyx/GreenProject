@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% load static %}
+<section class="text-center">
+    <h2>댓글</h2>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.content }}
+        <br>
+        <a href="javascript:window.history.back();"><button class="btn btn-primary" type="button">취소</button></a>
+        <button class="btn btn-primary" type="submit">저장하기</button>
+    </form>
+</section>
+
+
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

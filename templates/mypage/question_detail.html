@@ -61,6 +61,25 @@
             </div>
             {% endif %}
         </form>
+        <div class="comment1">
+            <hr>
+            {% for comment in list.cuscomment_set.all %}
+            <p>{{ comment.content }}</p>
+
+            <p class="d-flex justify-content-center">
+                - {{ comment.author }}, {{ comment.pub_date }}
+            </p>
+            {% if request.user == comment.author %}
+                <a class="" href="{% url 'mypage:comment_modify' comment.id %}"> 수정 </a>
+                <a href="#" class="delete" data-uri="{% url 'mypage:comment_delete' comment.id %}"> 삭제 </a>
+            <br>
+            <br>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <div class="comment2">
+            <a href="{% url 'mypage:comment_create' list.id %}" class="small">댓글 추가</a>
+        </div>
 {% endblock %}
 
 {% block script %}

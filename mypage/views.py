@@ -11,8 +11,8 @@ from django.utils.datetime_safe import date
 
 from common.forms import UserForm
 from community.models import Post
-from mypage.forms import MyForm
-from mypage.models import Memo, Question, Category
+from mypage.forms import MyForm, CusCommentForm
+from mypage.models import Memo, Question, Category, CusComment
 
 
 # Create your views here.
@@ -153,4 +153,27 @@ def comment_create(request, pk):
     else:
         form = CusCommentForm()
     context = {'form' : form }
+    return render(request, 'mypage/comment_form.html', context)
+
+@login_required(login_url='/')
+def comment_delete(request, pk):
+    comment = get_object_or_404(CusComment, pk=pk)
+    comment.delete()
+    print(comment.post.id)
+    return redirect('mypage:question_read', question_id=comment.post.id)
+
+@login_required(login_url='/')
+def comment_modify(request, pk):
+    comment = get_object_or_404(CusComment, pk=pk)
+    if request.method == "POST":
+        form = CusCommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.modify_date = timezone.now()
+            comment.save()
+            return redirect('mypage:question_read', question_id=comment.post.id)
+    else:
+        form = CusCommentForm(instance=comment)
+    context = {'form':form}
     return render(request, 'mypage/comment_form.html', context)
