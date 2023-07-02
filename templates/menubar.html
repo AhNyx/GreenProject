@@ -3,7 +3,7 @@
 $(document).ready(function () {
     var isOpen = false;
     var testObjHeight = 80;
-    var expandedHeight = 360;
+    var expandedHeight = 420;
     var tmp = parseInt($("#test_obj").css('top'));
     var animationInProgress = false;
     // 툴팁임
@@ -17,10 +17,10 @@ $(document).ready(function () {
     var menuState = getCookie("menuState");
     if (menuState === "open") {
         isOpen = true;
-        $("#up, #home, #cart, #kakao, #ocr").show();
+        $("#up, #home, #cart, #kakao, #ocr, #menuhelp").show();
         testObjHeight = expandedHeight;
     } else {
-        $("#up, #home, #cart, #kakao, #ocr").hide();
+        $("#up, #home, #cart, #kakao, #ocr ,#menuhelp").hide();
         testObjHeight = 80;
     }
     $("#test_obj").height(testObjHeight);
@@ -42,12 +42,12 @@ $(document).ready(function () {
         animationInProgress = true;
 
         if (isOpen) {
-            $("#up, #home, #cart, #kakao, #ocr").show();
+            $("#up, #home, #cart, #kakao, #ocr, #menuhelp").show();
             testObjHeight = expandedHeight;
             // 메뉴 상태를 쿠키에 저장
             setCookie("menuState", "open", 7);
         } else {
-            $("#up, #home, #cart, #kakao, #ocr").hide();
+            $("#up, #home, #cart, #kakao, #ocr, #menuhelp").hide();
             testObjHeight = 80;
             // 메뉴 상태를 쿠키에서 제거
             deleteCookie("menuState");
@@ -99,24 +99,51 @@ $(document).ready(function () {
 </script>
 <body>
 <div id="test_obj">
+  <header>
+    <nav>
+      <div id="menu" class="kakao-button">
+        <img src="{% static 'greenbooks/images/menu.png' %}" class="sg_image" alt="menu">
+        <div class="tooltip">메뉴 펼치기</div>
+      </div>
+      <div id="up" class="up-button">
+        <img src="{% static 'greenbooks/images/up.png' %}" class="sg_image" alt="맨 위로">
+        <div class="tooltip">맨 위로</div>
+      </div>
+      <div id="home" class="kakao-button">
+        <a href="{% url 'index' %}">
+          <img src="{% static 'greenbooks/images/home.png' %}" class="sg_image" alt="home">
+          <div class="tooltip">홈</div>
+        </a>
+      </div>
+      <div id="ocr" class="kakao-button">
+        <a href="{% url 'price:barcodereader' %}">
+          <img src="{% static 'greenbooks/images/ocr.png' %}" class="sg_image" alt="home">
+          <div class="tooltip">OCR</div>
+        </a>
+      </div>
+      <div id="cart" class="kakao-button">
+        <a href="{% url 'shopcart:detail' %}">
+          <img src="{% static 'greenbooks/images/cart.png' %}" class="sg_image" alt="cart">
+          <div class="tooltip">장바구니</div>
+        </a>
+      </div>
 
-    <header>
-        <nav>
-            <a href="#" id="menu" class="kakao-button" onclick="return false;" ><img src="../../static\greenbooks\images\menu.png" class="sg_image" alt="menu"></a>
-            <a href="{% url 'index' %}" id="home" class="kakao-button"><img src="../../static\greenbooks\images\home.png" class="sg_image" alt="home"></a>
-            <a href="{% url 'price:barcodereader' %}" id="ocr" class="kakao-button"><img src="../../static\greenbooks\images\ocr.png" class="sg_image" alt="home"></a>
-            <a href="{}" id="cart" class="kakao-button"><img src="../../static\greenbooks\images\cart.png" class="sg_image" alt="cart"></a>
-            <a onclick="goTop()" id="up" class="up-button"><img src="../../static\greenbooks\images\up.png" class="sg_image" alt="맨 위로"></a>
-            <a href="http://pf.kakao.com/_xdBNAG" id="kakao" class="kakao-button" target="_blank"><img src="../../static\greenbooks\images\kakao.png" class="sg_image" alt="카카오"></a>
-            <a href="#" id="menu" class="kakao-button" onclick="return false;"><img src="{% static 'greenbooks/images/menu.png' %}" class="sg_image" alt="menu"></a>
-            <a href="{% url 'index' %}" id="home" class="kakao-button"><img src="{% static 'greenbooks/images/home.png' %}" class="sg_image" alt="home"></a>
-            <a href="{% url 'price:barcodereader' %}" id="ocr" class="kakao-button"><img src="{% static 'greenbooks/images/ocr.png' %}" class="sg_image" alt="home"></a>
-            <a href="{% url 'shopcart:detail' %}" id="cart" class="kakao-button"><img src="{% static 'greenbooks/images/cart.png' %}" class="sg_image" alt="cart"></a>
-            <a onclick="goTop()" id="up" class="up-button"><img src="{% static 'greenbooks/images/up.png' %}" class="sg_image" alt="맨 위로"></a>
-            <a href="http://pf.kakao.com/_xdBNAG" id="kakao" class="kakao-button" target="_blank"><img src="{% static 'greenbooks/images/kakao.png' %}" class="sg_image" alt="카카오"></a>
-        </nav>
-    </header>
 
+
+      <div id="menuhelp" class="kakao-button">
+        <a href="{% url 'custom:help_list' %}">
+          <img src="{% static 'greenbooks/images/answer.png' %}" class="sg_image" alt="qna">
+          <div class="tooltip">Q&A</div>
+        </a>
+      </div>
+      <div id="kakao" class="kakao-button">
+        <a href="http://pf.kakao.com/_xdBNAG" target="_blank">
+          <img src="{% static 'greenbooks/images/kakao.png' %}" class="sg_image" alt="카카오">
+          <div class="tooltip">카카오 고객상담</div>
+        </a>
+      </div>
+    </nav>
+  </header>
 </div>
 
 
@@ -156,7 +183,8 @@ $(document).ready(function () {
     #ocr,
     #cart,
     #up,
-    #kakao {
+    #kakao
+    #menuhelp{
     cursor: pointer;
     }
 

@@ -44,17 +44,17 @@
                     <hr>
 
                     <div class="form-group mb-3 p-4" >
-                        <P>답변을 적어주세요.</P>
+                        <P>답변을 수정해주세요.</P>
                         <div class="cont">
                             <textarea class="form-control" name="answer_content" id="answer_content" rows="10"
-                                      placeholder="내용을 입력해주세요">{{ form.answer_content.value|default_if_none:'' }}</textarea>
+                                      placeholder="내용을 입력해주세요">{{ help.answer }}</textarea>
                         </div>
                     </div>
                 </div>
                 <div id="btn" class="text-center mt-2">
                         <button type="reset" class="btn btn-primary">취소</button>
                         <a href="{% url 'custom:help_list' %}" class="btn-a btn btn-primary">목록</a>
-                        <button type="submit" name="post_submit" class="btn btn-primary">답변 작성</button>
+                        <button type="submit" name="post_submit" class="btn btn-primary">수정</button>
                     </div>
             </form>
         </section>

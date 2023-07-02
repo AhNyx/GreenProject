@@ -1,70 +1,71 @@
 {% extends 'base.html' %}
-<!-- 템플릿 필터 적용을 위해 추가 -->
 {% load static %}
-{%block title%} - Q&A{%endblock%}
-{% block content %}
-<div class="container px-4 py-5">
-    <div id="announcement">
-        <div class="pb-2 border-bottom">
-            <h2>고객센터<br>
-                <p style="font-size:1.3rem">Q&A</p></h2>
-            <strong><p style="font-size:0.75rem; color:#ac2c38b5">
-                * 실명미사용, 단순비방, 비인격적인 용어 기재시 임의삭제 될 수 있습니다.<br>
-                * 주말, 공휴일, 평일 근무시간(08:30~17:30) 이후 문의에 대해서는 답변이 지연될 수 있습니다.</p></strong>
 
-            <hr>
-        </div>
+{% block title %} - Q&A {% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div id="announcement" class="pb-2 border-bottom">
+        <h2 class="text-center">고객센터</h2>
+        <p class="text-center" style="font-size:1.3rem">Q&A</p>
+        <strong>
+            <p style="font-size:0.75rem; color:#ac2c38b5">
+                * 실명미사용, 단순비방, 비인격적인 용어 기재시 임의삭제 될 수 있습니다.<br>
+                * 주말, 공휴일, 평일 근무시간(08:30~17:30) 이후 문의에 대해서는 답변이 지연될 수 있습니다.
+            </p>
+        </strong>
+        <hr>
     </div>
     <div class="row">
-        {% include 'custom/custom_menu.html'%}
+        {% include 'custom/custom_menu.html' %}
         <section id="help_list" class="col-lg-8">
-            <div class="board_title">
-                <strong>1:1게시판</strong>
-            </div>
-            <div class="board_view_wrap">
-                <div class="board_view">
-                    <div class="customer title">
-                        {{ help.title }}
-                    </div>
-                    <div class="info">
-                        <dl>
-                            <dt>번호</dt>
-                            <dd>{{ help.id }}</dd>
-                        </dl>
-                        <dl>
-                            <dt>글쓴이</dt>
-                            <dd>{{ help.author }}</dd>
-                        </dl>
-                        <dl>
-                            <dt>작성일</dt>
-                            <dd>{{ help.pub_date }}</dd>
-                        </dl>
-                        <dl>
-                            <dt>email</dt>
-                            <dd>{{ help.email }}</dd>
-                        </dl>
-                        <dl>
-                            <dt>조회</dt>
-                            <dd>{{ help.views }}</dd>
-                        </dl>
-                    </div>
-                    <div class="cont">
+            <div class="card mb-3" style="background-color: #EBEBE8; border: 1px solid #ddd;">
+                <div class="card-body p-4">
+                    <div class="card-text" style="height: 1em;"></div>
+                    <h5 class="card-title" style="font-weight:bold; margin-top: -0.5em;">Q : {{ help.title }}</h5>
+                    <hr>
+                    <div class="card-text p-2"
+                         style="border: 1px solid #ddd; background-color: #ffffff; margin-top: 1.5em; margin-bottom: 1.5em; min-height: 10em;">
+                        {% if help.content %}
                         {{ help.content }}
+                        {% else %}
+                        <em>글 내용이 없습니다.</em>
+                        {% endif %}
+                    </div>
+                    {% if help.answer %}
+                    <h5 class="card-title mb-0" style="font-weight:bold; margin-top: -0.5em;">A :</h5>
+                    <hr>
+                    <div class="card-text p-2"
+                         style="border: 1px solid #ddd; background-color: #ffffff; margin-top: 1.5em; margin-bottom: 1.5em; min-height: 10em;">
+                        {{ help.answer }}
+                    </div>
+                    {% endif %}
+                    <div class="info text-end mt-3" style="font-size:0.9rem; ">
+                          <span class="d-block">글쓴이 : {{ help.author }}</span>
+                        <span class="d-block">작성일 : {{ help.pub_date }}</span>
+                        <span class="d-block">이메일 : {{ help.email }}</span>
                     </div>
                 </div>
-                <div id="btn" class="text-center mt-3">
-                    <a href="{% url 'custom:help_list' %}" class="btn-a btn btn-primary">목록</a>
-                    <a href="{% url 'custom:help_modify' help.id %}" class="btn-a btn btn-primary">수정</a>
-                    <a href="{% url 'custom:help_delete' help.id %}" class="delete btn-a btn btn-primary">삭제</a>
-                    {% if user.is_superuser %}
-                        <a href="{% url 'custom:help_answer' help.id %}" class="btn-a btn btn-primary">답글 작성</a>
-                    {% endif %}
-                </div>
+            </div>
+            <!-- ... -->
+            <div class="text-center">
+                <a href="{% url 'custom:help_list' %}" class="btn btn-primary me-2">목록</a>
 
+
+                {% if user.is_superuser %}
+                    {% if not help.answer %}
+                        <a href="{% url 'custom:help_answer' help.id %}" class="btn btn-primary">답글 작성</a>
+
+                    {% else %}
+                        <a href="{% url 'custom:answer_delete' help.id %}" class="btn btn-primary">답변 삭제</a>
+                        <a href="{% url 'custom:answer_modify' help.id %}" class="btn btn-primary">답글 수정</a>
+                    {% endif %}
+                {% else %}
+                <a href="{% url 'custom:help_modify' help.id %}" class="btn btn-primary me-2">질문 수정</a>
+                {% endif %}
+                <a href="{% url 'custom:help_delete' help.id %}" class="btn btn-primary me-2">글 삭제</a>
             </div>
         </section>
     </div>
-
 </div>
-
 {% endblock %}

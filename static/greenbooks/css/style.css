@@ -158,6 +158,27 @@ main {
 
 }
 
+.pagination {
+    text-align: center;
+    justify-content: center;
+}
+
+.pagination .pagination-btn {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    margin: 2px;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    text-decoration: none;
+}
+
+.pagination .current-page {
+    font-weight: bold;
+}
 
 /* @@@@@@@@@@community @@@@@@@@@@@@@@스타 일 */
 

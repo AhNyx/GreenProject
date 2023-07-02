@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} - 공지사항{% endblock %}
+
+{% block content %}
+<div class="container px-4 py-5">
+    <div id="announcement">
+        <div class="pb-2 border-bottom">
+            <h2>고객센터<br>
+                <p style="font-size:1.3rem">공지사항 상세보기</p></h2>
+            <strong><p style="font-size:0.75rem; color:#ac2c38b5">
+                그린 24의 소식을 빠르게 전달해드리겠습니다.</p></strong>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        {% include 'custom/custom_menu.html' %}
+        <section id="help_view" class="col-lg-8">
+            <h4>{{ post.title }}</h4>
+            <p class="text-secondary">작성자: {{ post.author }}</p>
+            <p class="text-secondary">작성일: {{ post.pub_date }}</p>
+            <hr>
+            <div class="content">{{ post.content }}</div>
+            {% if post.author == request.user %}
+            <div class="d-flex justify-content-end mt-3">
+                <a href="{% url 'custom:notice_modify' post.id %}" class="btn btn-primary mr-2">수정</a>
+                <a href="{% url 'custom:notice_delete' post.id %}" class="btn btn-danger">삭제</a>
+            </div>
+            {% endif %}
+        </section>
+    </div>
+</div>
+{% endblock %}
