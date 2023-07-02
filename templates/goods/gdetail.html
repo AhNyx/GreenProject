@@ -42,37 +42,73 @@
     </div>
   </div>
 </section>
-<section id = review>
-    <h3 class="mt-5"> 판매자의 말! </h3>
-    <hr>
-    <div id = "left">
-        <div class="speech-bubble">상태 좋습니다 댓글주세요~ <br>
-        싸게 올렸어요~:D</div>
-        <div class="speech-bubble:after"></div>
-        <br>
-        <div class="speech-bubble"> 연락주시면 바로 답변 드리겠습니다~-</div>
-        <div class="speech-bubble:after">
-    </div>
-    <br>
-     <!--   &lt;!&ndash; thums-up image &ndash;&gt;
-    <div id="img">
-        <img src="{% static 'greenbooks/images/girl_re.png' %}" alt = "미모티콘">
-    </div>
 
-    <div id="right">
-        </div> <div class="right-bubble">오랜만에 감명깊게 읽은책입니다 ★★★★★★ <br> -경*진 -</div>
-        <div class="right-bubble:after"></div>
-        <br>
-        <div class="right-bubble">소장용으로 한권 더 구매할 예정입니다. ★★★★★★  <br>- 고*현</div>
-        <div class="right-bubble:after"></div>
-        <br>
-     </div>-->
+<!--말풍선-->
 
+<hr>
+<section class="pt-4">
+    <div class="container px-lg-5">
+        <div class="row gx-lg-5">
+            <div class="col-lg-6 col-xxl-4 mb-5">
+                <div class="card bg-light border-0 h-100">
+                    <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i class="bi bi-collection"></i></div>
+                            <div class="speech-bubble"> <br>  깨끗하게 보관했습니다.</div>
+                            <div class="speech-bubble:after"></div>
+
+                            <br>
+                            <br>
+                            <div class="speech-bubble"><br>
+                                                        편하신 방법으로 거래 가능합니다.</div>
+                            <div class="speech-bubble:after"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xxl-4 mb-5">
+                <div class="card bg-light border-0 h-100">
+                    <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i class="bi bi-cloud-download"></i></div>
+                        <h2 class="fs-4 fw-bold">판매자의 한마디</h2>
+                        <img src="{% static 'greenbooks/images/girl_re.png' %}" alt = "미모티콘">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xxl-4 mb-5">
+                <div class="card bg-light border-0 h-100">
+                    <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i class="bi bi-card-heading"></i></div>
+                        <div class="right-bubble">  <br> 관심있으신 분들은 댓글 달아주세요</div>
+                        <div class="right-bubble:after"></div>
+                        <br>
+                        <br>
+                        <div class="right-bubble">  <br> 친절하게 답변해드릴게요 ^^</div>
+                         <div class="right-bubble:after"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
-    <h3>dfdf</h3> <!--댓글 밑에 넣을예정-->
 
 
-<div id="disqus_thread"></div>
+
+<section>
+    <div class="container py-5"> <!-- 패딩을 추가하기 위해 container와 py-5 클래스를 사용 -->
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <div class="container py-3">
+                    <h3 style="text-align: center;">댓글로 판매자와 소통하세요</h3>
+                </div>
+                <div id="disqus_thread"></div><!--댓글 -->
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+
+
+
+</div>
 <script>
     /**
     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
@@ -91,6 +127,8 @@
     })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+</section>
 
 
 {% endblock %}

@@ -6,8 +6,7 @@
 	position: relative;
 	background: #d3d3d3;
 	border-radius: .4em;
-	text-align:center
-
+	margin: 20px auto 0;
 }
 
 .speech-bubble:after {
@@ -33,6 +32,7 @@
 	position: relative;
 	background: #c2c5cc;
 	border-radius: .4em;
+	margin: 20px auto 0;
 }
 
 .right-bubble:after {
@@ -49,36 +49,31 @@
 	margin-left: -10px;
 	margin-bottom: -20px;
 }
-/*주의사항 css*/
-#caution{
 
-}
-
-
-/*한줄평 css*/
+/*
+한줄평 css
 #review {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   background-color: #f0f0f0;
-
 }
 
 #left {
-        float: left;
-        text-align: center;
-        width: 50%;
-    }
+  flex: 1;
+  text-align: center;
+}
 
-    #img {
-        display: inline-block;
-        text-align: center;
-    }
+#img {
+  display: inline-block;
+  text-align: center;
+}
 
-    #right {
-        float: right;
-        text-align: center;
-        width: 50%;
-    }
+#right {
+  flex: 1;
+  text-align: center;
+}
+*/
+
 
