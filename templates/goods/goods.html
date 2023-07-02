@@ -1,26 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}구매 페이지입니다
+{% block title %} 구매 페이지입니다 {% endblock %}
 {% load humanize %} <!--원화로 표시하기위해 -->
-{% endblock %}
-{% block content %}
-<!--카테고리 메모-->
-<!--<section>
-    <div class="row">
-        <div class="col-2">
-            <div class="list-group mx-5">
-                <a href="{% url 'goods:goods' %}"
-                   class="list-group-item {% if not current_category %}active{% endif %}">All</a>
-                {% for category in categories %}
-                    <a href="{{ category.get_absolute_url }}"
-                       class="list-group-item ">
 
-                    </a>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-</section>-->
+{% block content %}
+
 <!--카테고리-->
 <!--li안에 a -->
 <div class="d-flex justify-content-center"> <!--# 가운데정렬-->
