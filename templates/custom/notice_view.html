@@ -24,8 +24,8 @@
                 <div class="content">{{ notice.content }}</div>
                 {% if request.user.is_superuser %}
                 <div class="d-flex justify-content-end mt-3">
-                    <a href="{% url 'custom:notice_modify' post.id %}" class="btn btn-primary mr-2">수정</a>
-                    <a href="{% url 'custom:notice_delete' post.id %}" class="btn btn-danger">삭제</a>
+                    <a href="{% url 'custom:notice_modify' notice.id %}" class="btn btn-primary mr-2">수정</a>
+                    <a href="{% url 'custom:notice_delete' notice.id %}" class="btn btn-danger">삭제</a>
                 </div>
                 {% endif %}
             </div>
