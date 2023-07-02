@@ -26,7 +26,7 @@ def barcodereader(request):
             # If not detected then print the message
             if not detectedBarcodes:
                 print("바코드 인식 실패.")
-                return redirect('price:uimage')
+                return redirect('price:barcodereader')
             else:
                 # Traverse through all the detected barcodes in image
                 for barcode in detectedBarcodes:
@@ -60,7 +60,7 @@ def barcodereader(request):
                                       {'title': title, 'link': link, 'cover': cover, 'isbn13': isbn13,
                                        'price': priceSales, 'pricestandard': priceStandard})
     # 보여줄 때는 이곳 수행
-    # 제일 처음엔 form을 받아와서 uimage.html에 보내주고
+    # 제일 처음엔 form을 받아와서 barcodereader.html에 보내주고
     else:
         form = PhotoForm()
         return render(request, 'checkbookprice/barcodereader.html', {'form': form})
