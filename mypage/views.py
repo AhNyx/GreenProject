@@ -73,7 +73,8 @@ def question(request):
         question_list = question_list.filter(
             Q(title__icontains=kw)|
             Q(content__icontains=kw)|
-            Q(author__username__icontains=kw)
+            Q(author__username__icontains=kw)|
+            Q(cuscomment__content__icontains=kw)
         ).distinct()
 
     paginator = Paginator(question_list, 10)
