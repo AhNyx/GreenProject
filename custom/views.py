@@ -168,7 +168,6 @@ def answer_delete(request, help_id):
 
 ############################ 여기부터 공지사항 #########
 
-@login_required(login_url='common:login')
 def notice_list(request):
     query = request.GET.get('query', '')  # 검색어 가져오기
 
