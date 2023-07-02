@@ -17,7 +17,7 @@ class PostForm(forms.ModelForm):    # 폼 생성시 필요한 필드
 class ReplyForm(forms.ModelForm):
     class Meta:
         model = Reply  # import
-        fields = ['content']
+        fields = ['content']    # 폼 내부에서 name으로 필드와 연결
         labels = {
             'content': '댓글 내용'
         }
