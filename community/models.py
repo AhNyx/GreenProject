@@ -53,10 +53,10 @@ class Post(models.Model):
 # 댓글 모델
 class Reply(models.Model):
     content = models.TextField()    # 댓글 내용
-    writer = models.ForeignKey(User, on_delete=models.CASCADE)  # 댓쓴이
+    writer = models.ForeignKey(User, on_delete=models.CASCADE)  # 댓쓴이: FK, User와 연결, 삭제연동
     create_date = models.DateTimeField(auto_now_add=True)       # 등록일
     modify_date = models.DateTimeField(null=True, blank=True)   # 수정일
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)    # 외래키
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)    # 포스트: FK, Post와 연결, 삭제연동
 
     def __str__(self):
         return self.content

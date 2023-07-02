@@ -151,7 +151,6 @@ def reply_create(request, post_id):
             reply.writer = request.user  # 댓쓴이는 현재 로그인한 사용자
             reply.post = post  # 외래키 생성(post와 연결)
             reply.save()
-
             # JSON 형식의 응답 생성
             response_data = {
                 'reply': {
@@ -163,7 +162,6 @@ def reply_create(request, post_id):
             return JsonResponse({'error': 'Form is not valid'}, status=400)
     else:
         form = ReplyForm()  # 빈 폼 생성
-
     context = {'form': form}
     return render(request, 'community/reply_form.html', context)
 

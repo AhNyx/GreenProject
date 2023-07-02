@@ -9,11 +9,12 @@
     <div class="row">
         <!-- 성길씨 Q&A에서 가져옴. 그리드: 왼쪽 2/12(16.67%) 영역 -->
         <aside class="col-lg-2">
-            <div class="flex-shrink-0" style="font-size: 16px;">
+            <div class="flex-shrink-0">
                 <ul class="list-unstyled ps-0">
                     <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse"
-                                data-bs-target="#home-collapse" aria-expanded="true">
+                        <!-- 버튼 클래스에 마진탑 추가(상세보기에서만)-->
+                        <button class="btn btn-toggle rounded collapsed mt-3" data-bs-toggle="collapse"
+                                data-bs-target="#home-collapse" aria-expanded="false">
                             <!-- 카테고리 눌렀다면 사이드바 큰 글씨로 -->
                             {% if current_category.slug %}
                             <h3>{{ current_category.slug }}</h3>
@@ -22,8 +23,9 @@
                             <h3>전체글</h3>
                             {% endif %}
                         </button>
-                        <div class="collapse show" id="home-collapse" style="">
+                        <div class="collapse" id="home-collapse" style="">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <!-- 글 상세보기 페이지이므로 사이드바에서 선택된 부분 없음 -->
                                 <!-- 전체글 -->
                                 <li><a href="{% url 'community:community' %}" class="link-dark rounded">전체글</a></li>
                                 <!-- 카테고리 이름으로 리스트 설정 -->
@@ -54,13 +56,10 @@
                 <tr>
                     <!-- 글쓴이 -->
                     <td>글쓴이: {{ post.writer }}</td>
-                    <!-- 수정된 경우 수정일시와 작성일시를, 아닌 경우 작성일시만 표시 -->
-                    <!-- yy-m-d h:mm으로 포맷변경 -->
+                    <!-- 작성일시 표시 -->
+                    <!-- yyyy.mm.dd hh:mm(24시간제)으로 포맷변경 -->
                     <td>
-                        작성: {{ post.create_date|date:"y-n-j G:i" }}
-                        {% if post.modify_date %}
-                        ,&nbsp;&nbsp;수정: {{ post.modify_date|date:"y-n-j G:i" }}
-                        {% endif %}
+                        작성: {{ post.create_date|date:"Y.m.d H:i" }}
                     </td>
                     <!-- 조회수 -->
                     <td>조회: {{ post.views }}</td>
@@ -70,9 +69,11 @@
                         <button type="button" name="{{ post.id }}" class="like">
                             <!-- 현재 유저가 추천인 중에 있으면 -->
                             {% if has_liked %}
-                            <img src="{% static 'greenbooks/images/heart_filled.png' %}" style="width: 20px; height: 20px;" alt="추천완료">
+                            <img src="{% static 'greenbooks/images/heart_filled.png' %}"
+                                 alt="추천완료" style="width: 20px;">
                             {% else %}
-                            <img src="{% static 'greenbooks/images/heart_empty.png' %}" style="width: 20px; height: 20px;" alt="추천보류">
+                            <img src="{% static 'greenbooks/images/heart_empty.png' %}"
+                                 alt="추천보류" style="width: 20px;">
                             {% endif %}
                         </button>
                         <!-- 추천수 영역: id지정-정보받아서 ajax로 반영 -->
@@ -82,9 +83,12 @@
                 <tr>
                 <!-- post 내용 - 편집기 넣은 버전 -->
                     <!-- 스타일: 왼쪽정렬, 자동줄바꿈 적용되기 때문에 white-space처리 삭제 -->
-                    <td colspan="4" class="text-start">
+                    <td colspan="3" class="text-start">
                         {{ post.description|safe }}
                     </td>
+                    <td style="font-size: 0.75rem;" class="text-end">{% if post.modify_date %}
+                        {{ post.modify_date|date:"Y.m.d H:i" }} 수정됨
+                        {% endif %}</td>
                 </tr>
             </table>
             <!-- 댓글 영역 -->
@@ -99,9 +103,9 @@
                         <li class="list-group-item">
                             <div class="writer-info mb-3">
                                 {% if reply.writer == post.writer %}
-                                <i class="fa-solid fa-user-pen fa-xl self-replyer"></i>
+                                <i class="fa-solid fa-user-pen fa-2xl" style="color: gold;"></i>
                                 {% else %}
-                                <i class="fa-solid fa-user fa-xl bg-commu"></i>
+                                <i class="fa-solid fa-user fa-2xl" style="color: lightskyblue;"></i>
                                 {% endif %}
                                 <span class="writer-name">{{ reply.writer }}</span>
                                 <span class="date" style="font-size: xx-small;">
@@ -113,7 +117,7 @@
                                     <div class="float-end">
                                         <!-- 삭제버튼 자바스크립트구동을 위해 delete클래스 필수 -->
                                         <a class="delete" href="#" data-uri="{% url 'community:re_delete' reply.id %}">
-                                            <i class="fa-solid fa-trash fa-xs"></i>
+                                            <i class="fa-solid fa-trash fa-xs" style="color: slategrey;"></i>
                                         </a>
                                     </div>
                                 {% endif %}
@@ -128,8 +132,8 @@
             </div>
             <!-- 댓글 등록 폼을 불러오는 버튼 -->
             {% if user.is_authenticated %}
-            <div>
-                <a href="" id="reply-form-btn" class="btn btn-primary d-flex justify-content-center">댓글 등록</a>
+            <div class="text-center">
+                <a href="" id="reply-form-btn" class="btn btn-primary">댓글 등록</a>
             </div>
             <!-- 댓글 등록 폼 -->
             <div id="reply-form-wrapper" style="display: none;">
@@ -159,6 +163,15 @@
 {% block script %}
 <script>
     $(document).ready(function() {
+        // 사이드바 - 화면크기가 작을땐(테이블위위치) 사이드바가 접혀있고 클땐(테이블옆위치) 사이드바가 열리도록
+        if ($(window).width() <= 991) {
+            $('.btn-toggle').attr('aria-expanded', 'false');
+            $('#home-collapse').removeClass('show');
+        } else {
+            $('.btn-toggle').attr('aria-expanded', 'true');
+            $('#home-collapse').addClass('show');
+        }
+
         // 삭제시 경고창
         // delete 클래스를 클릭시
         $('.delete').click(function() {
@@ -168,6 +181,7 @@
                 location.href=$(this).data('uri');
             }
         });
+
         // 추천 ajax처리
         $(".like").click(function () {
             var button = $(this);   // 버튼 특정하기
@@ -193,25 +207,20 @@
                 }
             });
         });
-        // 댓글폼버튼 토글
+
+        // 댓글폼 나타내기
         $('#reply-form-btn').click(function(e) {
             e.preventDefault();     // 기본 동작 막기
-            if ($('#reply-form-wrapper').css('display') === 'none') {
-                // 폼이 숨겨진 상태인 경우
-                $('#reply-form-wrapper').css('display', 'block');   // 폼 보이게 함
-                $('#reply-form-btn').text('취소');                   // 버튼의 글씨를 댓글작성 -> 취소로 바꿈
-                var windowHeight = $(window).height();              // 창의 높이 가져오기
-                $('html, body').animate({       // 버튼이 화면 세로길이의 중앙에 오도록 스크롤 애니메이션
-                    scrollTop: $('#reply-form-btn').offset().top - (windowHeight / 2)
-                }, 0, function() {
-                    $('#reply-form textarea[name="content"]').focus();      // 애니메이션이 완료된 후 textarea에 포커스를 줌
-                });
-            } else {
-                // 폼이 보이는 상태인 경우
-                $('#reply-form-wrapper').css('display', 'none');    // 폼 숨김
-                $('#reply-form-btn').text('댓글 작성');               // 버튼의 글씨를 취소 -> 댓글작성으로 바꿈
-            }
+            $('#reply-form-wrapper').css('display', 'block');   // 폼 보이기
+            $('#reply-form-btn').css('display', 'none');        // 버튼 숨기기
+            var windowHeight = $(window).height();              // 창의 높이 가져오기
+            $('html, body').animate({       // 댓글폼이 화면 세로길이의 중앙에 오도록 스크롤 애니메이션
+                scrollTop: $('#reply-form').offset().top - (windowHeight / 2)
+            }, 100, function() {
+                $('#reply-form textarea[name="content"]').focus();      // 애니메이션이 완료된 후 textarea에 포커스를 줌
+            });
         });
+
         // 댓글 등록 폼 제출
         $("#reply-form").submit(function(event) {
             event.preventDefault();  // 기본 제출 동작 막기

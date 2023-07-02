@@ -179,6 +179,8 @@ border: 2px solid red;
 .thumb > img { width:100%; }
 .thumb > .close { position:absolute; background-color:red; cursor:pointer; }
 
+/* 사이드바 현재카테고리리스트: 호버효과와 맞춤 */
+#home-collapse .selected{color: #fff; background-color: #81bf60;}
 /* 현재 부트스트랩상 a태그 기본속성이 밑줄, 파란글씨 */
     /* 모든 버튼영역(a): 밑줄 지우고 버튼색이 파래서 글씨가 안보여 흰글씨로 변경 */
 .btn-a a{color: #fff; text-decoration: none;}
@@ -188,14 +190,12 @@ border: 2px solid red;
 #commu-table a{color: #616161; display: block; width: 100%;}
 #commu-table tr:hover a{color: #212529;}
 #commu-table a:focus, a:active{background-color: transparent;}
+        /* 댓글수: 색 넣어줌 */
+#commu-table .bg-commu{color: #81bf60;}
     /* detail 카테고리영역(th): 제목스타일과 다르게 작성정보스타일에 가깝도록 글씨 색, 크기, 굵기 조정 */
 #commu-cate{color: #616161; font-size: 23px; font-weight: normal;}
 #detail .reply ul{border-bottom-style: inset; border-bottom-width: 1px;}
-        /* 좋아요버튼: 투명하게 그림만 뜨도록 세로길이줄임  */
+        /* 좋아요 버튼: 투명하게 그림만 뜨도록 세로길이줄임, 그림: 크기조정  */
 #detail .like{background: border-box; border-color: transparent; line-height: normal;}
         /* 댓글리스트 */
 #detail .list-group-item{color: #616161; border: 0px;}
-        /* 댓글유저(뱃지) */
-.bg-commu{color: #81bf60;}
-        /* 본인글 댓쓴이 아이콘 색변경 */
-.self-replyer{color: gold;}

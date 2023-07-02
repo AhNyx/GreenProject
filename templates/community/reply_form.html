@@ -1,5 +1,5 @@
 <!-- 폼: id로 자바스크립트 연결 -->
-<form method="post" id="reply-form" class="mb-3">
+<form method="post" id="reply-form" class="mb-3 mx-auto" style="width: 90%;}">
     {%csrf_token %}
     {% include 'form_errors.html' %}
     <div class="mb-3 mt-3">
@@ -11,18 +11,24 @@
     </div>
     <!-- 오른쪽 정렬 -->
     <div class="d-flex justify-content-end">
-      <button type="submit" class="btn btn-primary">작성</button>
+      <button type="submit" class="btn btn-primary me-1">작성</button>
+      <button type="reset" class="btn btn-primary" id="reply-reset">취소</button>
     </div>
 </form>
 {% block script %}
 <script>
-    // 댓글 등록 폼 제출 시 콘솔에 댓글 내용 출력
+    // 댓글 등록 폼 제출
     document.querySelector("#reply-form").addEventListener("submit", function(event) {
         event.preventDefault();  // 기본 제출 동작 막기
         // 댓글 내용 가져오기
         var content = document.querySelector("textarea[name='content']").value;
         // 실제로 제출하기
         this.submit();
+    });
+    // 취소버튼으로 댓글폼 숨기기
+    $('#reply-reset').click(function(e) {
+        $('#reply-form-wrapper').css('display', 'none');    // 폼 숨기기
+        $('#reply-form-btn').css('display', 'inline-block');       // 버튼 보이기
     });
 </script>
 {% endblock %}
