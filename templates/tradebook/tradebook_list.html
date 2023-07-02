@@ -28,11 +28,13 @@
                             <div class="collapse show" id="home-collapse" style="">
                                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                                     <!-- 전체글 -->
-                                    <li><a href="{% url 'tradebook:tradebook_list' %}" class="link-dark rounded">전체글</a>
+                                    <li><a href="{% url 'tradebook:tradebook_list' %}" class="link-dark rounded
+                                    {% if not current_category %} selected{% endif %}">전체글</a>
                                     </li>
                                     <!-- 카테고리 이름으로 리스트 설정 -->
                                     {% for category in trade_category %}
-                                    <li><a href="{{ category.get_absolute_url }}" class="link-dark rounded">
+                                    <li><a href="{{ category.get_absolute_url }}" class="link-dark rounded
+                                    {% if current_category == category %} selected{% endif %}">
                                         {{ category.name }}
                                     </a></li>
                                     {% endfor %}
