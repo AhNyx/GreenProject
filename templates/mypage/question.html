@@ -33,9 +33,9 @@
                     </button>
                     <div class="collapse show" id="home-collapse" style="">
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                            <li><a href="{% url 'mypage:question' %}" class="link-dark rounded">전체글</a></li>
+                            <li><a href="{% url 'mypage:question' %}" class="link-dark rounded {% if not current_category %} selected{% endif %}">전체글</a></li>
                             {% for category in categories %}
-                            <li><a href="{{ category.get_absolute_url }}" class="link-dark rounded">
+                            <li><a href="{{ category.get_absolute_url }}" class="link-dark rounded {% if current_category == category %} selected{% endif %}">
                                 {{ category.name }}
                             </a></li>
                             {% endfor %}
