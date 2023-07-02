@@ -26,7 +26,7 @@
         {% if user.is_authenticated %}
         <form action="{% url 'mypage:memo_create' %}" method="POST">
             {% csrf_token %}
-            <div id="btn_write" class="d-flex text-left">
+            <div id="btn_write" class="text-left">
             <input id="content" name="content" class="d-inline w-50 text-left"/>
                 <input type="submit" class="mx-1 btn btn-primary" value="쓰기">
             </div>
