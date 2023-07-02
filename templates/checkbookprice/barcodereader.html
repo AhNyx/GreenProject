@@ -2,30 +2,48 @@
 {% block content %}
 <div class="container">
     <div style="text-align:center;">
-        <hr>
-    <h1>바코드로 책 찾기</h1>
+    <h1 class="my-3">바코드로 책 찾기</h1>
         <hr>
     {% if title %}
     {% else %}
         <div class="my-3">
             <form method="POST" class="post-form" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {{ form.image }}
+                <div style="width:400px; height:400px; margin:30px auto;"><img id="tempImage" src=""></div>
                 <button type="submit" class="save btn btn-primary my-3" value="upload">찾기</button>
             </form>
         </div>
     {% endif %}
     {% if title %}
-        <div>
+        <div class="my-3">
             <img src="{{cover}}">
-        </div>
-        <div>
-            <h2>책 제목 : {{title}}</h2>
-            <h2>판매가 : {{price}}, 정가 : {{pricestandard}}</h2>
-            <a href="{{link}}">알라딘 판매처 링크</a>
-            <h2>isbn : {{isbn13}}</h2>
+            <table class="table my-3 table-bordered">
+                <tr>
+                    <td><h2>{{title}}</h2></td>
+                </tr>
+                    <tr><td><h4>판매가 : {{price}}</h4></td></tr>
+                    <tr><td><h4>정가 : {{pricestandard}}</h4></td></tr>
+                    <tr><td><a href="{{link}}">알라딘 판매처 링크</a></td></tr>
+                    <tr><td><h2>isbn : {{isbn13}}</h2></td></tr>
+            </table>
         </div>
     {% endif %}
     </div>
 </div>
+<script>
+ function imageView(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#tempImage').attr('src', e.target.result)
+                 .width(400)
+                 .height(400);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
 {% endblock %}

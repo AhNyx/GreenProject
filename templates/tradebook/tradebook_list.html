@@ -5,7 +5,7 @@
     <section id="community">
         <div id="announcement">
             <h2 class="pb-2 border-bottom">중고책거래</h2>
-            <hr>
+
         </div>
         <div class="row">
             <!-- 성길씨 Q&A에서 가져옴. 그리드: 왼쪽 2/12(16.67%) 영역 -->
@@ -58,7 +58,15 @@
                 {% for trade in trade_list %}
                 <tr>
                     {% if trade.trade_category %}
-                    <td><span class="badge bg-secondary">{{ trade.trade_category }}</span></td>
+                        {% if trade.trade_category.slug == "팝니다" %}
+                            <td><span class="badge bg-primary">{{ trade.trade_category }}</span></td>
+                        {% elif trade.trade_category.slug == "삽니다" %}
+                            <td><span class="badge bg-danger">{{ trade.trade_category }}</span></td>
+                        {% elif trade.trade_category.slug == "거래중" %}
+                            <td><span class="badge bg-success">{{ trade.trade_category }}</span></td>
+                        {% else %}
+                            <td><span class="badge bg-dark">{{ trade.trade_category }}</span></td>
+                        {% endif %}
                     {% endif %}
                     <td>{{ trade.id }}</td>
                     <td>
