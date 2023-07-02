@@ -4,6 +4,7 @@
 {% block title %} - 공지사항{% endblock %}
 
 {% block content %}
+
 <div class="container px-4 py-5">
     <div id="announcement">
         <div class="pb-2 border-bottom">
@@ -15,10 +16,10 @@
         </div>
     </div>
     <div class="row">
-        {% include 'custom/custom_menu.html' %}
+        {% include 'custom/custom_noticemenu.html' %}
         <section id="notice_list" class="col-lg-8">
             <h4>공지사항입니다.</h4>
-            <h6>제목이나 내용을 검색해주세요.</h6>
+            <h6>제목을 검색해주세요.</h6>
             <form method="GET" action="{% url 'custom:notice_list' %}" class="mb-3">
                 <div class="input-group">
                     <input type="text" class="form-control" name="query" placeholder="검색어 입력" value="{{ query }}">
@@ -32,7 +33,9 @@
                     <th scope="col" style="font-size: 0.9rem;">제목</th>
                     <th scope="col" style="font-size: 0.9rem;">작성자</th>
                     <th scope="col" style="font-size: 0.9rem;">작성일</th>
+                    {% if request.user.is_superuser %} <!-- 추가: superuser인 경우에만 삭제 열을 표시 -->
                     <th scope="col" style="font-size: 0.9rem;">삭제</th>
+                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
@@ -46,11 +49,13 @@
                         </td>
                         <td>{{ notice.author }}</td>
                         <td>{{ notice.pub_date }}</td>
+                        {% if request.user.is_superuser %} <!-- 추가: superuser인 경우에만 삭제 버튼 표시 -->
                         <td class="delete">
                             <a href="{% url 'custom:notice_delete' notice.id %}">
                                 <img id="delete-icon1" src="{% static 'greenbooks/images/delete.png' %}" alt="휴지통">
                             </a>
                         </td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 {% else %}
@@ -97,4 +102,5 @@
         </section>
     </div>
 </div>
+
 {% endblock %}
