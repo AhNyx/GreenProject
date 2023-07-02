@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} - 공지사항{% endblock %}
+
+{% block content %}
+<div class="container px-4 py-5">
+    <div id="announcement">
+        <div class="pb-2 border-bottom">
+            <h2>고객센터<br>
+                <p style="font-size:1.3rem">공지사항 글쓰기</p></h2>
+            <strong><p style="font-size:0.75rem; color:#ac2c38b5">
+                그린 24의 소식을 빠르게 전달해드리겠습니다.</p></strong>
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        {% include 'custom/custom_menu.html' %}
+        <section id="notice_list" class="col-lg-8">
+            <form action="" method="POST"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- 유효성 검사 -->
+                {% include 'form_errors.html' %}
+                <h4>공지사항을 적어주세요</h4>
+                <div class="board_write_wrap">
+                    <div class="board_write" style="background color:#EBEBE8">
+                        <div class="title">
+
+                            <dt>제목</dt>
+                            <dd><input type="text" class="form-control" name="title" id="title"
+                                       value="{{ form.title.value|default_if_none:'' }}"
+                                       placeholder="제목을 입력해주세요"></dd>
+
+                        </div>
+
+                        <div class="cont">
+                            <textarea class="form-control" name="content" id="content" rows="10"
+                                      placeholder="내용을 입력해주세요">{{ form.content.value|default_if_none:'' }}</textarea>
+                        </div>
+                    </div>
+                    <div id="btn" class="text-center mt-2">
+                        <button type="reset" class="btn btn-primary">취소</button>
+                        <a href="{% url 'custom:notice_list' %}" class="btn-a btn btn-primary">목록</a>
+                        <button type="submit" name="post_submit" class="btn btn-primary">작성</button>
+                    </div>
+                </div>
+
+            </form>
+        </section>
+    </div>
+</div>
+{% endblock %}

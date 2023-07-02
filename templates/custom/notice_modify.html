@@ -1,50 +1,38 @@
 {% extends 'base.html' %}
-<!-- 템플릿 필터 적용을 위해 추가 -->
 {% load static %}
-{%block title%} - Q&A{%endblock%}
+{% block title %} - 공지사항{% endblock %}
+
 {% block content %}
 <div class="container px-4 py-5">
     <div id="announcement">
         <div class="pb-2 border-bottom">
             <h2>고객센터<br>
-                <p style="font-size:1.3rem">Q&A</p></h2>
+                <p style="font-size:1.3rem">공지사항 수정</p></h2>
             <strong><p style="font-size:0.75rem; color:#ac2c38b5">
-                * 단순비방, 비인격적인 용어 기재시 임의삭제 될 수 있습니다.<br>
-                * 주말, 공휴일, 평일 근무시간(08:30~17:30) 이후 문의에 대해서는 답변이 지연될 수 있습니다.<br></p></strong>
-
+                그린 24의 소식을 빠르게 전달해드리겠습니다.</p></strong>
             <hr>
         </div>
     </div>
     <div class="row">
-        {% include 'custom/custom_menu.html'%}
-        <section id="help_list" class="col-lg-8">
-            <form action="" method="post"
+        {% include 'custom/custom_menu.html' %}
+         <form action="" method="post"
                   enctype="multipart/form-data">
                 {% csrf_token %}
                 <!-- 유효성 검사 -->
                 {% include 'form_errors.html' %}
-                <h4>질문을 수정할 수 있습니다.</h4>
-                <strong><p style="font-size:0.9rem; color:#ac2c38b5">< 질문을 수정하시고 수정버튼을 누르셔야지 저장이 됩니다. ></p></strong>
+                <h4>공지사항을 수정할 수 있습니다.</h4>
                 <div class="board_write_wrap">
                     <div class="board_write" style="background color:#EBEBE8">
                         <div class="title">
-                            <dl>
+
                                 <dt>제목</dt>
                                 <dd><input type="text" class="form-control" name="title" id="title"
                                            value="{{ form.title.value|default_if_none:'' }}"
                                            placeholder="제목을 입력해주세요"></dd>
 
-                            </dl>
+
                         </div>
 
-                        <div class="email">
-                            <dl>
-                                <dt>이메일</dt>
-                                <dd><input type="text" class="form-control" name="email" id="email"
-                                           value="{{ form.email.value|default_if_none:'' }}"
-                                           placeholder="이메일을 입력해주세요"></dd>
-                            </dl>
-                        </div>
                         <dt>본문</dt>
                         <div class="cont">
                             <textarea class="form-control" name="content" id="content" rows="10"
@@ -53,7 +41,7 @@
                     </div>
                     <div id="btn" class="text-center mt-2">
                         <button type="reset" class="btn btn-primary">취소</button>
-                        <a href="{% url 'custom:help_list' %}" class="btn-a btn btn-primary">목록</a>
+                        <a href="{% url 'custom:notice_list' %}" class="btn-a btn btn-primary">목록</a>
                         <button type="submit" class="btn btn-primary">수정</button>
                     </div>
                 </div>
@@ -62,5 +50,4 @@
         </section>
     </div>
 </div>
-
 {% endblock %}
