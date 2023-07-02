@@ -12,9 +12,8 @@
             <div class="flex-shrink-0">
                 <ul class="list-unstyled ps-0">
                     <li class="mb-1">
-                        <!-- 버튼 클래스에 마진탑 추가(상세보기에서만)-->
-                        <button class="btn btn-toggle rounded collapsed mt-3" data-bs-toggle="collapse"
-                                data-bs-target="#home-collapse" aria-expanded="false">
+                        <button class="btn btn-toggle rounded mb-1" data-bs-toggle="collapse"
+                                data-bs-target="#home-collapse" aria-expanded="true">
                             <!-- 카테고리 눌렀다면 사이드바 큰 글씨로 -->
                             {% if current_category.slug %}
                             <h3>{{ current_category.slug }}</h3>
@@ -23,14 +22,18 @@
                             <h3>전체글</h3>
                             {% endif %}
                         </button>
-                        <div class="collapse" id="home-collapse" style="">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <!-- 글 상세보기 페이지이므로 사이드바에서 선택된 부분 없음 -->
+                        <div class="collapse show" id="home-collapse">
+                            <ul id="list-bar" class="btn-toggle-nav list-unstyled pb-1 small">
                                 <!-- 전체글 -->
-                                <li><a href="{% url 'community:community' %}" class="link-dark rounded">전체글</a></li>
+                                <!-- 뷰를 통해 넘어온 카테고리 정보가 없으면 전체글이 선택됨 -->
+                                <!-- 디테일에서는 선택된 카테고리가 없음 -->
+                                <li><a href="{% url 'community:community' %}"
+                                       class="link-dark rounded">전체글</a></li>
                                 <!-- 카테고리 이름으로 리스트 설정 -->
+                                <!-- 뷰를 통해 넘어온 카테고리 정보가 있으면 그 카테고리가 선택됨 -->
                                 {% for category in categories %}
-                                <li><a href="{{ category.get_absolute_url }}" class="link-dark rounded">
+                                <li><a href="{{ category.get_absolute_url }}" class="link-dark rounded
+                                {% if current_category == category %} selected{% endif %}">
                                     {{ category.name }}
                                 </a></li>
                                 {% endfor %}
@@ -162,16 +165,24 @@
 {% endblock %}
 {% block script %}
 <script>
-    $(document).ready(function() {
-        // 사이드바 - 화면크기가 작을땐(테이블위위치) 사이드바가 접혀있고 클땐(테이블옆위치) 사이드바가 열리도록
-        if ($(window).width() <= 991) {
-            $('.btn-toggle').attr('aria-expanded', 'false');
-            $('#home-collapse').removeClass('show');
+    // 반응형 사이드바
+    function sidebarEffect() {
+        if ($(window).innerWidth() >= 992) {
+            $('.btn-toggle').css('display', 'inline-flex');
+            $('#list-bar').removeClass('d-flex');
+            $('#list-bar').removeClass('justify-content-center');
         } else {
-            $('.btn-toggle').attr('aria-expanded', 'true');
-            $('#home-collapse').addClass('show');
+            $('.btn-toggle').css('display', 'none');
+            $('#list-bar').addClass('d-flex');
+            $('#list-bar').addClass('justify-content-center');
         }
+    }
+    // 초기 로딩 시 실행
+    sidebarEffect();
+    // 윈도우 크기 변경 시 실행
+    $(window).resize(sidebarEffect);
 
+    $(document).ready(function() {
         // 삭제시 경고창
         // delete 클래스를 클릭시
         $('.delete').click(function() {

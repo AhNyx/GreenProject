@@ -4809,7 +4809,7 @@ textarea.form-control-lg {
 }
 .page-link:focus {
   z-index: 3;
-  color: #0a58ca;
+  /*color: #0a58ca;*/
   background-color: #e9ecef;
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
