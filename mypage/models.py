@@ -44,3 +44,11 @@ class Question(models.Model):
         self.views += 1
         self.save()
         return self.views
+
+
+class CusComment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    pub_date = models.DateTimeField()
+    modify_date = models.DateTimeField(null=True, blank=True)
+    post = models.ForeignKey(Question, null=True, blank=True, on_delete=models.CASCADE)
