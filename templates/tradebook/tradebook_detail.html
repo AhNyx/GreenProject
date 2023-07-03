@@ -62,21 +62,23 @@
         <!-- 댓글 내용 -->
         {% for comment in trade_post_detail.comment_set.all %}
         <div id="comment" style="border: 1px solid #ccc">
-        <p>{{ comment.content }}</p>
-        <p>
+        <p class="m-3">{{ comment.content }}</p>
+        <p class="d-flex justify-content-end">
             - {{ comment.trade_author }}, {{ comment.pub_date }}
         </p>
         {% if request.user == comment.trade_author %}
-            <a href="{% url 'tradebook:comment_modify' comment.id %}">수정</a>
-            <a href="#" class="delete"
+            <div class="d-flex justify-content-end">
+            <a href="{% url 'tradebook:comment_modify' comment.id %}" class="btn btn-primary">수정</a>
+            <a href="#" class="delete btn btn-primary"
                data-uri="{% url 'tradebook:comment_delete' comment.id %}">삭제</a>
+                </div>
         {% endif %}
         </div>
         {% endfor %}
     </div>
-    <div>
+    <div class="d-flex justify-content-end">
         <a href="{% url 'tradebook:comment_create' trade_post_detail.id %}"
-        class="small">댓글 추가</a>
+        class="small btn btn-primary ">댓글 추가</a>
     </div>
 </div>
 {% endblock %}
