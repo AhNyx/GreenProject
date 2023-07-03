@@ -6,6 +6,7 @@
       #box1{height:50px;}
       a{text-decoration: none; color: black}
   </style>
+<div class="container">
     <div class="d-flex flex-row mb-3">
         <div class="p-2 h3"><a href="{% url 'mypage:mypage' user.id %}">마이페이지</a></div>
         <div class="p-2 mx-5"><a href="{% url 'mypage:memberinfo' user.id %}">회원정보</a></div>
@@ -14,59 +15,61 @@
         <div class="p-2 mx-5"><a href="{% url 'mypage:memo_list' %}">메모장</a></div>
         <div class="p-2 mx-5"><a href="{% url 'mypage:question' %}">고객상담</a></div>
     </div>
-    <div id="box1"></div>
-
-<section id="cart_detail" style="width:95%; margin:0 auto">
-<div id="title">
-    <h3 class="pb-2 border-bottom text-center">장바구니</h3>
 </div>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <td>상품사진</td>
-        <td>상품이름</td>
-        <td>수량</td>
-        <td>지우기</td>
-        <td>한개당가격</td>
-        <td>가격</td>
-      </tr>
-    </thead>
-    <tbody>
-    {% for item in cart %}
-      {% with product=item.product %}
-      <tr>
-        <td class="align-middle">
-          <img src="{{ item.product.image.url }}" alt="" width="30%">
-        </td>
-        <td class="align-middle">{{ item.product.name }}</td>
-        <td class="align-middle">
-          <form action="{% url 'shopcart:product_add' product.id %}" method="post">
-            {{ item.quantity_form.quantity }}
-            {{ item.quantity_form.is_update }}
-            <input type="submit" class="btn btn-primary my-1" value="변경">
-            {% csrf_token %}
-          </form>
-        </td>
-        <td class="align-middle"><a href="{% url 'shopcart:product_remove' product.id %}"> <i class="fa-sharp fa-solid fa-trash"></i></a></td>
-        <td class="align-middle">{{item.price}}</td>
-        <td class="align-middle">{{item.total_price}}</td>
-      </tr>
 
-      {% endwith %}
-    {% endfor %}
-    <tr class="total">
-      <td>Total</td>
-      <td colspan="4"></td>
-      <td class="num">{{ cart.get_product_total}}</td>
-    </tr>
-    </tbody>
-  </table>
-    <p class="text-end">
-      <a href="" class="btn btn-secondary">
-        쇼핑 계속하기
-      </a>
-    </p>
-</section>
+<div class="container px-4 py-5">
+  <section id="cart_detail" style="width:95%; margin:0 auto">
+  <div id="title">
+      <h3 class="pb-2 border-bottom text-center">장바구니</h3>
+  </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <td>상품사진</td>
+          <td>상품이름</td>
+          <td>수량</td>
+          <td>지우기</td>
+          <td>한개당가격</td>
+          <td>가격</td>
+        </tr>
+      </thead>
+      <tbody>
+      {% for item in cart %}
+        {% with product=item.product %}
+        <tr>
+          <td class="align-middle">
+            <img src="{{ item.product.image.url }}" alt="" width="30%">
+          </td>
+          <td class="align-middle">{{ item.product.name }}</td>
+          <td class="align-middle">
+            <form action="{% url 'shopcart:product_add' product.id %}" method="post">
+              {{ item.quantity_form.quantity }}
+              {{ item.quantity_form.is_update }}
+              <input type="submit" class="btn btn-primary my-1" value="변경">
+              {% csrf_token %}
+            </form>
+          </td>
+          <td class="align-middle"><a href="{% url 'shopcart:product_remove' product.id %}"> <i class="fa-sharp fa-solid fa-trash"></i></a></td>
+          <td class="align-middle">{{item.price}}</td>
+          <td class="align-middle">{{item.total_price}}</td>
+        </tr>
+
+        {% endwith %}
+      {% endfor %}
+      <tr class="total">
+        <td>Total</td>
+        <td colspan="4"></td>
+        <td class="num">{{ cart.get_product_total}}</td>
+      </tr>
+      </tbody>
+    </table>
+      <p class="text-end">
+        <a href="" class="btn btn-secondary">
+          쇼핑 계속하기
+        </a>
+      </p>
+  </section>
+</div>
 
 
 

@@ -3,6 +3,8 @@
 {% block title %} 구매 페이지입니다 {% endblock %}
 {% load humanize %} <!--원화로 표시하기위해 -->
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 {% block content %}
 
 <!--카테고리-->
@@ -91,13 +93,13 @@
             $('#kw').val($('.kw').val());  //입력폼에서 입력된 키워드를 hidden 타입
             $('#searchForm').submit();     //폼을 전송함 - view로
         });
-        <!--// 엔터로 검색했을 때도 조회되도록
+        // 엔터로 검색했을 때도 조회되도록
         $('.kw').keypress(function(event) {
             if (event.key === "Enter") {
                 event.preventDefault();
                 $('#searchForm').submit();
             }
-        });-->
+        });
 
     });
 </script>
