@@ -11,16 +11,18 @@
         <div class="list-group list-group-horizontal">
             <!--책제목-->
             <!--<h3 class="fw-bold mb-0 fs-4">돈의 속성</h3>-->
-            <div style="text-align: center" class="d-flex">
+
+            <div style="" class="d-flex flex-wrap">
                 {% if goods %}
 
                 {% for good in goods %}
-                    <div class="">
-                    <img style="" class="mx-3 row col-12 px-3" src="{{ good.image.url }}" alt="책 사진(alt)"/>
-                    </div>
+
+
+                <div class="">
+                    <img style="width:200px;" class="mx-3 row px-3 py-4" src="{{ good.image.url }}" alt="책 사진(alt)"/>
+                </div>
+
                 {% endfor %}
-
-
 
 
                 {% endif %}
@@ -28,6 +30,7 @@
         </div>
     </div>
 
-    <div>
-    </div>
-    {% endblock %}
+</div>
+<div>
+</div>
+{% endblock %}

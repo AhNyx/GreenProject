@@ -5,6 +5,7 @@ from goods.models import Goods
 
 def index(request):
     goods = Goods.objects.all()
+
     context = {'goods':goods}
     return render(request, 'greenbooks/index.html', context)
 
